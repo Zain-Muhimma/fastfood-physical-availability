@@ -1,0 +1,2748 @@
+{
+  "meta": {
+    "totalReviews": 119778,
+    "brands": [
+      "Al Baik",
+      "Burger King",
+      "Burgerizzr",
+      "Hardees",
+      "Herfy",
+      "Kfc",
+      "Kudu",
+      "McDonald's",
+      "Shawarma House"
+    ],
+    "attributes": [
+      "Ambiance and Comfort",
+      "Brand Reputation and Reviews",
+      "Cleanliness and Hygiene",
+      "Clientele and Social Environment",
+      "Customer Service and Friendliness",
+      "Healthy and Nutritional Options",
+      "Innovation and Unique Offerings",
+      "Location and Accessibility",
+      "Menu Variety and Options",
+      "Popularity and Market Presence",
+      "Price and Value for Money",
+      "Quality of Ingredients",
+      "Special Offers and Promotions",
+      "Speed of Service and Convenience",
+      "Taste and Flavour of Food"
+    ],
+    "dateRange": {
+      "start": "2025-07-01",
+      "end": "2025-12-31"
+    }
+  },
+  "attributeDistribution": {
+    "Ambiance and Comfort": {
+      "Al Baik": 0.021961,
+      "Burger King": 0.034328,
+      "Burgerizzr": 0.029568,
+      "Hardees": 0.030804,
+      "Herfy": 0.025487,
+      "Kfc": 0.022744,
+      "Kudu": 0.033805,
+      "McDonald's": 0.02688,
+      "Shawarma House": 0.056229
+    },
+    "Brand Reputation and Reviews": {
+      "Al Baik": 0.093054,
+      "Burger King": 0.059651,
+      "Burgerizzr": 0.041306,
+      "Hardees": 0.070165,
+      "Herfy": 0.079528,
+      "Kfc": 0.083969,
+      "Kudu": 0.053773,
+      "McDonald's": 0.084337,
+      "Shawarma House": 0.093716
+    },
+    "Cleanliness and Hygiene": {
+      "Al Baik": 0.022482,
+      "Burger King": 0.036438,
+      "Burgerizzr": 0.035481,
+      "Hardees": 0.037307,
+      "Herfy": 0.064307,
+      "Kfc": 0.039633,
+      "Kudu": 0.05197,
+      "McDonald's": 0.050976,
+      "Shawarma House": 0.050717
+    },
+    "Clientele and Social Environment": {
+      "Al Baik": 0.007891,
+      "Burger King": 0.004643,
+      "Burgerizzr": 0.002913,
+      "Hardees": 0.003879,
+      "Herfy": 0.007906,
+      "Kfc": 0.002063,
+      "Kudu": 0.010727,
+      "McDonald's": 0.013484,
+      "Shawarma House": 0.011025
+    },
+    "Customer Service and Friendliness": {
+      "Al Baik": 0.266433,
+      "Burger King": 0.371412,
+      "Burgerizzr": 0.354722,
+      "Hardees": 0.406503,
+      "Herfy": 0.332389,
+      "Kfc": 0.42877,
+      "Kudu": 0.345218,
+      "McDonald's": 0.333087,
+      "Shawarma House": 0.132304
+    },
+    "Healthy and Nutritional Options": {
+      "Al Baik": 0.002159,
+      "Burger King": 0.001688,
+      "Burgerizzr": 0.002471,
+      "Hardees": 0.00057,
+      "Herfy": 0.00059,
+      "Kfc": 0.000864,
+      "Kudu": 0.004958,
+      "McDonald's": 0.001653,
+      "Shawarma House": 0.007718
+    },
+    "Innovation and Unique Offerings": {
+      "Al Baik": 0.005658,
+      "Burger King": 0.002251,
+      "Burgerizzr": 0.00662,
+      "Hardees": 0.001825,
+      "Herfy": 0.002714,
+      "Kfc": 0.001439,
+      "Kudu": 0.005544,
+      "McDonald's": 0.00174,
+      "Shawarma House": 0.016538
+    },
+    "Location and Accessibility": {
+      "Al Baik": 0.028735,
+      "Burger King": 0.017727,
+      "Burgerizzr": 0.011209,
+      "Hardees": 0.014261,
+      "Herfy": 0.025605,
+      "Kfc": 0.015162,
+      "Kudu": 0.025512,
+      "McDonald's": 0.030403,
+      "Shawarma House": 0.029768
+    },
+    "Menu Variety and Options": {
+      "Al Baik": 0.026576,
+      "Burger King": 0.022369,
+      "Burgerizzr": 0.015181,
+      "Hardees": 0.020878,
+      "Herfy": 0.026903,
+      "Kfc": 0.011804,
+      "Kudu": 0.023483,
+      "McDonald's": 0.024314,
+      "Shawarma House": 0.06946
+    },
+    "Popularity and Market Presence": {
+      "Al Baik": 0.046006,
+      "Burger King": 0.005346,
+      "Burgerizzr": 0.007855,
+      "Hardees": 0.004678,
+      "Herfy": 0.012271,
+      "Kfc": 0.005086,
+      "Kudu": 0.011043,
+      "McDonald's": 0.013353,
+      "Shawarma House": 0.029768
+    },
+    "Price and Value for Money": {
+      "Al Baik": 0.042656,
+      "Burger King": 0.025886,
+      "Burgerizzr": 0.044925,
+      "Hardees": 0.0251,
+      "Herfy": 0.053923,
+      "Kfc": 0.020872,
+      "Kudu": 0.050933,
+      "McDonald's": 0.033796,
+      "Shawarma House": 0.083793
+    },
+    "Quality of Ingredients": {
+      "Al Baik": 0.062011,
+      "Burger King": 0.084693,
+      "Burgerizzr": 0.072551,
+      "Hardees": 0.077809,
+      "Herfy": 0.060531,
+      "Kfc": 0.083777,
+      "Kudu": 0.062066,
+      "McDonald's": 0.075508,
+      "Shawarma House": 0.106946
+    },
+    "Special Offers and Promotions": {
+      "Al Baik": 0.000968,
+      "Burger King": 0.009707,
+      "Burgerizzr": 0.007326,
+      "Hardees": 0.007188,
+      "Herfy": 0.014631,
+      "Kfc": 0.003263,
+      "Kudu": 0.007572,
+      "McDonald's": 0.008656,
+      "Shawarma House": 0.001103
+    },
+    "Speed of Service and Convenience": {
+      "Al Baik": 0.247971,
+      "Burger King": 0.126618,
+      "Burgerizzr": 0.142101,
+      "Hardees": 0.137479,
+      "Herfy": 0.20472,
+      "Kfc": 0.143179,
+      "Kudu": 0.181556,
+      "McDonald's": 0.216302,
+      "Shawarma House": 0.108049
+    },
+    "Taste and Flavour of Food": {
+      "Al Baik": 0.125437,
+      "Burger King": 0.197243,
+      "Burgerizzr": 0.225772,
+      "Hardees": 0.161552,
+      "Herfy": 0.088496,
+      "Kfc": 0.137373,
+      "Kudu": 0.13184,
+      "McDonald's": 0.085512,
+      "Shawarma House": 0.202867
+    }
+  },
+  "sentimentDistribution": {
+    "Positive": {
+      "Al Baik": 0.298295,
+      "Burger King": 0.799662,
+      "Burgerizzr": 0.736981,
+      "Hardees": 0.756874,
+      "Herfy": 0.237286,
+      "Kfc": 0.692721,
+      "Kudu": 0.455558,
+      "McDonald's": 0.278457,
+      "Shawarma House": 0.592062
+    },
+    "Negative": {
+      "Al Baik": 0.626815,
+      "Burger King": 0.161367,
+      "Burgerizzr": 0.228244,
+      "Hardees": 0.210839,
+      "Herfy": 0.706313,
+      "Kfc": 0.280985,
+      "Kudu": 0.489408,
+      "McDonald's": 0.663694,
+      "Shawarma House": 0.320838
+    },
+    "Neutral": {
+      "Al Baik": 0.07489,
+      "Burger King": 0.03897,
+      "Burgerizzr": 0.034775,
+      "Hardees": 0.032288,
+      "Herfy": 0.056401,
+      "Kfc": 0.026294,
+      "Kudu": 0.055035,
+      "McDonald's": 0.057849,
+      "Shawarma House": 0.0871
+    }
+  },
+  "attributeSentiment": {
+    "Ambiance and Comfort": {
+      "Al Baik": {
+        "positive": 0.01005,
+        "negative": 0.010348,
+        "neutral": 0.001563
+      },
+      "Burger King": {
+        "positive": 0.030388,
+        "negative": 0.003095,
+        "neutral": 0.000844
+      },
+      "Burgerizzr": {
+        "positive": 0.019241,
+        "negative": 0.009532,
+        "neutral": 0.000794
+      },
+      "Hardees": {
+        "positive": 0.026013,
+        "negative": 0.004335,
+        "neutral": 0.000456
+      },
+      "Herfy": {
+        "positive": 0.006844,
+        "negative": 0.018053,
+        "neutral": 0.00059
+      },
+      "Kfc": {
+        "positive": 0.017801,
+        "negative": 0.004414,
+        "neutral": 0.000528
+      },
+      "Kudu": {
+        "positive": 0.020508,
+        "negative": 0.011359,
+        "neutral": 0.001938
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.034179,
+        "negative": 0.017641,
+        "neutral": 0.00441
+      }
+    },
+    "Brand Reputation and Reviews": {
+      "Al Baik": {
+        "positive": 0.037668,
+        "negative": 0.042879,
+        "neutral": 0.012507
+      },
+      "Burger King": {
+        "positive": 0.049522,
+        "negative": 0.008301,
+        "neutral": 0.001829
+      },
+      "Burgerizzr": {
+        "positive": 0.031244,
+        "negative": 0.007237,
+        "neutral": 0.002824
+      },
+      "Hardees": {
+        "positive": 0.054991,
+        "negative": 0.013006,
+        "neutral": 0.002168
+      },
+      "Herfy": {
+        "positive": 0.027139,
+        "negative": 0.047552,
+        "neutral": 0.004838
+      },
+      "Kfc": {
+        "positive": 0.061609,
+        "negative": 0.020105,
+        "neutral": 0.002255
+      },
+      "Kudu": {
+        "positive": 0.027495,
+        "negative": 0.020689,
+        "neutral": 0.005589
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.076075,
+        "negative": 0.014333,
+        "neutral": 0.003308
+      }
+    },
+    "Cleanliness and Hygiene": {
+      "Al Baik": {
+        "positive": 0.008933,
+        "negative": 0.012432,
+        "neutral": 0.001117
+      },
+      "Burger King": {
+        "positive": 0.026871,
+        "negative": 0.009004,
+        "neutral": 0.000563
+      },
+      "Burgerizzr": {
+        "positive": 0.022507,
+        "negative": 0.01271,
+        "neutral": 0.000265
+      },
+      "Hardees": {
+        "positive": 0.022818,
+        "negative": 0.013919,
+        "neutral": 0.00057
+      },
+      "Herfy": {
+        "positive": 0.008378,
+        "negative": 0.054749,
+        "neutral": 0.00118
+      },
+      "Kfc": {
+        "positive": 0.024087,
+        "negative": 0.015258,
+        "neutral": 0.000288
+      },
+      "Kudu": {
+        "positive": 0.027044,
+        "negative": 0.023754,
+        "neutral": 0.001172
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.027563,
+        "negative": 0.023153,
+        "neutral": 0.0
+      }
+    },
+    "Clientele and Social Environment": {
+      "Al Baik": {
+        "positive": 0.001638,
+        "negative": 0.003573,
+        "neutral": 0.00268
+      },
+      "Burger King": {
+        "positive": 0.002954,
+        "negative": 0.000281,
+        "neutral": 0.001407
+      },
+      "Burgerizzr": {
+        "positive": 0.001412,
+        "negative": 0.000706,
+        "neutral": 0.000794
+      },
+      "Hardees": {
+        "positive": 0.002054,
+        "negative": 0.000456,
+        "neutral": 0.001369
+      },
+      "Herfy": {
+        "positive": 0.002832,
+        "negative": 0.00236,
+        "neutral": 0.002714
+      },
+      "Kfc": {
+        "positive": 0.000864,
+        "negative": 0.000336,
+        "neutral": 0.000864
+      },
+      "Kudu": {
+        "positive": 0.005499,
+        "negative": 0.002073,
+        "neutral": 0.003155
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.003308,
+        "negative": 0.002205,
+        "neutral": 0.005513
+      }
+    },
+    "Customer Service and Friendliness": {
+      "Al Baik": {
+        "positive": 0.079208,
+        "negative": 0.18462,
+        "neutral": 0.002606
+      },
+      "Burger King": {
+        "positive": 0.319077,
+        "negative": 0.050647,
+        "neutral": 0.001688
+      },
+      "Burgerizzr": {
+        "positive": 0.294528,
+        "negative": 0.058341,
+        "neutral": 0.001853
+      },
+      "Hardees": {
+        "positive": 0.334855,
+        "negative": 0.069937,
+        "neutral": 0.001711
+      },
+      "Herfy": {
+        "positive": 0.086254,
+        "negative": 0.24118,
+        "neutral": 0.004956
+      },
+      "Kfc": {
+        "positive": 0.333381,
+        "negative": 0.093278,
+        "neutral": 0.002111
+      },
+      "Kudu": {
+        "positive": 0.188272,
+        "negative": 0.154061,
+        "neutral": 0.002885
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.081588,
+        "negative": 0.049614,
+        "neutral": 0.001103
+      }
+    },
+    "Healthy and Nutritional Options": {
+      "Al Baik": {
+        "positive": 0.000744,
+        "negative": 0.000968,
+        "neutral": 0.000447
+      },
+      "Burger King": {
+        "positive": 0.001548,
+        "negative": 0.0,
+        "neutral": 0.000141
+      },
+      "Burgerizzr": {
+        "positive": 0.001853,
+        "negative": 0.000177,
+        "neutral": 0.000441
+      },
+      "Hardees": {
+        "positive": 0.000456,
+        "negative": 0.000114,
+        "neutral": 0.0
+      },
+      "Herfy": {
+        "positive": 0.000354,
+        "negative": 0.000236,
+        "neutral": 0.0
+      },
+      "Kfc": {
+        "positive": 0.000384,
+        "negative": 0.000432,
+        "neutral": 4.8e-05
+      },
+      "Kudu": {
+        "positive": 0.00311,
+        "negative": 0.000811,
+        "neutral": 0.001037
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.00441,
+        "negative": 0.001103,
+        "neutral": 0.002205
+      }
+    },
+    "Innovation and Unique Offerings": {
+      "Al Baik": {
+        "positive": 0.002903,
+        "negative": 0.001563,
+        "neutral": 0.001191
+      },
+      "Burger King": {
+        "positive": 0.002251,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Burgerizzr": {
+        "positive": 0.004854,
+        "negative": 0.00053,
+        "neutral": 0.001236
+      },
+      "Hardees": {
+        "positive": 0.001483,
+        "negative": 0.000228,
+        "neutral": 0.000114
+      },
+      "Herfy": {
+        "positive": 0.00118,
+        "negative": 0.001416,
+        "neutral": 0.000118
+      },
+      "Kfc": {
+        "positive": 0.001152,
+        "negative": 0.00024,
+        "neutral": 4.8e-05
+      },
+      "Kudu": {
+        "positive": 0.003606,
+        "negative": 0.000901,
+        "neutral": 0.001037
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.014333,
+        "negative": 0.002205,
+        "neutral": 0.0
+      }
+    },
+    "Location and Accessibility": {
+      "Al Baik": {
+        "positive": 0.002978,
+        "negative": 0.013325,
+        "neutral": 0.012432
+      },
+      "Burger King": {
+        "positive": 0.003517,
+        "negative": 0.003517,
+        "neutral": 0.010692
+      },
+      "Burgerizzr": {
+        "positive": 0.002207,
+        "negative": 0.00406,
+        "neutral": 0.004943
+      },
+      "Hardees": {
+        "positive": 0.003195,
+        "negative": 0.002396,
+        "neutral": 0.008671
+      },
+      "Herfy": {
+        "positive": 0.001888,
+        "negative": 0.010501,
+        "neutral": 0.013215
+      },
+      "Kfc": {
+        "positive": 0.002303,
+        "negative": 0.00451,
+        "neutral": 0.008349
+      },
+      "Kudu": {
+        "positive": 0.003381,
+        "negative": 0.011629,
+        "neutral": 0.010502
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.007718,
+        "negative": 0.00882,
+        "neutral": 0.01323
+      }
+    },
+    "Menu Variety and Options": {
+      "Al Baik": {
+        "positive": 0.003722,
+        "negative": 0.016005,
+        "neutral": 0.006849
+      },
+      "Burger King": {
+        "positive": 0.008301,
+        "negative": 0.003658,
+        "neutral": 0.010411
+      },
+      "Burgerizzr": {
+        "positive": 0.005207,
+        "negative": 0.005031,
+        "neutral": 0.004943
+      },
+      "Hardees": {
+        "positive": 0.009127,
+        "negative": 0.005476,
+        "neutral": 0.006275
+      },
+      "Herfy": {
+        "positive": 0.00295,
+        "negative": 0.014631,
+        "neutral": 0.009322
+      },
+      "Kfc": {
+        "positive": 0.002543,
+        "negative": 0.00619,
+        "neutral": 0.003071
+      },
+      "Kudu": {
+        "positive": 0.005499,
+        "negative": 0.011178,
+        "neutral": 0.006806
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.045204,
+        "negative": 0.005513,
+        "neutral": 0.018743
+      }
+    },
+    "Popularity and Market Presence": {
+      "Al Baik": {
+        "positive": 0.009529,
+        "negative": 0.021068,
+        "neutral": 0.01541
+      },
+      "Burger King": {
+        "positive": 0.002392,
+        "negative": 0.000844,
+        "neutral": 0.00211
+      },
+      "Burgerizzr": {
+        "positive": 0.003354,
+        "negative": 0.002471,
+        "neutral": 0.00203
+      },
+      "Hardees": {
+        "positive": 0.00251,
+        "negative": 0.000228,
+        "neutral": 0.00194
+      },
+      "Herfy": {
+        "positive": 0.002596,
+        "negative": 0.003186,
+        "neutral": 0.00649
+      },
+      "Kfc": {
+        "positive": 0.002351,
+        "negative": 0.00072,
+        "neutral": 0.002015
+      },
+      "Kudu": {
+        "positive": 0.003426,
+        "negative": 0.002975,
+        "neutral": 0.004643
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.00882,
+        "negative": 0.006615,
+        "neutral": 0.014333
+      }
+    },
+    "Price and Value for Money": {
+      "Al Baik": {
+        "positive": 0.018909,
+        "negative": 0.020993,
+        "neutral": 0.002754
+      },
+      "Burger King": {
+        "positive": 0.010974,
+        "negative": 0.013506,
+        "neutral": 0.001407
+      },
+      "Burgerizzr": {
+        "positive": 0.017829,
+        "negative": 0.025066,
+        "neutral": 0.00203
+      },
+      "Hardees": {
+        "positive": 0.010382,
+        "negative": 0.012778,
+        "neutral": 0.00194
+      },
+      "Herfy": {
+        "positive": 0.012861,
+        "negative": 0.037758,
+        "neutral": 0.003304
+      },
+      "Kfc": {
+        "positive": 0.00427,
+        "negative": 0.015882,
+        "neutral": 0.00072
+      },
+      "Kudu": {
+        "positive": 0.012891,
+        "negative": 0.035247,
+        "neutral": 0.002795
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.044101,
+        "negative": 0.031974,
+        "neutral": 0.007718
+      }
+    },
+    "Quality of Ingredients": {
+      "Al Baik": {
+        "positive": 0.012209,
+        "negative": 0.046825,
+        "neutral": 0.002978
+      },
+      "Burger King": {
+        "positive": 0.066404,
+        "negative": 0.01632,
+        "neutral": 0.00197
+      },
+      "Burgerizzr": {
+        "positive": 0.047132,
+        "negative": 0.022771,
+        "neutral": 0.002648
+      },
+      "Hardees": {
+        "positive": 0.053394,
+        "negative": 0.023388,
+        "neutral": 0.001027
+      },
+      "Herfy": {
+        "positive": 0.010265,
+        "negative": 0.048732,
+        "neutral": 0.001534
+      },
+      "Kfc": {
+        "positive": 0.04923,
+        "negative": 0.033444,
+        "neutral": 0.001104
+      },
+      "Kudu": {
+        "positive": 0.016001,
+        "negative": 0.04318,
+        "neutral": 0.002885
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.045204,
+        "negative": 0.055127,
+        "neutral": 0.006615
+      }
+    },
+    "Special Offers and Promotions": {
+      "Al Baik": {
+        "positive": 0.000149,
+        "negative": 0.000744,
+        "neutral": 7.4e-05
+      },
+      "Burger King": {
+        "positive": 0.006472,
+        "negative": 0.002673,
+        "neutral": 0.000563
+      },
+      "Burgerizzr": {
+        "positive": 0.004325,
+        "negative": 0.001677,
+        "neutral": 0.001324
+      },
+      "Hardees": {
+        "positive": 0.00559,
+        "negative": 0.001255,
+        "neutral": 0.000342
+      },
+      "Herfy": {
+        "positive": 0.007198,
+        "negative": 0.005782,
+        "neutral": 0.001652
+      },
+      "Kfc": {
+        "positive": 0.001583,
+        "negative": 0.001344,
+        "neutral": 0.000336
+      },
+      "Kudu": {
+        "positive": 0.00302,
+        "negative": 0.0032,
+        "neutral": 0.001352
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.001103
+      }
+    },
+    "Speed of Service and Convenience": {
+      "Al Baik": {
+        "positive": 0.035212,
+        "negative": 0.206581,
+        "neutral": 0.006179
+      },
+      "Burger King": {
+        "positive": 0.087366,
+        "negative": 0.035734,
+        "neutral": 0.003517
+      },
+      "Burgerizzr": {
+        "positive": 0.078376,
+        "negative": 0.058694,
+        "neutral": 0.005031
+      },
+      "Hardees": {
+        "positive": 0.087507,
+        "negative": 0.046092,
+        "neutral": 0.003879
+      },
+      "Herfy": {
+        "positive": 0.020531,
+        "negative": 0.180413,
+        "neutral": 0.003776
+      },
+      "Kfc": {
+        "positive": 0.078259,
+        "negative": 0.062041,
+        "neutral": 0.002879
+      },
+      "Kudu": {
+        "positive": 0.046336,
+        "negative": 0.129271,
+        "neutral": 0.00595
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.042999,
+        "negative": 0.060639,
+        "neutral": 0.00441
+      }
+    },
+    "Taste and Flavour of Food": {
+      "Al Baik": {
+        "positive": 0.074444,
+        "negative": 0.044889,
+        "neutral": 0.006104
+      },
+      "Burger King": {
+        "positive": 0.181626,
+        "negative": 0.013787,
+        "neutral": 0.001829
+      },
+      "Burgerizzr": {
+        "positive": 0.202913,
+        "negative": 0.019241,
+        "neutral": 0.003619
+      },
+      "Hardees": {
+        "positive": 0.142499,
+        "negative": 0.017228,
+        "neutral": 0.001825
+      },
+      "Herfy": {
+        "positive": 0.046018,
+        "negative": 0.039764,
+        "neutral": 0.002714
+      },
+      "Kfc": {
+        "positive": 0.112902,
+        "negative": 0.022792,
+        "neutral": 0.001679
+      },
+      "Kudu": {
+        "positive": 0.089471,
+        "negative": 0.039079,
+        "neutral": 0.00329
+      },
+      "McDonald's": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0
+      },
+      "Shawarma House": {
+        "positive": 0.15656,
+        "negative": 0.041896,
+        "neutral": 0.00441
+      }
+    }
+  },
+  "sampleReviews": [
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "good service serve by jannica",
+      "date": "2025-12-10",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "good service serve by jannica"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I went to the branch and handed the bill to the employee, Taher. After fifteen minutes, I asked him about the bill, and he said he didn't know anything about it. I asked several other employees, but no one addressed the issue. Then I went to the security guard, who retrieved it for me from the same employee, Taher. I hope I didn't hold Taher accountable. The security guard deserves a reward for his excellent treatment of everyone; he was cheerful, polite, and respectful. I hope the company will ",
+      "date": "2025-11-24",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "I went to the branch and handed the bill to the employee, Taher. After fifteen minutes, I asked him about the bill, and he said he didn't know anything about it. I asked several other employees, but no one addressed the issue."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I went to the branch and handed the bill to the employee, Taher. After fifteen minutes, I asked him about the bill, and he said he didn't know anything about it. I asked several other employees, but no one addressed the issue. Then I went to the security guard, who retrieved it for me from the same employee, Taher. I hope I didn't hold Taher accountable. The security guard deserves a reward for his excellent treatment of everyone; he was cheerful, polite, and respectful. I hope the company will ",
+      "date": "2025-11-24",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Then I went to the security guard, who retrieved it for me from the same employee, Taher. I hope I didn't hold Taher accountable. The security guard deserves a reward for his excellent treatment of everyone; he was cheerful, polite, and respectful. I hope the company will reward him."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I went to the branch and handed the bill to the employee, Taher. After fifteen minutes, I asked him about the bill, and he said he didn't know anything about it. I asked several other employees, but no one addressed the issue. Then I went to the security guard, who retrieved it for me from the same employee, Taher. I hope I didn't hold Taher accountable. The security guard deserves a reward for his excellent treatment of everyone; he was cheerful, polite, and respectful. I hope the company will ",
+      "date": "2025-11-24",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "After fifteen minutes, I asked him about the bill, and he said he didn't know anything about it."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Everything is fine .This institution is the best role is Keeta , hunger and normal Castomer everyone equal .Not different low.",
+      "date": "2025-12-20",
+      "brand": "Al Baik",
+      "attribute": "Clientele and Social Environment",
+      "sentiment": "Neutral",
+      "justification": "Keeta , hunger and normal Castomer everyone equal .Not different low."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Good service with jannica",
+      "date": "2025-12-10",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Good service with jannica"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Raw with laa fat",
+      "date": "2025-12-03",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Negative",
+      "justification": "Raw with laa fat"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The drive-thru service was terrible. We stood in line for about an hour, honking our horns, but there was no response. Their service was awful.",
+      "date": "2025-08-06",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "We stood in line for about an hour, honking our horns, but there was no response."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The drive-thru service was terrible. We stood in line for about an hour, honking our horns, but there was no response. Their service was awful.",
+      "date": "2025-08-06",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Their service was awful."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Good observation by  Mr.Azhar restaurant manager.",
+      "date": "2025-12-09",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Good observation by Mr.Azhar restaurant manager."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Always loved the dood of albaik!",
+      "date": "2025-12-10",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "Always loved the dood of albaik!"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unfortunately, the same problem persists. The place is empty, there are approximately 8 of them, and I didn't take the order until 7:07.",
+      "date": "2025-11-07",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "I didn't take the order until 7:07."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unfortunately, the same problem persists. The place is empty, there are approximately 8 of them, and I didn't take the order until 7:07.",
+      "date": "2025-11-07",
+      "brand": "Al Baik",
+      "attribute": "Popularity and Market Presence",
+      "sentiment": "Neutral",
+      "justification": "The place is empty, there are approximately 8 of them"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Rude staff. Firstly they forgot fries and made us wait extra ten minutes when told to get them again. Kept refusing for any side stuff like ketchup, garlic sauce and buns. Did not give any of them at all and were extremely rude about it. Oh and they kept fighting with each other. Never visiting this branch again.",
+      "date": "2025-12-22",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Rude staff. Firstly they forgot fries and made us wait extra ten minutes when told to get them again. Kept refusing for any side stuff like ketchup, garlic sauce and buns. Did not give any of them at all and were extremely rude about it. Oh and they kept fighting with each other."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Rude staff. Firstly they forgot fries and made us wait extra ten minutes when told to get them again. Kept refusing for any side stuff like ketchup, garlic sauce and buns. Did not give any of them at all and were extremely rude about it. Oh and they kept fighting with each other. Never visiting this branch again.",
+      "date": "2025-12-22",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Firstly they forgot fries and made us wait extra ten minutes when told to get them again."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Rude staff. Firstly they forgot fries and made us wait extra ten minutes when told to get them again. Kept refusing for any side stuff like ketchup, garlic sauce and buns. Did not give any of them at all and were extremely rude about it. Oh and they kept fighting with each other. Never visiting this branch again.",
+      "date": "2025-12-22",
+      "brand": "Al Baik",
+      "attribute": "Menu Variety and Options",
+      "sentiment": "Negative",
+      "justification": "Kept refusing for any side stuff like ketchup, garlic sauce and buns. Did not give any of them at all"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Going to Albaik feels like traveling to another country. But here I am, still a regular customer of Albaik.",
+      "date": "2025-12-12",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Positive",
+      "justification": "Going to Albaik feels like traveling to another country."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Going to Albaik feels like traveling to another country. But here I am, still a regular customer of Albaik.",
+      "date": "2025-12-12",
+      "brand": "Al Baik",
+      "attribute": "Popularity and Market Presence",
+      "sentiment": "Positive",
+      "justification": "But here I am, still a regular customer of Albaik."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best restaurant in Saudi Arabia, the taste is delicious",
+      "date": "2025-08-10",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "the taste is delicious"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best restaurant in Saudi Arabia, the taste is delicious",
+      "date": "2025-08-10",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Positive",
+      "justification": "The best restaurant in Saudi Arabia"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I hope the working hours will be adjusted. I ordered two egg sandwiches through the app, and it told me they would be ready in 15 minutes. When I arrived at the restaurant, the waiter told me my order would take another 40 minutes!\n\nSeriously? 40 minutes? Even if I ordered a stuffed lamb, it wouldn't be like this! They should adhere to the time specified in the app.",
+      "date": "2025-08-09",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "I ordered two egg sandwiches through the app, and it told me they would be ready in 15 minutes. When I arrived at the restaurant, the waiter told me my order would take another 40 minutes!"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I hope the working hours will be adjusted. I ordered two egg sandwiches through the app, and it told me they would be ready in 15 minutes. When I arrived at the restaurant, the waiter told me my order would take another 40 minutes!\n\nSeriously? 40 minutes? Even if I ordered a stuffed lamb, it wouldn't be like this! They should adhere to the time specified in the app.",
+      "date": "2025-08-09",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Seriously? 40 minutes? Even if I ordered a stuffed lamb, it wouldn't be like this!"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Delay, delay, delay!\nEveryone is refusing to prepare HungerStation orders. The worst worker is Mad Suhan, who's water-saving.\nAnd the other one is wearing a red cap, meaning he's the supervisor, Mohammed Rafiq. They're not preparing anything, but there are a few customers, and the order arrived more than 30 minutes late.",
+      "date": "2025-12-27",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Delay, delay, delay! ... the order arrived more than 30 minutes late."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Delay, delay, delay!\nEveryone is refusing to prepare HungerStation orders. The worst worker is Mad Suhan, who's water-saving.\nAnd the other one is wearing a red cap, meaning he's the supervisor, Mohammed Rafiq. They're not preparing anything, but there are a few customers, and the order arrived more than 30 minutes late.",
+      "date": "2025-12-27",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "The worst worker is Mad Suhan, who's water-saving. And the other one is wearing a red cap, meaning he's the supervisor, Mohammed Rafiq. They're not preparing anything"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Just got an ice cream and someone asked me to rate it lol",
+      "date": "2025-11-26",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Neutral",
+      "justification": "someone asked me to rate it"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "After a bad experience, I took the plunge three months later, thinking the restaurant would have improved. But unfortunately, it's gone from bad to worse. The food is very cold, though it still tastes like Al Baik, but the service is abysmal, disrespectful, and disorganized. I'm sure if they continue like this, they'll lose more and more customers, and that's exactly what's happening.",
+      "date": "2025-10-15",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Neutral",
+      "justification": "though it still tastes like Al Baik"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "After a bad experience, I took the plunge three months later, thinking the restaurant would have improved. But unfortunately, it's gone from bad to worse. The food is very cold, though it still tastes like Al Baik, but the service is abysmal, disrespectful, and disorganized. I'm sure if they continue like this, they'll lose more and more customers, and that's exactly what's happening.",
+      "date": "2025-10-15",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the service is abysmal, disrespectful, and disorganized."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "After a bad experience, I took the plunge three months later, thinking the restaurant would have improved. But unfortunately, it's gone from bad to worse. The food is very cold, though it still tastes like Al Baik, but the service is abysmal, disrespectful, and disorganized. I'm sure if they continue like this, they'll lose more and more customers, and that's exactly what's happening.",
+      "date": "2025-10-15",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "the service is abysmal, disrespectful, and disorganized."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unfortunately, even a star doesn't deserve it. This is the last time I'll go to Al Baik.\n\nWhere is the Al Baik of old? 😔",
+      "date": "2025-12-29",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Negative",
+      "justification": "This is the last time I'll go to Al Baik. Where is the Al Baik of old? 😔"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The cleanliness is very, very bad. The tables, chairs, walls, and doors are not in good condition.",
+      "date": "2025-08-10",
+      "brand": "Al Baik",
+      "attribute": "Cleanliness and Hygiene",
+      "sentiment": "Negative",
+      "justification": "The cleanliness is very, very bad. The tables, chairs, walls, and doors are not in good condition."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Out standing service",
+      "date": "2025-08-13",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Out standing service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "May God bless them, fast service.",
+      "date": "2025-11-09",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Positive",
+      "justification": "fast service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The professor did a great job, thank you.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "The professor did a great job"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This is the second time I'm leaving a review because of the delay! The delay is unjustified. There were few customers, and the delay was excessive. This is the last time I'll be coming to this branch.",
+      "date": "2025-07-23",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "This is the second time I'm leaving a review because of the delay! The delay is unjustified. There were few customers, and the delay was excessive."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This is the second time I'm leaving a review because of the delay! The delay is unjustified. There were few customers, and the delay was excessive. This is the last time I'll be coming to this branch.",
+      "date": "2025-07-23",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "This is the last time I'll be coming to this branch."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I told him I didn't want anything spicy, and he discovered the whole order was already hot. Have some fear of God for people who have problems with spicy food. Last experience.",
+      "date": "2025-11-28",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Negative",
+      "justification": "I told him I didn't want anything spicy, and he discovered the whole order was already hot."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I told him I didn't want anything spicy, and he discovered the whole order was already hot. Have some fear of God for people who have problems with spicy food. Last experience.",
+      "date": "2025-11-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Have some fear of God for people who have problems with spicy food."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I told him I didn't want anything spicy, and he discovered the whole order was already hot. Have some fear of God for people who have problems with spicy food. Last experience.",
+      "date": "2025-11-28",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Last experience."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Thank you for your service, ma'am Dina Atiwag.",
+      "date": "2025-12-10",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Thank you for your service, ma'am Dina Atiwag."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "No dining and sometimes slow to give order",
+      "date": "2025-07-29",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "sometimes slow to give order"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Strange drive-thru policy!!!\nLimited items only\nThe problem is that I sat there for about 30 minutes and couldn't leave or order because the order was limited to four or five meals\nPoor branch",
+      "date": "2025-10-01",
+      "brand": "Al Baik",
+      "attribute": "Innovation and Unique Offerings",
+      "sentiment": "Negative",
+      "justification": "Strange drive-thru policy!!! Limited items only"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Strange drive-thru policy!!!\nLimited items only\nThe problem is that I sat there for about 30 minutes and couldn't leave or order because the order was limited to four or five meals\nPoor branch",
+      "date": "2025-10-01",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "I sat there for about 30 minutes and couldn't leave or order"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Strange drive-thru policy!!!\nLimited items only\nThe problem is that I sat there for about 30 minutes and couldn't leave or order because the order was limited to four or five meals\nPoor branch",
+      "date": "2025-10-01",
+      "brand": "Al Baik",
+      "attribute": "Menu Variety and Options",
+      "sentiment": "Negative",
+      "justification": "the order was limited to four or five meals"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Strange drive-thru policy!!!\nLimited items only\nThe problem is that I sat there for about 30 minutes and couldn't leave or order because the order was limited to four or five meals\nPoor branch",
+      "date": "2025-10-01",
+      "brand": "Al Baik",
+      "attribute": "Location and Accessibility",
+      "sentiment": "Negative",
+      "justification": "Poor branch"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Not good Service he don't know how to speak costomar",
+      "date": "2025-07-02",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "he don't know how to speak costomar"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Not good Service he don't know how to speak costomar",
+      "date": "2025-07-02",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Not good Service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very rude staff",
+      "date": "2025-12-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Very rude staff"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Best nuggets and and chicken broast are found in here.",
+      "date": "2025-10-28",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "Best nuggets and and chicken broast are found in here."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Best nuggets and and chicken broast are found in here.",
+      "date": "2025-10-28",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Positive",
+      "justification": "Best nuggets and and chicken broast are found in here."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Best nuggets and and chicken broast are found in here.",
+      "date": "2025-10-28",
+      "brand": "Al Baik",
+      "attribute": "Menu Variety and Options",
+      "sentiment": "Positive",
+      "justification": "Best nuggets and and chicken broast are found in here."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Always on the top",
+      "date": "2025-08-29",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Positive",
+      "justification": "Always on the top"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Always on the top",
+      "date": "2025-08-29",
+      "brand": "Al Baik",
+      "attribute": "Popularity and Market Presence",
+      "sentiment": "Positive",
+      "justification": "Always on the top"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Costumer service is very bad",
+      "date": "2025-10-27",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Costumer service is very bad"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "What does it mean that I order on the app and it takes another 10 minutes to finish, then I find out that he is waiting for me to come so he can start it?",
+      "date": "2025-09-17",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "it takes another 10 minutes to finish, then I find out that he is waiting for me to come so he can start it"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The restaurant is excellent, but the staff there are not very good. They treat you as if they are doing you a favor.",
+      "date": "2025-08-12",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the staff there are not very good. They treat you as if they are doing you a favor."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "We ordered an egg and chicken sandwich, they made it badly. It was a waste of money. Half an egg, a little bit of chicken, a little bit of sauce, and no pickles. All the meals have become expensive, and they reduced the ingredients. Even the big bagel slice became light. The order was placed on 10/17/2025 in the morning at 8 o'clock. Blessings do not last long with cheating.",
+      "date": "2025-10-17",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Negative",
+      "justification": "Half an egg, a little bit of chicken, a little bit of sauce, and no pickles."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "We ordered an egg and chicken sandwich, they made it badly. It was a waste of money. Half an egg, a little bit of chicken, a little bit of sauce, and no pickles. All the meals have become expensive, and they reduced the ingredients. Even the big bagel slice became light. The order was placed on 10/17/2025 in the morning at 8 o'clock. Blessings do not last long with cheating.",
+      "date": "2025-10-17",
+      "brand": "Al Baik",
+      "attribute": "Price and Value for Money",
+      "sentiment": "Negative",
+      "justification": "All the meals have become expensive, and they reduced the ingredients."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "We ordered an egg and chicken sandwich, they made it badly. It was a waste of money. Half an egg, a little bit of chicken, a little bit of sauce, and no pickles. All the meals have become expensive, and they reduced the ingredients. Even the big bagel slice became light. The order was placed on 10/17/2025 in the morning at 8 o'clock. Blessings do not last long with cheating.",
+      "date": "2025-10-17",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Negative",
+      "justification": "We ordered an egg and chicken sandwich, they made it badly."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very weak costumer service, not a advisable Al baik branch to visit",
+      "date": "2025-12-10",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Very weak costumer service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Honestly, the service at this branch is terrible, and no one at the supervisory branch responds to you. I advise anyone with high blood pressure or diabetes not to come to this branch.",
+      "date": "2025-12-24",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the service at this branch is terrible, and no one at the supervisory branch responds to you."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Honestly, the service at this branch is terrible, and no one at the supervisory branch responds to you. I advise anyone with high blood pressure or diabetes not to come to this branch.",
+      "date": "2025-12-24",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "I advise anyone with high blood pressure or diabetes not to come to this branch."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best place to buy in Saudi Arabia is upstairs. There's a local shop upstairs and an elevator for the elderly. In other countries, there's a cashier on the ground floor and another one upstairs, and the organization is excellent.",
+      "date": "2025-11-25",
+      "brand": "Al Baik",
+      "attribute": "Location and Accessibility",
+      "sentiment": "Neutral",
+      "justification": "The best place to buy in Saudi Arabia is upstairs. There's a local shop upstairs and an elevator for the elderly. In other countries, there's a cashier on the ground floor and another one upstairs"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best place to buy in Saudi Arabia is upstairs. There's a local shop upstairs and an elevator for the elderly. In other countries, there's a cashier on the ground floor and another one upstairs, and the organization is excellent.",
+      "date": "2025-11-25",
+      "brand": "Al Baik",
+      "attribute": "Clientele and Social Environment",
+      "sentiment": "Neutral",
+      "justification": "and an elevator for the elderly."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best place to buy in Saudi Arabia is upstairs. There's a local shop upstairs and an elevator for the elderly. In other countries, there's a cashier on the ground floor and another one upstairs, and the organization is excellent.",
+      "date": "2025-11-25",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Neutral",
+      "justification": "and the organization is excellent."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "All the Albaik companies have become bad in service. They have started to let their representatives go first, and then others, whether they are regular customers or representatives of other companies. God is sufficient for us, and He is the best Disposer of affairs.",
+      "date": "2025-08-19",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "They have started to let their representatives go first, and then others, whether they are regular customers or representatives of other companies."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "All the Albaik companies have become bad in service. They have started to let their representatives go first, and then others, whether they are regular customers or representatives of other companies. God is sufficient for us, and He is the best Disposer of affairs.",
+      "date": "2025-08-19",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Negative",
+      "justification": "All the Albaik companies have become bad in service."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst workers in the garbage branch",
+      "date": "2025-09-03",
+      "brand": "Al Baik",
+      "attribute": "Cleanliness and Hygiene",
+      "sentiment": "Negative",
+      "justification": "workers in the garbage branch"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst workers in the garbage branch",
+      "date": "2025-09-03",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "worst workers"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This nice restaurant and very first service here❤️❤️",
+      "date": "2025-09-30",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "nice restaurant and very first service here"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This nice restaurant and very first service here❤️❤️",
+      "date": "2025-09-30",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Positive",
+      "justification": "very first service here"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Baddest service of all time. Time wasting worker. Albaik official please notice that",
+      "date": "2025-08-18",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Time wasting worker."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Baddest service of all time. Time wasting worker. Albaik official please notice that",
+      "date": "2025-08-18",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Baddest service of all time."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Excellent restaurant, great quality, great price, and great atmosphere. Thank you to the brothers Mohamed El Sagheer and Farhan 🙏🏻",
+      "date": "2025-11-22",
+      "brand": "Al Baik",
+      "attribute": "Price and Value for Money",
+      "sentiment": "Positive",
+      "justification": "great price"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Excellent restaurant, great quality, great price, and great atmosphere. Thank you to the brothers Mohamed El Sagheer and Farhan 🙏🏻",
+      "date": "2025-11-22",
+      "brand": "Al Baik",
+      "attribute": "Ambiance and Comfort",
+      "sentiment": "Positive",
+      "justification": "great atmosphere"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Excellent restaurant, great quality, great price, and great atmosphere. Thank you to the brothers Mohamed El Sagheer and Farhan 🙏🏻",
+      "date": "2025-11-22",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Positive",
+      "justification": "great quality"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very very good",
+      "date": "2025-12-31",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "Very very good"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The restaurant is very bad, the staff are very bad in terms of customer respect and service, and the management is very bad in handling the situation.",
+      "date": "2025-11-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the staff are very bad in terms of customer respect and service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The restaurant is very bad, the staff are very bad in terms of customer respect and service, and the management is very bad in handling the situation.",
+      "date": "2025-11-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the management is very bad in handling the situation"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Thank you to all the staff at Al Baik, Andalus Mall branch, for their patience with some customers.",
+      "date": "2025-11-20",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Thank you to all the staff at Al Baik, Andalus Mall branch, for their patience with some customers."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Delicious and affordable",
+      "date": "2025-09-30",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "Delicious"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Delicious and affordable",
+      "date": "2025-09-30",
+      "brand": "Al Baik",
+      "attribute": "Price and Value for Money",
+      "sentiment": "Positive",
+      "justification": "affordable"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Al Baik has the tastiest and most delicious broasted chicken in the world. Thank you, Al Baik Restaurant.",
+      "date": "2025-12-10",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "Al Baik has the tastiest and most delicious broasted chicken in the world."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Al Baik has the tastiest and most delicious broasted chicken in the world. Thank you, Al Baik Restaurant.",
+      "date": "2025-12-10",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Positive",
+      "justification": "broasted chicken"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The food is excellent, but some of the staff are terrible.",
+      "date": "2025-10-30",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "The food is excellent"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The food is excellent, but some of the staff are terrible.",
+      "date": "2025-10-30",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "some of the staff are terrible"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The branch is more expensive than other branches, and the service is very bad. Some of the items are not available, knowing that you will be charged for them and receive a bill.",
+      "date": "2025-09-27",
+      "brand": "Al Baik",
+      "attribute": "Price and Value for Money",
+      "sentiment": "Negative",
+      "justification": "The branch is more expensive than other branches, and the service is very bad. Some of the items are not available, knowing that you will be charged for them and receive a bill."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The branch is more expensive than other branches, and the service is very bad. Some of the items are not available, knowing that you will be charged for them and receive a bill.",
+      "date": "2025-09-27",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the service is very bad."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The branch is more expensive than other branches, and the service is very bad. Some of the items are not available, knowing that you will be charged for them and receive a bill.",
+      "date": "2025-09-27",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Some of the items are not available, knowing that you will be charged for them and receive a bill."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Yes Nice service",
+      "date": "2025-12-21",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Yes Nice service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The website opens at 7 am. I'm at the store at 9 am and it's still closed. Either the website is wrong or the employees are asleep. There is no power or strength except in God.",
+      "date": "2025-10-13",
+      "brand": "Al Baik",
+      "attribute": "Location and Accessibility",
+      "sentiment": "Negative",
+      "justification": "The website opens at 7 am. I'm at the store at 9 am and it's still closed."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The website opens at 7 am. I'm at the store at 9 am and it's still closed. Either the website is wrong or the employees are asleep. There is no power or strength except in God.",
+      "date": "2025-10-13",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "The website opens at 7 am. I'm at the store at 9 am and it's still closed."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Most loved and delicious food outlet",
+      "date": "2025-11-06",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "delicious food"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Most loved and delicious food outlet",
+      "date": "2025-11-06",
+      "brand": "Al Baik",
+      "attribute": "Popularity and Market Presence",
+      "sentiment": "Positive",
+      "justification": "Most loved"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best restaurant, thank God, they are all good. Thanks to my brother Abdullah, he did a great job. May God protect him, my Lord.",
+      "date": "2025-08-26",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Thanks to my brother Abdullah, he did a great job. May God protect him, my Lord."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I recommend maintaining the level as I noticed it was lower and the oil content increased.",
+      "date": "2025-09-23",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Neutral",
+      "justification": "I noticed it was lower and the oil content increased."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst service I have ever experienced in my life. It took me an hour to receive my order. The problem is that the customer just pulled it out and it was ready on the shelf. As soon as he handed it to me, we were done. As usual, Al Baik excels in the worst service. I don’t know how the restaurant still has customers.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "It took me an hour to receive my order."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst service I have ever experienced in my life. It took me an hour to receive my order. The problem is that the customer just pulled it out and it was ready on the shelf. As soon as he handed it to me, we were done. As usual, Al Baik excels in the worst service. I don’t know how the restaurant still has customers.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "The worst service I have ever experienced in my life."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst service I have ever experienced in my life. It took me an hour to receive my order. The problem is that the customer just pulled it out and it was ready on the shelf. As soon as he handed it to me, we were done. As usual, Al Baik excels in the worst service. I don’t know how the restaurant still has customers.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Negative",
+      "justification": "As usual, Al Baik excels in the worst service."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unfortunately, you ask for a bag of ketchup only for the burger to be told it's finished.\nOkay, bring a small container. He refused.\nHe said, \"You have to buy ketchup, not just because of the price. I've never had a burger from a restaurant and been told to buy ketchup because it doesn't come in a bag with the order.\"",
+      "date": "2025-09-25",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Negative",
+      "justification": "you ask for a bag of ketchup only for the burger to be told it's finished."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unfortunately, you ask for a bag of ketchup only for the burger to be told it's finished.\nOkay, bring a small container. He refused.\nHe said, \"You have to buy ketchup, not just because of the price. I've never had a burger from a restaurant and been told to buy ketchup because it doesn't come in a bag with the order.\"",
+      "date": "2025-09-25",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Okay, bring a small container. He refused. He said, \"You have to buy ketchup, not just because of the price. I've never had a burger from a restaurant and been told to buy ketchup because it doesn't come in a bag with the order.\""
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst branch of Al-Baik is always a pill or two. It is not of the same quality and is always very bad. I hate Al-Baik from them.",
+      "date": "2025-10-08",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Negative",
+      "justification": "It is not of the same quality and is always very bad."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst branch of Al-Baik is always a pill or two. It is not of the same quality and is always very bad. I hate Al-Baik from them.",
+      "date": "2025-10-08",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Negative",
+      "justification": "It is not of the same quality"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst branch of Al-Baik is always a pill or two. It is not of the same quality and is always very bad. I hate Al-Baik from them.",
+      "date": "2025-10-08",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Negative",
+      "justification": "The worst branch of Al-Baik"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "On top of the delay, the order is incomplete, they don't respond to the customer, and there is no interest in customer service. So you take people's money, the orders are incomplete, and you don't respond either. It's getting worse and worse.",
+      "date": "2025-11-28",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "On top of the delay, the order is incomplete"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "On top of the delay, the order is incomplete, they don't respond to the customer, and there is no interest in customer service. So you take people's money, the orders are incomplete, and you don't respond either. It's getting worse and worse.",
+      "date": "2025-11-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "they don't respond to the customer, and there is no interest in customer service."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The dirtiest branch I've ever seen",
+      "date": "2025-07-01",
+      "brand": "Al Baik",
+      "attribute": "Cleanliness and Hygiene",
+      "sentiment": "Negative",
+      "justification": "The dirtiest branch I've ever seen"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I thank whoever brought the dark-skinned employee who takes the orders. I swear I only come here for him.",
+      "date": "2025-09-14",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "I thank whoever brought the dark-skinned employee who takes the orders. I swear I only come here for him."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "A cool, enjoyable and quiet location, especially in front of Manuel Mall markets.",
+      "date": "2025-09-05",
+      "brand": "Al Baik",
+      "attribute": "Location and Accessibility",
+      "sentiment": "Neutral",
+      "justification": "A cool, enjoyable and quiet location, especially in front of Manuel Mall markets."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "A cool, enjoyable and quiet location, especially in front of Manuel Mall markets.",
+      "date": "2025-09-05",
+      "brand": "Al Baik",
+      "attribute": "Ambiance and Comfort",
+      "sentiment": "Positive",
+      "justification": "A cool, enjoyable and quiet location"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "A very excellent restaurant",
+      "date": "2025-10-23",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "A very excellent restaurant"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "It's not the best at all. The food is often cold and the staff is uncooperative.",
+      "date": "2025-08-28",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Negative",
+      "justification": "The food is often cold"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "It's not the best at all. The food is often cold and the staff is uncooperative.",
+      "date": "2025-08-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the staff is uncooperative"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The food was freezing cold at the Sasco Naaman station branch, and the management was terrible. We waited 45 minutes, the cans were uncovered and ready, and it arrived cold. I swear I'll never go to this branch again.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Negative",
+      "justification": "The food was freezing cold"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The food was freezing cold at the Sasco Naaman station branch, and the management was terrible. We waited 45 minutes, the cans were uncovered and ready, and it arrived cold. I swear I'll never go to this branch again.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "We waited 45 minutes"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The food was freezing cold at the Sasco Naaman station branch, and the management was terrible. We waited 45 minutes, the cans were uncovered and ready, and it arrived cold. I swear I'll never go to this branch again.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the management was terrible"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "If you just taught employees respect, it would be better. We wouldn't have to ask for free to treat them this way.",
+      "date": "2025-10-25",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "If you just taught employees respect, it would be better. We wouldn't have to ask for free to treat them this way."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best Saudi brand",
+      "date": "2025-09-30",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Positive",
+      "justification": "The best Saudi brand"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Excellent service, but the delay is normal.",
+      "date": "2025-11-19",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Neutral",
+      "justification": "the delay is normal"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This branch is awful, the service is bad and the workers are uncooperative, even though it's not crowded...",
+      "date": "2025-10-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the service is bad and the workers are uncooperative"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This branch is awful, the service is bad and the workers are uncooperative, even though it's not crowded...",
+      "date": "2025-10-28",
+      "brand": "Al Baik",
+      "attribute": "Popularity and Market Presence",
+      "sentiment": "Negative",
+      "justification": "even though it's not crowded"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Mohammed is very sorry, he is very kind, helpful and fair to our request. Thank you very much 🤍",
+      "date": "2025-09-24",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Mohammed is very sorry, he is very kind, helpful and fair to our request."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very bad behavior...they are really slow to work...",
+      "date": "2025-12-21",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Very bad behavior..."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very bad behavior...they are really slow to work...",
+      "date": "2025-12-21",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "...they are really slow to work..."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I swear to God, customer service is terrible. No one answers and there is a delay in orders.",
+      "date": "2025-10-01",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "customer service is terrible. No one answers"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I swear to God, customer service is terrible. No one answers and there is a delay in orders.",
+      "date": "2025-10-01",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "there is a delay in orders."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This branch very good service also im coming baikthtu only 4 minutes servings thank you all team",
+      "date": "2025-12-29",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Positive",
+      "justification": "only 4 minutes servings"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This branch very good service also im coming baikthtu only 4 minutes servings thank you all team",
+      "date": "2025-12-29",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "very good service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Rude staff, unhelpful staff, and very late orders at this restaurant.",
+      "date": "2025-12-01",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Rude staff, unhelpful staff"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Rude staff, unhelpful staff, and very late orders at this restaurant.",
+      "date": "2025-12-01",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "very late orders"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Great, I hope they continue like this.",
+      "date": "2025-10-29",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Positive",
+      "justification": "Great, I hope they continue like this."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very Good experience.. Must Try",
+      "date": "2025-12-09",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Positive",
+      "justification": "Very Good experience.. Must Try"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This branch is for application requests only. Their problem is that they delay you a lot.",
+      "date": "2025-09-28",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Their problem is that they delay you a lot."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "One of the worst branches I have seen, and God is my witness to what I say. The skin of the sandwich falls off when I pick up the food, the order takes a long time, and the worker tires you out with it.",
+      "date": "2025-08-18",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Negative",
+      "justification": "The skin of the sandwich falls off when I pick up the food"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "One of the worst branches I have seen, and God is my witness to what I say. The skin of the sandwich falls off when I pick up the food, the order takes a long time, and the worker tires you out with it.",
+      "date": "2025-08-18",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "the order takes a long time, and the worker tires you out with it."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Memories of the good old days",
+      "date": "2025-10-28",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Neutral",
+      "justification": "Memories of the good old days"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst experience ever! My order arrived incomplete, without bread, the chicken was cold, and the fries were stale.",
+      "date": "2025-12-27",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Negative",
+      "justification": "the chicken was cold, and the fries were stale."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst experience ever! My order arrived incomplete, without bread, the chicken was cold, and the fries were stale.",
+      "date": "2025-12-27",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "My order arrived incomplete, without bread"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The prices are excellent. The quantity of food is excellent. The speed of preparing the order is excellent. The only note is the lack of a Vine.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Price and Value for Money",
+      "sentiment": "Positive",
+      "justification": "The prices are excellent."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The prices are excellent. The quantity of food is excellent. The speed of preparing the order is excellent. The only note is the lack of a Vine.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Price and Value for Money",
+      "sentiment": "Positive",
+      "justification": "The quantity of food is excellent."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The prices are excellent. The quantity of food is excellent. The speed of preparing the order is excellent. The only note is the lack of a Vine.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Positive",
+      "justification": "The speed of preparing the order is excellent."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "This outlet staff makes delivery boys wait longer",
+      "date": "2025-12-30",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "This outlet staff makes delivery boys wait longer"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "To branch management: 1) Make sure the cashier writes the orders accurately. I ordered a sandwich WITHOUT sauce, and after waiting 15 to 20 minutes, I received it WITH sauce, and then waited another 15 minutes to receive a replacement sandwich WITHOUT sauce. 2) The screen displaying the order numbers reads: \"NOW SERVING\". Myself and other customers thought this meant these orders are now ready and kept asking for our orders. Please change the title to: \"NOW PREPARING\", and separately display the",
+      "date": "2025-11-08",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "I ordered a sandwich WITHOUT sauce, and after waiting 15 to 20 minutes, I received it WITH sauce, and then waited another 15 minutes to receive a replacement sandwich WITHOUT sauce."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "To branch management: 1) Make sure the cashier writes the orders accurately. I ordered a sandwich WITHOUT sauce, and after waiting 15 to 20 minutes, I received it WITH sauce, and then waited another 15 minutes to receive a replacement sandwich WITHOUT sauce. 2) The screen displaying the order numbers reads: \"NOW SERVING\". Myself and other customers thought this meant these orders are now ready and kept asking for our orders. Please change the title to: \"NOW PREPARING\", and separately display the",
+      "date": "2025-11-08",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Please change the title to: \"NOW PREPARING\", and separately display the numbers of the orders ready for pick-up and entitle it: \"READY\" so that customers do not gather near the counter asking about their orders unnecessarily."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "To branch management: 1) Make sure the cashier writes the orders accurately. I ordered a sandwich WITHOUT sauce, and after waiting 15 to 20 minutes, I received it WITH sauce, and then waited another 15 minutes to receive a replacement sandwich WITHOUT sauce. 2) The screen displaying the order numbers reads: \"NOW SERVING\". Myself and other customers thought this meant these orders are now ready and kept asking for our orders. Please change the title to: \"NOW PREPARING\", and separately display the",
+      "date": "2025-11-08",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Make sure the cashier writes the orders accurately."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "It's not crowded, but it's slow.",
+      "date": "2025-07-30",
+      "brand": "Al Baik",
+      "attribute": "Popularity and Market Presence",
+      "sentiment": "Neutral",
+      "justification": "It's not crowded"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "It's not crowded, but it's slow.",
+      "date": "2025-07-30",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "but it's slow"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "They are very late. The worst service.",
+      "date": "2025-10-23",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "They are very late."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "They are very late. The worst service.",
+      "date": "2025-10-23",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "The worst service."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unfortunately, the service is very bad. There are few people, and there are delays. I left them for a while, went away, and came back, and they are still delayed. My number on the screen has passed many times, and I only received my payment late.",
+      "date": "2025-11-20",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Unfortunately, the service is very bad. There are few people, and there are delays. I left them for a while, went away, and came back, and they are still delayed. My number on the screen has passed many times, and I only received my payment late."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best restaurant I have ever tasted",
+      "date": "2025-08-16",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "The best restaurant I have ever tasted"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Service was so slow after the reopening",
+      "date": "2025-11-24",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Service was so slow"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Love all the nature of all emplyee and all where very good nad very serve with very happy thak you love yo come again",
+      "date": "2025-10-26",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Love all the nature of all emplyee and all where very good nad very serve with very happy"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Love all the nature of all emplyee and all where very good nad very serve with very happy thak you love yo come again",
+      "date": "2025-10-26",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Positive",
+      "justification": "very serve with very happy"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst branch in terms of customer service and terrible delays. I wish you would replace the entire team with a faster one.",
+      "date": "2025-12-31",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "The worst branch in terms of customer service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The worst branch in terms of customer service and terrible delays. I wish you would replace the entire team with a faster one.",
+      "date": "2025-12-31",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "terrible delays. I wish you would replace the entire team with a faster one."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very bad, I did not find you late",
+      "date": "2025-10-25",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "I did not find you late"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Al Baik is famous, but the branch in the industrial area near Al Salem intersection is slow and disorganized. However, the service employee is excellent and very helpful.",
+      "date": "2025-12-30",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Neutral",
+      "justification": "Al Baik is famous"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Al Baik is famous, but the branch in the industrial area near Al Salem intersection is slow and disorganized. However, the service employee is excellent and very helpful.",
+      "date": "2025-12-30",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "the branch in the industrial area near Al Salem intersection is slow and disorganized"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Al Baik is famous, but the branch in the industrial area near Al Salem intersection is slow and disorganized. However, the service employee is excellent and very helpful.",
+      "date": "2025-12-30",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "the service employee is excellent and very helpful"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best and tastiest thing is in you, Grandma",
+      "date": "2025-08-31",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "The best and tastiest thing is in you, Grandma"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Good job good service",
+      "date": "2025-11-17",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "good service"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The Best Saudi Food",
+      "date": "2025-11-19",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "The Best Saudi Food"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Well clean atmosphere",
+      "date": "2025-08-17",
+      "brand": "Al Baik",
+      "attribute": "Ambiance and Comfort",
+      "sentiment": "Positive",
+      "justification": "Well clean atmosphere"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Even a star is a loss. By God, the worst cashier in all the branches in Jeddah. I have been to many branches, but I have never seen such disrespect. I don’t know what to say, honestly!",
+      "date": "2025-08-10",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "the worst cashier"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Even a star is a loss. By God, the worst cashier in all the branches in Jeddah. I have been to many branches, but I have never seen such disrespect. I don’t know what to say, honestly!",
+      "date": "2025-08-10",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "such disrespect"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Only chicken nuggets are available.",
+      "date": "2025-09-17",
+      "brand": "Al Baik",
+      "attribute": "Menu Variety and Options",
+      "sentiment": "Negative",
+      "justification": "Only chicken nuggets are available."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I am a fan of Al Baik restaurants, but the branches in the central region are not like their restaurants in Hijaz. Just an opinion.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Neutral",
+      "justification": "I am a fan of Al Baik restaurants"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I am a fan of Al Baik restaurants, but the branches in the central region are not like their restaurants in Hijaz. Just an opinion.",
+      "date": "2025-08-27",
+      "brand": "Al Baik",
+      "attribute": "Location and Accessibility",
+      "sentiment": "Negative",
+      "justification": "but the branches in the central region are not like their restaurants in Hijaz."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very very very very bad treatment, very very very very very bad, and they brought you a cold meal. The worst branch.",
+      "date": "2025-09-27",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "Very very very very bad treatment"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very very very very bad treatment, very very very very very bad, and they brought you a cold meal. The worst branch.",
+      "date": "2025-09-27",
+      "brand": "Al Baik",
+      "attribute": "Quality of Ingredients",
+      "sentiment": "Negative",
+      "justification": "they brought you a cold meal"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very very very very bad treatment, very very very very very bad, and they brought you a cold meal. The worst branch.",
+      "date": "2025-09-27",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Negative",
+      "justification": "The worst branch"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The best restaurant in Al-Alam",
+      "date": "2025-10-31",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Positive",
+      "justification": "The best restaurant in Al-Alam"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The cashier was very rude and had poor manners with customers. The morning employee was uncooperative; there was a disagreement about the order, and she refused to amend it.",
+      "date": "2025-12-28",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "The cashier was very rude and had poor manners with customers. The morning employee was uncooperative; there was a disagreement about the order, and she refused to amend it."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "The cashier was very rude and had poor manners with customers. The morning employee was uncooperative; there was a disagreement about the order, and she refused to amend it.",
+      "date": "2025-12-28",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "there was a disagreement about the order, and she refused to amend it."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unreasonable delay.\n\nAnd on top of that, the receiving employee wearing glasses rudely called it backwardness.",
+      "date": "2025-12-29",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Unreasonable delay."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Unreasonable delay.\n\nAnd on top of that, the receiving employee wearing glasses rudely called it backwardness.",
+      "date": "2025-12-29",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "the receiving employee wearing glasses rudely called it backwardness."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Albaik my favourite Saudi fast food chain, delicious & crispy chicken, excellent value for money, cleanliness maintained, friendly staff, but need to wait on long queues during peak hours.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "delicious & crispy chicken"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Albaik my favourite Saudi fast food chain, delicious & crispy chicken, excellent value for money, cleanliness maintained, friendly staff, but need to wait on long queues during peak hours.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Price and Value for Money",
+      "sentiment": "Positive",
+      "justification": "excellent value for money"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Albaik my favourite Saudi fast food chain, delicious & crispy chicken, excellent value for money, cleanliness maintained, friendly staff, but need to wait on long queues during peak hours.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Cleanliness and Hygiene",
+      "sentiment": "Positive",
+      "justification": "cleanliness maintained"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Albaik my favourite Saudi fast food chain, delicious & crispy chicken, excellent value for money, cleanliness maintained, friendly staff, but need to wait on long queues during peak hours.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "friendly staff"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Albaik my favourite Saudi fast food chain, delicious & crispy chicken, excellent value for money, cleanliness maintained, friendly staff, but need to wait on long queues during peak hours.",
+      "date": "2025-12-18",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "need to wait on long queues during peak hours"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Cashier Ali Al-Alawi provided excellent service; he was respectful, polite, and efficient. 👍🏼",
+      "date": "2025-11-01",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "Cashier Ali Al-Alawi provided excellent service; he was respectful, polite, and efficient."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Cashier Ali Al-Alawi provided excellent service; he was respectful, polite, and efficient. 👍🏼",
+      "date": "2025-11-01",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Positive",
+      "justification": "efficient"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very, very slow service. The workers look at every piece they fill, and the order is not ready for twenty minutes, unfortunately. Note that the other branches are not like this, and Albaik’s reputation is well-known.",
+      "date": "2025-10-09",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Very, very slow service. The workers look at every piece they fill, and the order is not ready for twenty minutes, unfortunately."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very, very slow service. The workers look at every piece they fill, and the order is not ready for twenty minutes, unfortunately. Note that the other branches are not like this, and Albaik’s reputation is well-known.",
+      "date": "2025-10-09",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Negative",
+      "justification": "Note that the other branches are not like this, and Albaik’s reputation is well-known."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Very long waiting time",
+      "date": "2025-08-30",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "Very long waiting time"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Finally visited the much-hyped Saudi brand Al-Baik - something I’ve wanted to try since childhood. Was it worth the hype? Honestly, my expectations fell a bit short.\nThe fish spicy fillets were the highlight for me ♥️ absolutely delicious and truly lived up to the hype. However, the chicken breast meal and spicy burger were quite average and didn’t stand out. Also, a bit of a disappointment at the Clock Tower Al-Baik (P3 level) doesn’t serve their famous broast chicken, which was something we we",
+      "date": "2025-09-29",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Positive",
+      "justification": "The fish spicy fillets were the highlight for me ♥️ absolutely delicious and truly lived up to the hype."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Finally visited the much-hyped Saudi brand Al-Baik - something I’ve wanted to try since childhood. Was it worth the hype? Honestly, my expectations fell a bit short.\nThe fish spicy fillets were the highlight for me ♥️ absolutely delicious and truly lived up to the hype. However, the chicken breast meal and spicy burger were quite average and didn’t stand out. Also, a bit of a disappointment at the Clock Tower Al-Baik (P3 level) doesn’t serve their famous broast chicken, which was something we we",
+      "date": "2025-09-29",
+      "brand": "Al Baik",
+      "attribute": "Taste and Flavour of Food",
+      "sentiment": "Negative",
+      "justification": "However, the chicken breast meal and spicy burger were quite average and didn’t stand out."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Finally visited the much-hyped Saudi brand Al-Baik - something I’ve wanted to try since childhood. Was it worth the hype? Honestly, my expectations fell a bit short.\nThe fish spicy fillets were the highlight for me ♥️ absolutely delicious and truly lived up to the hype. However, the chicken breast meal and spicy burger were quite average and didn’t stand out. Also, a bit of a disappointment at the Clock Tower Al-Baik (P3 level) doesn’t serve their famous broast chicken, which was something we we",
+      "date": "2025-09-29",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Neutral",
+      "justification": "Finally visited the much-hyped Saudi brand Al-Baik - something I’ve wanted to try since childhood. Was it worth the hype?"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Finally visited the much-hyped Saudi brand Al-Baik - something I’ve wanted to try since childhood. Was it worth the hype? Honestly, my expectations fell a bit short.\nThe fish spicy fillets were the highlight for me ♥️ absolutely delicious and truly lived up to the hype. However, the chicken breast meal and spicy burger were quite average and didn’t stand out. Also, a bit of a disappointment at the Clock Tower Al-Baik (P3 level) doesn’t serve their famous broast chicken, which was something we we",
+      "date": "2025-09-29",
+      "brand": "Al Baik",
+      "attribute": "Menu Variety and Options",
+      "sentiment": "Negative",
+      "justification": "Also, a bit of a disappointment at the Clock Tower Al-Baik (P3 level) doesn’t serve their famous broast chicken, which was something we were really looking forward to."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "May God make them happy. The workers are very wonderful. Thank you very much for the elegant style.",
+      "date": "2025-10-27",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Positive",
+      "justification": "The workers are very wonderful."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "May God make them happy. The workers are very wonderful. Thank you very much for the elegant style.",
+      "date": "2025-10-27",
+      "brand": "Al Baik",
+      "attribute": "Ambiance and Comfort",
+      "sentiment": "Positive",
+      "justification": "elegant style"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Why is there no drive through?",
+      "date": "2025-12-27",
+      "brand": "Al Baik",
+      "attribute": "Location and Accessibility",
+      "sentiment": "Neutral",
+      "justification": "Why is there no drive through?"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Why is there no drive through?",
+      "date": "2025-12-27",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Neutral",
+      "justification": "Why is there no drive through?"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "Have lunch there, don't go, wait for dinner because the order takes a very long time.",
+      "date": "2025-12-24",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "the order takes a very long time"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "A bad experience, with a wait time of more than 40 minutes. The service providers' voices were annoyingly loud. The truth is, the service at Albaik branches has become very subpar.",
+      "date": "2025-10-25",
+      "brand": "Al Baik",
+      "attribute": "Speed of Service and Convenience",
+      "sentiment": "Negative",
+      "justification": "with a wait time of more than 40 minutes."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "A bad experience, with a wait time of more than 40 minutes. The service providers' voices were annoyingly loud. The truth is, the service at Albaik branches has become very subpar.",
+      "date": "2025-10-25",
+      "brand": "Al Baik",
+      "attribute": "Ambiance and Comfort",
+      "sentiment": "Negative",
+      "justification": "The service providers' voices were annoyingly loud."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "A bad experience, with a wait time of more than 40 minutes. The service providers' voices were annoyingly loud. The truth is, the service at Albaik branches has become very subpar.",
+      "date": "2025-10-25",
+      "brand": "Al Baik",
+      "attribute": "Brand Reputation and Reviews",
+      "sentiment": "Negative",
+      "justification": "The truth is, the service at Albaik branches has become very subpar."
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "All the workers there are like tar",
+      "date": "2025-07-02",
+      "brand": "Al Baik",
+      "attribute": "Customer Service and Friendliness",
+      "sentiment": "Negative",
+      "justification": "All the workers there are like tar"
+    },
+    {
+      "id": "Ci9DQUlRQUNvZENodHlj",
+      "text": "I came to the shop from a long distance away, and it said it opens at 6:30 in the morning, but when I arrived, it was closed and opens at 9. Please clarify this for people.",
+      "date": "2025-12-27",
+      "brand": "Al Baik",
+      "attribute": "Location and Accessibility",
+      "sentiment": "Negative",
+      "justification": "it said it opens at 6:30 in the morning, but when I arrived, it was closed and opens at 9."
+    }
+  ]
+}

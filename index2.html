@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Availability Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #FAFAFA; color: #1A1A1A;}
+        .container {display: flex; height: 100vh;}
+        .sidebar {width: 220px; background-color: #FFFFFF; border-right: 1px solid #E8E8E8; padding: 20px; overflow-y: auto; display: flex; flex-direction: column;}
+        .sidebar-logo {display: flex; align-items: center; gap: 10px; margin-bottom: 30px; font-weight: bold; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;}
+        .sidebar-logo-circle {width: 32px; height: 32px; background-color: #E85D3A; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;}
+        .sidebar-nav {flex: 1;}
+        .nav-section {margin-bottom: 20px;}
+        .nav-item {padding: 12px 12px; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; border-radius: 4px; color: #333333; transition: all 0.2s;}
+        .nav-item:hover {background-color: #F5F5F5;}
+        .nav-item.active {color: #E85D3A; border-left: 4px solid #E85D3A; padding-left: 8px; font-weight: 600;}
+        .nav-item-icon {width: 20px; text-align: center;}
+        .nav-subitems {display: none; padding-left: 20px; margin-top: 8px;}
+        .nav-subitems.show {display: block;}
+        .nav-subitem {padding: 8px 12px; font-size: 12px; cursor: pointer; color: #666666;}
+        .sidebar-footer {border-top: 1px solid #E8E8E8; padding-top: 20px; margin-top: auto;}
+        .warning-section {background-color: #FFF8DC; border: 1px solid #FFE4B5; border-radius: 6px; padding: 12px; font-size: 12px; line-height: 1.5; color: #333333; margin-bottom: 15px;}
+        .powered-by {font-size: 11px; color: #999999; text-align: center; margin-top: 15px;}
+        .main-content {flex: 1; display: flex; flex-direction: column; overflow: hidden;}
+        .header-bar {background-color: #FFFFFF; border-bottom: 1px solid #E8E8E8; padding: 0; display: flex; align-items: stretch; height: auto;}
+        .brand-strip {flex: 1; padding: 15px 20px; display: flex; gap: 20px; align-items: center; border-right: 1px solid #E8E8E8; overflow-x: auto;}
+        .brand-item {display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; min-width: 70px;}
+        .brand-item.active {opacity: 1;}
+        .brand-item:not(.active) {opacity: 0.6;}
+        .brand-avatar {width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;}
+        .brand-name {font-size: 11px; text-align: center; font-weight: 600; color: #333333;}
+        .top-buttons {display: flex; gap: 10px; padding: 15px 20px; align-items: center;}
+        .btn {padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; display: flex; align-items: center; gap: 6px;}
+        .btn-info {border: 2px solid #2196F3; color: #2196F3; background-color: transparent;}
+        .btn-info:hover {background-color: #E3F2FD;}
+        .btn-primary {background-color: #E85D3A; color: white;}
+        .btn-primary:hover {background-color: #D64A2A;}
+        .btn-secondary {border: 2px solid #CCCCCC; color: #333333; background-color: transparent;}
+        .btn-secondary:hover {background-color: #F5F5F5;}
+        .filter-bar {background-color: #FFFFFF; padding: 15px 20px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid #E8E8E8;}
+        .filter-group {display: flex; align-items: center; gap: 8px;}
+        .filter-label {font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #333333; min-width: 80px;}
+        .filter-select {padding: 6px 10px; border: 1px solid #D0D0D0; border-radius: 4px; font-size: 13px; background-color: #FFFFFF; cursor: pointer; min-width: 120px;}
+        .page-container {flex: 1; overflow: hidden; display: none;}
+        .page-container.active {display: flex;}
+        .page-wrapper {flex: 1; display: flex; overflow: hidden;}
+        .page-main {flex: 1; overflow-y: auto; padding: 30px;}
+        .page-sidebar {width: 300px; background-color: #FFFFFF; border-left: 1px solid #E8E8E8; overflow-y: auto; padding: 30px 20px;}
+        .page-title {font-family: Georgia, serif; font-size: 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; color: #1A1A1A;}
+        .card {background-color: #FFFFFF; border: 1px solid #E8E8E8; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);}
+        .card-title {font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #E85D3A; margin-bottom: 15px;}
+        .card-green-title {color: #2ECC71;}
+        .card-red-title {color: #E74C3C;}
+        .brand-card {border-left: 4px solid #E85D3A;}
+        .brand-card-header {display: flex; align-items: center; gap: 15px; margin-bottom: 20px;}
+        .brand-card-avatar {width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;}
+        .brand-card-info h2 {font-size: 20px; font-weight: bold; margin-bottom: 4px;}
+        .brand-card-label {font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #E85D3A; font-weight: 600;}
+        .kpi-group {display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 20px;}
+        .kpi-item {text-align: center;}
+        .kpi-label {font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #999999; margin-bottom: 8px;}
+        .kpi-value {font-size: 32px; font-weight: bold; color: #1A1A1A; display: flex; align-items: baseline; justify-content: center; gap: 8px;}
+        .kpi-unit {font-size: 14px; color: #666666;}
+        .ranking-badge {width: 44px; height: 44px; border-radius: 50%; background-color: #E85D3A; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; font-size: 20px;}
+        .brand-ranking-strip {display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; margin: 20px 0;}
+        .ranking-item {display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 80px; text-align: center;}
+        .ranking-number {font-size: 11px; font-weight: bold; color: #E85D3A;}
+        .ranking-score {font-size: 12px; font-weight: 600; color: #333333;}
+        .strategic-read {background-color: #FFFFFF; border: 1px solid #E8E8E8; border-radius: 8px; padding: 15px; font-size: 13px; line-height: 1.6; color: #333333; margin-bottom: 20px;}
+        .comparison-table {width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px;}
+        .comparison-table thead {background-color: #F5F5F5;}
+        .comparison-table th {padding: 12px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #333333; border-bottom: 2px solid #E8E8E8;}
+        .comparison-table td {padding: 12px; border-bottom: 1px solid #E8E8E8;}
+        .table-label {font-weight: 600; color: #333333; min-width: 140px;}
+        .table-value {text-align: right; font-weight: 600;}
+        .table-value.positive {color: #2ECC71;}
+        .table-value.negative {color: #E74C3C;}
+        .table-brand-highlight {color: #E85D3A; font-weight: 700;}
+        .chart-container {position: relative; height: 300px; margin-bottom: 20px;}
+        .chart-container.large {height: 400px;}
+        .strength-cards {display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;}
+        .strength-card {background-color: #FFFFFF; border: 1px solid #E8E8E8; border-radius: 8px; padding: 15px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);}
+        .strength-card-title {font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;}
+        .strength-card-green .strength-card-title {color: #2ECC71;}
+        .strength-card-red .strength-card-title {color: #E74C3C;}
+        .strength-item {padding: 8px 0; font-size: 13px; border-bottom: 1px solid #F0F0F0;}
+        .strength-item:last-child {border-bottom: none;}
+        .strength-item-name {font-weight: 600; color: #333333;}
+        .strength-item-value {font-size: 12px; color: #666666;}
+        .awaiting-banner {background-color: #FFF3CD; border: 2px solid #FFE4B5; border-radius: 8px; padding: 40px 20px; text-align: center; margin-bottom: 20px;}
+        .awaiting-title {font-size: 24px; font-weight: bold; color: #333333; margin-bottom: 10px;}
+        .awaiting-text {font-size: 14px; color: #666666;}
+        .heatmap-container {overflow-x: auto; margin-bottom: 20px;}
+        .heatmap-table {border-collapse: collapse; font-size: 11px; min-width: 800px;}
+        .heatmap-table th, .heatmap-table td {border: 1px solid #E8E8E8; padding: 8px;}
+        .heatmap-table th {background-color: #F5F5F5; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
+        .heatmap-cell {text-align: center; font-weight: 600;}
+        .heatmap-high {background-color: #C8E6C9; color: #1B5E20;}
+        .heatmap-medium {background-color: #FFF9C4; color: #F57F17;}
+        .heatmap-low {background-color: #FFCCCC; color: #C62828;}
+        ::-webkit-scrollbar {width: 8px; height: 8px;}
+        ::-webkit-scrollbar-track {background: #F5F5F5;}
+        ::-webkit-scrollbar-thumb {background: #CCCCCC; border-radius: 4px;}
+        ::-webkit-scrollbar-thumb:hover {background: #999999;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-circle">PA</div>
+                <div>PHYSICAL<br>AVAILABILITY</div>
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-item active" onclick="switchPage(1)"><span class="nav-item-icon">📊</span><span>Executive Summary</span></div>
+                    <div class="nav-subitems show"><div class="nav-subitem">Overview</div></div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-item" onclick="switchPage(2)"><span class="nav-item-icon">📍</span><span>Presence</span></div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-item" onclick="switchPage(3)"><span class="nav-item-icon">⭐</span><span>Prominence</span></div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-item" onclick="switchPage(4)"><span class="nav-item-icon">📦</span><span>Portfolio</span></div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-item" onclick="switchPage(5)"><span class="nav-item-icon">🔄</span><span>Experience vs Memory</span></div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-item" onclick="switchPage(6)"><span class="nav-item-icon">🎯</span><span>Competitive Gap</span></div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-item" onclick="switchPage(7)"><span class="nav-item-icon">⚠️</span><span>Early Warning</span></div>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="warning-section">
+                    <div><strong>Early Warning — Wave 2</strong></div>
+                    <div style="margin-top: 8px; font-size: 11px;">This page will be enabled once the next wave is released.</div>
+                </div>
+                <div class="powered-by"><strong>Powered by</strong><br>Muhimma Digital Platform</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header-bar">
+                <div class="brand-strip" id="brandStrip"></div>
+                <div class="top-buttons">
+                    <button class="btn btn-info">ℹ️ HOW TO READ</button>
+                    <button class="btn btn-primary">GENERATE REPORT</button>
+                    <button class="btn btn-secondary" onclick="resetFilters()">RESET</button>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-group"><label class="filter-label">REGION</label><select class="filter-select"><option>All</option></select></div>
+                <div class="filter-group"><label class="filter-label">NATIONALITY</label><select class="filter-select"><option>All</option></select></div>
+                <div class="filter-group"><label class="filter-label">GENDER</label><select class="filter-select"><option>All</option></select></div>
+                <div class="filter-group"><label class="filter-label">AGE GROUP</label><select class="filter-select"><option>All</option></select></div>
+            </div>
+
+            <div class="page-container active" id="page1">
+                <div class="page-wrapper">
+                    <div class="page-main">
+                        <div class="page-title">PHYSICAL AVAILABILITY SCOREBOARD</div>
+                        <div class="card brand-card" id="page1-brand-card"></div>
+                        <div id="page1-ranking-strip" class="brand-ranking-strip"></div>
+                        <div class="card"><div class="card-title">STRATEGIC READ</div><div id="page1-strategic-read" class="strategic-read"></div></div>
+                        <div class="strength-cards">
+                            <div class="strength-card strength-card-green"><div class="strength-card-title">✓ STRONGEST PA</div><div id="page1-strongest"></div></div>
+                            <div class="strength-card strength-card-red"><div class="strength-card-title">✗ WEAKEST PA</div><div id="page1-weakest"></div></div>
+                        </div>
+                        <div class="card"><div class="card-title">CUSTOMER JOURNEY FUNNEL</div><div class="chart-container"><canvas id="page1-funnel"></canvas></div></div>
+                    </div>
+                    <div class="page-sidebar"><div class="card"><div class="card-title">OVERALL PHYSICAL AVAILABILITY</div><div id="page1-table"></div></div></div>
+                </div>
+            </div>
+
+            <div class="page-container" id="page2">
+                <div class="page-wrapper">
+                    <div class="page-main">
+                        <div class="page-title">PRESENCE</div>
+                        <div class="card brand-card" id="page2-brand-card"></div>
+                        <div class="card"><div class="card-title">STRATEGIC READ</div><div id="page2-strategic-read" class="strategic-read"></div></div>
+                        <div class="strength-cards">
+                            <div class="strength-card strength-card-green"><div class="strength-card-title">✓ STRONGEST</div><div id="page2-strongest"></div></div>
+                            <div class="strength-card strength-card-red"><div class="strength-card-title">✗ WEAKEST</div><div id="page2-weakest"></div></div>
+                        </div>
+                        <div class="card"><div class="card-title">EASE OF ACCESS DISTRIBUTION</div><div class="chart-container"><canvas id="page2-ease"></canvas></div></div>
+                        <div class="card"><div class="card-title">FREQUENCY MOMENTUM</div><div class="chart-container"><canvas id="page2-momentum"></canvas></div></div>
+                    </div>
+                    <div class="page-sidebar"><div class="card"><div class="card-title">PRESENCE METRICS COMPARISON</div><div id="page2-table" style="font-size: 12px;"></div></div></div>
+                </div>
+            </div>
+
+            <div class="page-container" id="page3">
+                <div class="page-wrapper">
+                    <div class="page-main">
+                        <div class="page-title">PROMINENCE</div>
+                        <div class="card brand-card" id="page3-brand-card"></div>
+                        <div class="card"><div class="card-title">STRATEGIC READ</div><div id="page3-strategic-read" class="strategic-read"></div></div>
+                        <div class="strength-cards">
+                            <div class="strength-card strength-card-green"><div class="strength-card-title">✓ STRONGEST</div><div id="page3-strongest"></div></div>
+                            <div class="strength-card strength-card-red"><div class="strength-card-title">✗ WEAKEST</div><div id="page3-weakest"></div></div>
+                        </div>
+                        <div class="card"><div class="card-title">IMPRESSION DISTRIBUTION</div><div class="chart-container"><canvas id="page3-impression"></canvas></div></div>
+                        <div class="card"><div class="card-title">NET ADVOCACY POSITION</div><div class="chart-container"><canvas id="page3-advocacy"></canvas></div></div>
+                    </div>
+                    <div class="page-sidebar"><div class="card"><div class="card-title">PROMINENCE METRICS</div><div id="page3-table" style="font-size: 12px;"></div></div></div>
+                </div>
+            </div>
+
+            <div class="page-container" id="page4">
+                <div class="page-wrapper">
+                    <div class="page-main">
+                        <div class="page-title">PORTFOLIO</div>
+                        <div class="card brand-card" id="page4-brand-card"></div>
+                        <div class="card"><div class="card-title">PORTFOLIO POSITIONING</div><div class="chart-container large"><canvas id="page4-radar"></canvas></div></div>
+                        <div class="card"><div class="card-title">CATEGORY DEMAND VS BRAND DELIVERY</div><div class="chart-container"><canvas id="page4-demand"></canvas></div></div>
+                        <div class="card"><div class="card-title">KEY DECISION DRIVERS</div><div class="chart-container"><canvas id="page4-reasons"></canvas></div></div>
+                    </div>
+                    <div class="page-sidebar"><div class="card"><div class="card-title">ATTRIBUTE PERFORMANCE</div><div id="page4-table" style="font-size: 11px; max-height: 500px; overflow-y: auto;"></div></div></div>
+                </div>
+            </div>
+
+            <div class="page-container" id="page5">
+                <div class="page-wrapper">
+                    <div class="page-main">
+                        <div class="page-title">EXPERIENCE VS MEMORY ALIGNMENT</div>
+                        <div id="page5-mcdonalds-notice" style="display:none; background:#FFF3CD; border:1px solid #FFE4B5; border-radius:6px; padding:12px 16px; margin-bottom:20px; font-size:13px; color:#856404;"><strong>⚠ Note:</strong> McDonald's has no attribute-level review data available for the selected period. Quadrant analysis is unavailable for this brand.</div>
+                        <div class="card"><div class="card-title">ALIGNMENT QUADRANT MAP</div><div style="position:relative; height:420px;"><canvas id="page5-scatter"></canvas></div></div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
+                            <div class="card" style="border-top:3px solid #2ECC71;"><div class="card-title" style="color:#2ECC71;">✓ REINFORCED STRENGTHS</div><div id="page5-reinforced"></div></div>
+                            <div class="card" style="border-top:3px solid #E74C3C;"><div class="card-title" style="color:#E74C3C;">✗ BROKEN PROMISES</div><div id="page5-broken"></div></div>
+                            <div class="card" style="border-top:3px solid #F39C12;"><div class="card-title" style="color:#F39C12;">◎ MISSED OPPORTUNITIES</div><div id="page5-missed"></div></div>
+                            <div class="card" style="border-top:3px solid #BDC3C7;"><div class="card-title" style="color:#999;">— LOW PRIORITY</div><div id="page5-low"></div></div>
+                        </div>
+                        <div class="card"><div class="card-title">FULL ALIGNMENT TABLE — ALL 15 ATTRIBUTES</div><div id="page5-table" style="overflow-x:auto;"></div></div>
+                    </div>
+                    <div class="page-sidebar">
+                        <div class="card"><div class="card-title">QUADRANT LEGEND</div>
+                            <div style="font-size:12px; line-height:1.8;">
+                                <div style="margin-bottom:10px;"><span style="color:#2ECC71; font-weight:700;">● Reinforced Strength</span><br>High survey association + strong positive reviews. Double down.</div>
+                                <div style="margin-bottom:10px;"><span style="color:#E74C3C; font-weight:700;">● Broken Promise</span><br>High expectations but weak review delivery. Urgent fix needed.</div>
+                                <div style="margin-bottom:10px;"><span style="color:#F39C12; font-weight:700;">● Missed Opportunity</span><br>Strong experience not yet captured in mental availability. Amplify.</div>
+                                <div><span style="color:#BDC3C7; font-weight:700;">● Low Priority</span><br>Weak on both dimensions. De-prioritise.</div>
+                            </div>
+                        </div>
+                        <div class="card"><div class="card-title">THRESHOLDS</div>
+                            <div style="font-size:12px; line-height:1.8;">
+                                <div style="margin-bottom:6px;"><strong>X-axis (Memory):</strong><br>Per-brand median of Q24 attribute association %</div>
+                                <div><strong>Y-axis (Experience):</strong><br>Fixed at 60% positive review sentiment</div>
+                            </div>
+                        </div>
+                        <div class="card"><div class="card-title">DATA SOURCES</div>
+                            <div style="font-size:12px; line-height:1.7; color:#555;">
+                                <div>📊 <strong>Memory:</strong> Q24 brand association survey (Wave 3, n=1,198)</div>
+                                <div style="margin-top:8px;">⭐ <strong>Experience:</strong> Google Reviews sentiment (Jul–Dec 2025, analysed by AI)</div>
+                                <div style="margin-top:8px; color:#E85D3A;">⚠ McDonald's excluded from quadrant — no attribute-level review data available</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-container" id="page6">
+                <div class="page-wrapper">
+                    <div class="page-main">
+                        <div class="page-title">COMPETITIVE GAP ANALYSIS</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                            <div class="card"><div class="card-title">PRESENCE GAP</div><div style="font-size: 28px; font-weight: bold; color: #E85D3A;" id="gap-presence"></div><div style="font-size: 12px; color: #666; margin-top: 8px;">vs market leader</div></div>
+                            <div class="card"><div class="card-title">PROMINENCE GAP</div><div style="font-size: 28px; font-weight: bold; color: #E85D3A;" id="gap-prominence"></div><div style="font-size: 12px; color: #666; margin-top: 8px;">vs market leader</div></div>
+                            <div class="card"><div class="card-title">PORTFOLIO GAP</div><div style="font-size: 28px; font-weight: bold; color: #E85D3A;" id="gap-portfolio"></div><div style="font-size: 12px; color: #666; margin-top: 8px;">vs market leader</div></div>
+                        </div>
+                        <div class="card"><div class="card-title">ALL 18 METRICS COMPARISON</div><div class="chart-container large"><canvas id="page6-bullets"></canvas></div></div>
+                        <div class="card"><div class="card-title">COMPETITIVE HEATMAP</div><div class="heatmap-container" id="page6-heatmap"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-container" id="page7">
+                <div class="page-wrapper">
+                    <div class="page-main">
+                        <div class="page-title">EARLY WARNING SIGNALS</div>
+                        <div class="awaiting-banner"><div class="awaiting-title">⏳ AWAITING WAVE 4 DATA</div><div class="awaiting-text">This page will be enabled once Wave 4 data is released.</div></div>
+                        <div class="card">
+                            <div class="card-title">TRACKING FRAMEWORK (WAVE 3 BASELINE)</div>
+                            <table class="comparison-table">
+                                <thead><tr><th>METRIC</th><th>W3 BASELINE</th><th>GREEN ZONE</th><th>YELLOW ZONE</th><th>RED ZONE</th></tr></thead>
+                                <tbody>
+                                    <tr><td class="table-label">Awareness (Trial %)</td><td>86.0%</td><td>> 85%</td><td>80-85%</td><td>< 80%</td></tr>
+                                    <tr><td class="table-label">Active Usage</td><td>65.2%</td><td>> 63%</td><td>58-63%</td><td>< 58%</td></tr>
+                                    <tr><td class="table-label">Accessibility (Convenient %)</td><td>58.0%</td><td>> 56%</td><td>50-56%</td><td>< 50%</td></tr>
+                                    <tr><td class="table-label">Positive Impression</td><td>61.6%</td><td>> 59%</td><td>54-59%</td><td>< 54%</td></tr>
+                                    <tr><td class="table-label">Good Value Perception</td><td>40.9%</td><td>> 39%</td><td>35-39%</td><td>< 35%</td></tr>
+                                    <tr><td class="table-label">Growth Trajectory</td><td>30.2%</td><td>> 28%</td><td>20-28%</td><td>< 20%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BRANDS = ['Kudu', 'Burgerizzr', 'Al Baik', 'McDonalds', 'KFC', 'Sign Burger', 'Burger King', 'Bayt Al-Shawarma', 'Hardees', 'Herfy'];
+        const BRAND_COLORS = {'Kudu': '#E85D3A', 'Burgerizzr': '#C62828', 'Al Baik': '#E65100', 'McDonalds': '#FFC107', 'KFC': '#D32F2F', 'Sign Burger': '#4CAF50', 'Burger King': '#FF8F00', 'Bayt Al-Shawarma': '#7B1FA2', 'Hardees': '#FF6F00', 'Herfy': '#1565C0'};
+        const BRAND_INITIALS = {'Kudu': 'K', 'Burgerizzr': 'B', 'Al Baik': 'AB', 'McDonalds': 'M', 'KFC': 'KFC', 'Sign Burger': 'SB', 'Burger King': 'BK', 'Bayt Al-Shawarma': 'BS', 'Hardees': 'H', 'Herfy': 'HF'};
+
+        const q15 = {'Kudu': {unaware:4.3, know_untried:9.7, lapsed:20.9, occasional:35.6, regular:29.6, trial:86.0, active:65.2}, 'Burgerizzr': {unaware:9.2, know_untried:21.5, lapsed:20.2, occasional:29.8, regular:19.3, trial:69.4, active:49.1}, 'Al Baik': {unaware:1.8, know_untried:3.9, lapsed:5.7, occasional:21.5, regular:67.1, trial:94.3, active:88.6}, 'McDonalds': {unaware:2.3, know_untried:2.8, lapsed:12.1, occasional:27.0, regular:55.8, trial:94.8, active:82.8}, 'KFC': {unaware:4.2, know_untried:7.4, lapsed:17.0, occasional:31.7, regular:39.7, trial:88.4, active:71.4}, 'Sign Burger': {unaware:19.7, know_untried:23.4, lapsed:16.3, occasional:23.6, regular:17.1, trial:57.0, active:40.7}, 'Burger King': {unaware:2.5, know_untried:12.4, lapsed:24.4, occasional:41.0, regular:19.7, trial:85.1, active:60.7}, 'Bayt Al-Shawarma': {unaware:10.7, know_untried:16.8, lapsed:14.9, occasional:29.9, regular:27.6, trial:72.4, active:57.5}, 'Hardees': {unaware:5.4, know_untried:16.7, lapsed:24.1, occasional:35.1, regular:18.7, trial:77.9, active:53.8}, 'Herfy': {unaware:3.1, know_untried:9.3, lapsed:24.1, occasional:38.6, regular:24.9, trial:87.6, active:63.5}};
+        const q18 = {'Kudu': {convenient:58.0, inconvenient:33.8, impossible:8.3}, 'Burgerizzr': {convenient:47.9, inconvenient:38.4, impossible:13.7}, 'Al Baik': {convenient:62.1, inconvenient:25.8, impossible:12.1}, 'McDonalds': {convenient:78.8, inconvenient:15.3, impossible:6.0}, 'KFC': {convenient:60.1, inconvenient:30.0, impossible:9.9}, 'Sign Burger': {convenient:42.6, inconvenient:39.2, impossible:18.2}, 'Burger King': {convenient:56.3, inconvenient:35.8, impossible:7.9}, 'Bayt Al-Shawarma': {convenient:52.5, inconvenient:33.0, impossible:14.5}, 'Hardees': {convenient:50.5, inconvenient:38.7, impossible:10.7}, 'Herfy': {convenient:61.3, inconvenient:31.7, impossible:7.0}};
+        const q19 = {'Kudu': {positive:61.6, neutral:32.1, negative:6.3}, 'Burgerizzr': {positive:51.9, neutral:40.1, negative:8.1}, 'Al Baik': {positive:83.4, neutral:14.4, negative:2.2}, 'McDonalds': {positive:74.6, neutral:15.6, negative:9.8}, 'KFC': {positive:62.8, neutral:26.8, negative:10.4}, 'Sign Burger': {positive:52.1, neutral:40.3, negative:7.6}, 'Burger King': {positive:56.6, neutral:35.6, negative:7.8}, 'Bayt Al-Shawarma': {positive:61.3, neutral:33.4, negative:5.3}, 'Hardees': {positive:51.1, neutral:39.2, negative:9.8}, 'Herfy': {positive:58.8, neutral:33.2, negative:8.0}};
+        const q20 = {'Kudu': {good_value:40.9, as_expected:49.0, overpriced:10.1}, 'Burgerizzr': {good_value:41.8, as_expected:48.7, overpriced:9.5}, 'Al Baik': {good_value:68.6, as_expected:28.1, overpriced:3.3}, 'McDonalds': {good_value:56.5, as_expected:33.8, overpriced:9.7}, 'KFC': {good_value:46.7, as_expected:41.4, overpriced:11.9}, 'Sign Burger': {good_value:44.1, as_expected:45.8, overpriced:10.1}, 'Burger King': {good_value:38.6, as_expected:52.6, overpriced:8.8}, 'Bayt Al-Shawarma': {good_value:48.3, as_expected:44.1, overpriced:7.6}, 'Hardees': {good_value:36.0, as_expected:54.1, overpriced:9.9}, 'Herfy': {good_value:42.2, as_expected:48.0, overpriced:9.8}};
+        const q21 = {'Kudu': {growing:43.9, same:42.4, declining:13.7, net:30.2}, 'Burgerizzr': {growing:35.8, same:50.1, declining:14.1, net:21.7}, 'Al Baik': {growing:68.0, same:27.2, declining:4.8, net:63.2}, 'McDonalds': {growing:52.5, same:33.5, declining:14.0, net:38.5}, 'KFC': {growing:48.1, same:37.7, declining:14.2, net:34.0}, 'Sign Burger': {growing:43.1, same:43.6, declining:13.3, net:29.8}, 'Burger King': {growing:36.5, same:45.9, declining:17.6, net:18.9}, 'Bayt Al-Shawarma': {growing:47.5, same:43.4, declining:9.1, net:38.3}, 'Hardees': {growing:28.2, same:47.5, declining:24.3, net:3.9}, 'Herfy': {growing:39.8, same:42.2, declining:18.0, net:21.8}};
+        const q16 = {'Kudu':23.1, 'Burgerizzr':16.9, 'Al Baik':28.0, 'McDonalds':64.1, 'KFC':28.2, 'Sign Burger':19.2, 'Burger King':31.1, 'Bayt Al-Shawarma':10.7, 'Hardees':14.7, 'Herfy':30.8};
+        const q17 = {'Kudu': {more:24.8, same:50.5, less:24.7, net:0.1}, 'Burgerizzr': {more:23.2, same:50.4, less:26.4, net:-3.2}, 'Al Baik': {more:55.0, same:36.5, less:8.5, net:46.5}, 'McDonalds': {more:39.0, same:40.8, less:20.2, net:18.8}, 'KFC': {more:33.2, same:43.9, less:22.9, net:10.3}, 'Sign Burger': {more:26.7, same:49.4, less:23.9, net:2.7}, 'Burger King': {more:18.3, same:53.1, less:28.6, net:-10.4}, 'Bayt Al-Shawarma': {more:29.8, same:53.0, less:17.2, net:12.6}, 'Hardees': {more:14.4, same:56.5, less:29.1, net:-14.7}, 'Herfy': {more:21.0, same:52.2, less:26.8, net:-5.8}};
+        const q22 = {'McDonalds': {net:61.3}, 'Burger King': {net:48.9}, 'Herfy': {net:46.7}, 'Hardees': {net:41.8}, 'Kudu': {net:51.5}, 'Burgerizzr': {net:50.4}, 'Sign Burger': {net:53.0}, 'KFC': {net:49.0}, 'Al Baik': {net:77.4}, 'Bayt Al-Shawarma': {net:57.4}};
+        const q24 = {'Kudu': {Taste:14.3, Quality:8.1, 'Price/Value':6.3, Promos:6.8, 'Menu Variety':7.2, 'Health Options':8.2, Location:8.1, Ambiance:6.7, Clientele:5.5, Cleanliness:7.1, Service:6.9, Speed:6.5, Reputation:6.4, Popularity:6.6, Innovation:5.8}, 'Burgerizzr': {Taste:11.5, Quality:7.1, 'Price/Value':4.3, Promos:4.9, 'Menu Variety':5.7, 'Health Options':4.7, Location:3.4, Ambiance:4.4, Clientele:5.3, Cleanliness:4.8, Service:6.3, Speed:4.9, Reputation:5.7, Popularity:5.2, Innovation:5.0}, 'Al Baik': {Taste:31.9, Quality:31.6, 'Price/Value':31.4, Promos:20.0, 'Menu Variety':23.3, 'Health Options':17.9, Location:23.5, Ambiance:18.6, Clientele:18.4, Cleanliness:23.5, Service:21.8, Speed:21.9, Reputation:27.5, Popularity:30.7, Innovation:23.7}, 'McDonalds': {Taste:63.8, Quality:28.7, 'Price/Value':25.2, Promos:26.5, 'Menu Variety':26.1, 'Health Options':19.9, Location:31.5, Ambiance:27.2, Clientele:25.5, Cleanliness:28.0, Service:27.6, Speed:29.0, Reputation:28.3, Popularity:32.9, Innovation:23.7}, 'KFC': {Taste:15.4, Quality:17.4, 'Price/Value':10.7, Promos:10.8, 'Menu Variety':11.6, 'Health Options':7.5, Location:12.3, Ambiance:11.3, Clientele:11.6, Cleanliness:11.9, Service:10.7, Speed:11.5, Reputation:12.1, Popularity:15.2, Innovation:9.9}, 'Sign Burger': {Taste:7.4, Quality:7.1, 'Price/Value':5.1, Promos:3.3, 'Menu Variety':3.8, 'Health Options':3.4, Location:3.8, Ambiance:4.7, Clientele:3.5, Cleanliness:7.1, Service:6.1, Speed:4.6, Reputation:5.0, Popularity:5.2, Innovation:4.9}, 'Burger King': {Taste:26.9, Quality:11.7, 'Price/Value':9.9, Promos:9.7, 'Menu Variety':9.3, 'Health Options':8.5, Location:10.3, Ambiance:8.2, Clientele:8.8, Cleanliness:9.8, Service:10.4, Speed:10.8, Reputation:10.9, Popularity:10.5, Innovation:8.8}, 'Bayt Al-Shawarma': {Taste:4.9, Quality:9.4, 'Price/Value':13.1, Promos:8.2, 'Menu Variety':14.6, 'Health Options':10.4, Location:11.0, Ambiance:11.2, Clientele:12.1, Cleanliness:11.5, Service:10.3, Speed:11.2, Reputation:12.6, Popularity:10.8, Innovation:14.9}, 'Hardees': {Taste:13.0, Quality:6.8, 'Price/Value':5.3, Promos:5.4, 'Menu Variety':5.7, 'Health Options':4.0, Location:4.5, Ambiance:6.5, Clientele:4.5, Cleanliness:4.3, Service:4.1, Speed:4.3, Reputation:4.5, Popularity:4.8, Innovation:3.2}, 'Herfy': {Taste:24.4, Quality:11.4, 'Price/Value':10.5, Promos:12.9, 'Menu Variety':10.6, 'Health Options':7.6, Location:11.4, Ambiance:10.1, Clientele:8.5, Cleanliness:10.9, Service:11.9, Speed:12.9, Reputation:10.1, Popularity:10.4, Innovation:8.9}};
+
+        let selectedBrand = 'Burgerizzr';
+        let chartInstances = {};
+
+        function initBrandStrip() {
+            const strip = document.getElementById('brandStrip');
+            strip.innerHTML = '';
+            BRANDS.forEach(brand => {
+                const item = document.createElement('div');
+                item.className = `brand-item ${brand === selectedBrand ? 'active' : ''}`;
+                item.onclick = () => selectBrand(brand);
+                item.innerHTML = `<div class="brand-avatar" style="background-color: ${BRAND_COLORS[brand]};">${BRAND_INITIALS[brand]}</div><div class="brand-name">${brand}</div>`;
+                strip.appendChild(item);
+            });
+        }
+
+        function selectBrand(brand) { selectedBrand = brand; initBrandStrip(); updateAllPages(); }
+        function resetFilters() { selectedBrand = 'Burgerizzr'; initBrandStrip(); updateAllPages(); }
+        function switchPage(pageNum) {
+            document.querySelectorAll('.page-container').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[pageNum - 1].classList.add('active');
+            updatePageSpecificCharts(pageNum);
+        }
+
+        function getRank(brand, values) {
+            const sorted = Object.entries(values).sort((a, b) => b[1] - a[1]);
+            return sorted.findIndex(entry => entry[0] === brand) + 1;
+        }
+
+        function getRankBadge(rank) {
+            return `<div class="ranking-badge" style="width: 36px; height: 36px; font-size: 16px;">#${rank}</div>`;
+        }
+
+        function updatePage1() {
+            const p1 = q18[selectedBrand].convenient;
+            const pr1 = q19[selectedBrand].positive;
+            const po1 = q24[selectedBrand].Taste;
+            const p1Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q18[b].convenient])));
+            const pr1Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q19[b].positive])));
+            const po1Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q24[b].Taste])));
+
+            const brandCard = document.getElementById('page1-brand-card');
+            brandCard.innerHTML = `<div class="brand-card-header"><div class="brand-card-avatar" style="background-color: ${BRAND_COLORS[selectedBrand]};">${BRAND_INITIALS[selectedBrand]}</div><div class="brand-card-info"><h2>${selectedBrand}</h2><div class="brand-card-label">FOCUSED BRAND</div></div></div><div class="kpi-group"><div class="kpi-item"><div class="kpi-label">Presence Score</div><div class="kpi-value">${p1.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(p1Rank)}</div><div class="kpi-item"><div class="kpi-label">Prominence (Positive %)</div><div class="kpi-value">${pr1.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(pr1Rank)}</div><div class="kpi-item"><div class="kpi-label">Portfolio (Taste)</div><div class="kpi-value">${po1.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(po1Rank)}</div></div>`;
+
+            const avgScores = BRANDS.map(b => ({brand: b, score: ((q18[b].convenient + q19[b].positive + q24[b].Taste) / 3).toFixed(1)})).sort((a, b) => b.score - a.score);
+            const rankingStrip = document.getElementById('page1-ranking-strip');
+            rankingStrip.innerHTML = avgScores.map((item, idx) => `<div class="ranking-item"><div class="ranking-number">#${idx + 1}</div><div class="brand-avatar" style="background-color: ${BRAND_COLORS[item.brand]}; width: 44px; height: 44px; font-size: 12px;">${BRAND_INITIALS[item.brand]}</div><div class="brand-name">${item.brand}</div><div class="ranking-score">${item.score}</div></div>`).join('');
+
+            const strategicRead = document.getElementById('page1-strategic-read');
+            strategicRead.textContent = `${selectedBrand} demonstrates a ${p1 > 60 ? 'strong' : p1 > 45 ? 'moderate' : 'developing'} physical availability footprint. With ${p1.toFixed(1)}% convenience perception and ${pr1.toFixed(1)}% positive impressions, the brand is positioned as a ${po1 > 25 ? 'taste leader' : 'quality option'}. Trial rate: ${q15[selectedBrand].trial.toFixed(1)}%, Active: ${q15[selectedBrand].active.toFixed(1)}%.`;
+
+            const metrics = {'Presence (Convenience)': p1, 'Friction (Impossible)': q18[selectedBrand].impossible, 'Positive Impression': pr1, 'Good Value': q20[selectedBrand].good_value, 'Growth Momentum': q21[selectedBrand].net, 'Taste Appeal': po1};
+            const sorted = Object.entries(metrics).sort((a, b) => b[1] - a[1]);
+            const strongest = document.getElementById('page1-strongest');
+            const weakest = document.getElementById('page1-weakest');
+            strongest.innerHTML = sorted.slice(0, 3).map((m, i) => `<div class="strength-item"><div class="strength-item-name">${i + 1}. ${m[0]}</div><div class="strength-item-value">${m[1].toFixed(1)}%</div></div>`).join('');
+            weakest.innerHTML = sorted.slice(-3).reverse().map((m, i) => `<div class="strength-item"><div class="strength-item-name">${i + 1}. ${m[0]}</div><div class="strength-item-value">${m[1].toFixed(1)}%</div></div>`).join('');
+
+            const funnelCtx = document.getElementById('page1-funnel');
+            if (chartInstances['page1-funnel']) chartInstances['page1-funnel'].destroy();
+            chartInstances['page1-funnel'] = new Chart(funnelCtx, {type: 'bar', data: {labels: ['Unaware', 'Know/Untried', 'Lapsed', 'Occasional', 'Regular', 'Trial %', 'Active %'], datasets: [{label: selectedBrand, data: [q15[selectedBrand].unaware, q15[selectedBrand].know_untried, q15[selectedBrand].lapsed, q15[selectedBrand].occasional, q15[selectedBrand].regular, q15[selectedBrand].trial, q15[selectedBrand].active], backgroundColor: BRAND_COLORS[selectedBrand], borderRadius: 4}]}, options: {indexAxis: 'x', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 100}}}});
+
+            const table = document.getElementById('page1-table');
+            const metricLabels = ['Presence (Convenient %)', 'Friction (Impossible %)', 'Positive Impression', 'Good Value %', 'Growth Net %', 'Taste Appeal %'];
+            const metricValues = [q18, q18, q19, q20, q21, q24];
+            const metricKeys = ['convenient', 'impossible', 'positive', 'good_value', 'net', 'Taste'];
+            let tableHTML = '<table class="comparison-table" style="font-size: 12px;"><thead><tr><th>METRIC</th>';
+            BRANDS.forEach(b => tableHTML += `<th style="font-size: 10px;">${b.substring(0, 3)}</th>`);
+            tableHTML += '</tr></thead><tbody>';
+            metricLabels.forEach((label, idx) => {
+                tableHTML += `<tr><td class="table-label">${label}</td>`;
+                BRANDS.forEach(brand => {
+                    const value = metricValues[idx][brand][metricKeys[idx]];
+                    const isSelected = brand === selectedBrand;
+                    tableHTML += `<td class="table-value ${isSelected ? 'table-brand-highlight' : ''}">${value.toFixed(1)}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+            table.innerHTML = tableHTML;
+        }
+
+        function updatePage2() {
+            const P1 = q18[selectedBrand].convenient;
+            const P2 = q18[selectedBrand].impossible;
+            const P3 = q15[selectedBrand].trial;
+            const P4 = q17[selectedBrand].net;
+            const P5 = q24[selectedBrand].Location;
+            const P6 = 32.0;
+            const P1Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q18[b].convenient])));
+            const brandCard = document.getElementById('page2-brand-card');
+            brandCard.innerHTML = `<div class="brand-card-header"><div class="brand-card-avatar" style="background-color: ${BRAND_COLORS[selectedBrand]};">${BRAND_INITIALS[selectedBrand]}</div><div class="brand-card-info"><h2>${selectedBrand}</h2><div class="brand-card-label">PRESENCE OVERVIEW</div></div></div><div class="kpi-group"><div class="kpi-item"><div class="kpi-label">Ease Score</div><div class="kpi-value">${P1.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(P1Rank)}</div><div class="kpi-item"><div class="kpi-label">Friction Rate</div><div class="kpi-value">${P2.toFixed(1)}<span class="kpi-unit">%</span></div></div></div>`;
+            const strategicRead = document.getElementById('page2-strategic-read');
+            strategicRead.textContent = `${selectedBrand} shows ${P1 > 60 ? 'strong' : 'variable'} accessibility at ${P1.toFixed(1)}%. Friction: ${P2.toFixed(1)}%. Trial: ${P3.toFixed(1)}%. Frequency momentum: ${P4 > 0 ? 'positive' : 'negative'} ${P4.toFixed(1)}%.`;
+            const metrics = {'Easy Access (Convenient)': P1, 'Access Friction (Impossible)': P2, 'Trial Penetration': P3, 'Frequency Growth': P4, 'Location Appeal': P5, 'Location Convenience': P6};
+            const sorted = Object.entries(metrics).sort((a, b) => b[1] - a[1]);
+            const strongest = document.getElementById('page2-strongest');
+            const weakest = document.getElementById('page2-weakest');
+            strongest.innerHTML = sorted.slice(0, 3).map((m, i) => `<div class="strength-item"><div class="strength-item-name">${i + 1}. ${m[0]}</div><div class="strength-item-value">${m[1].toFixed(1)}%</div></div>`).join('');
+            weakest.innerHTML = sorted.slice(-3).reverse().map((m, i) => `<div class="strength-item"><div class="strength-item-name">${i + 1}. ${m[0]}</div><div class="strength-item-value">${m[1].toFixed(1)}%</div></div>`).join('');
+
+            const easeCtx = document.getElementById('page2-ease');
+            if (chartInstances['page2-ease']) chartInstances['page2-ease'].destroy();
+            chartInstances['page2-ease'] = new Chart(easeCtx, {type: 'bar', data: {labels: BRANDS, datasets: [{label: 'Convenient', data: BRANDS.map(b => q18[b].convenient), backgroundColor: '#2ECC71'}, {label: 'Inconvenient', data: BRANDS.map(b => q18[b].inconvenient), backgroundColor: '#FFC107'}, {label: 'Impossible', data: BRANDS.map(b => q18[b].impossible), backgroundColor: '#E74C3C'}]}, options: {indexAxis: 'x', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: true, position: 'bottom'}}, scales: {x: {stacked: true}, y: {stacked: true, beginAtZero: true, max: 100}}}});
+
+            const momentumCtx = document.getElementById('page2-momentum');
+            if (chartInstances['page2-momentum']) chartInstances['page2-momentum'].destroy();
+            chartInstances['page2-momentum'] = new Chart(momentumCtx, {type: 'bar', data: {labels: BRANDS, datasets: [{label: 'More Frequent', data: BRANDS.map(b => q17[b].more), backgroundColor: '#2ECC71'}, {label: 'Same', data: BRANDS.map(b => q17[b].same), backgroundColor: '#999999'}, {label: 'Less Frequent', data: BRANDS.map(b => q17[b].less), backgroundColor: '#E74C3C'}]}, options: {indexAxis: 'x', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: true, position: 'bottom'}}, scales: {x: {stacked: true}, y: {stacked: true, beginAtZero: true, max: 100}}}});
+
+            const table = document.getElementById('page2-table');
+            let tableHTML = '<table class="comparison-table" style="font-size: 11px;"><thead><tr><th>PRESENCE METRICS</th>';
+            BRANDS.forEach(b => tableHTML += `<th style="font-size: 9px;">${b.substring(0, 3)}</th>`);
+            tableHTML += '</tr></thead><tbody>';
+            const presenceMetrics = [{label: 'P1: Convenient %', values: BRANDS.map(b => q18[b].convenient)}, {label: 'P2: Impossible %', values: BRANDS.map(b => q18[b].impossible)}, {label: 'P3: Trial %', values: BRANDS.map(b => q15[b].trial)}, {label: 'P4: Freq. Net %', values: BRANDS.map(b => q17[b].net)}, {label: 'P5: Location %', values: BRANDS.map(b => q24[b].Location)}, {label: 'P6: Loc. Conv.', values: BRANDS.map(b => 32.0)}];
+            presenceMetrics.forEach((metric, idx) => {
+                tableHTML += `<tr><td class="table-label">${metric.label}</td>`;
+                metric.values.forEach((val, bIdx) => {
+                    const isSelected = BRANDS[bIdx] === selectedBrand;
+                    const color = idx === 1 ? (val < 10 ? 'positive' : 'negative') : (val > 50 ? 'positive' : 'negative');
+                    tableHTML += `<td class="table-value ${color} ${isSelected ? 'table-brand-highlight' : ''}">${val.toFixed(1)}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+            table.innerHTML = tableHTML;
+        }
+
+        function updatePage3() {
+            const PR1 = q19[selectedBrand].positive;
+            const PR2 = q20[selectedBrand].good_value;
+            const PR3 = q21[selectedBrand].net;
+            const PR1Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q19[b].positive])));
+            const PR2Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q20[b].good_value])));
+            const PR3Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q21[b].net])));
+            const brandCard = document.getElementById('page3-brand-card');
+            brandCard.innerHTML = `<div class="brand-card-header"><div class="brand-card-avatar" style="background-color: ${BRAND_COLORS[selectedBrand]};">${BRAND_INITIALS[selectedBrand]}</div><div class="brand-card-info"><h2>${selectedBrand}</h2><div class="brand-card-label">PROMINENCE OVERVIEW</div></div></div><div class="kpi-group"><div class="kpi-item"><div class="kpi-label">Positive %</div><div class="kpi-value">${PR1.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(PR1Rank)}</div><div class="kpi-item"><div class="kpi-label">Good Value %</div><div class="kpi-value">${PR2.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(PR2Rank)}</div><div class="kpi-item"><div class="kpi-label">Growth Net %</div><div class="kpi-value">${PR3.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(PR3Rank)}</div></div>`;
+            const strategicRead = document.getElementById('page3-strategic-read');
+            strategicRead.textContent = `${selectedBrand}: ${PR1.toFixed(1)}% positive perception, ${PR2.toFixed(1)}% good value, ${PR3.toFixed(1)}% growth momentum. Position: ${PR1 > 70 ? 'strong' : 'solid'} positive reputation.`;
+            const metrics = {'Positive Impression': PR1, 'Good Value Perception': PR2, 'Growth Momentum': PR3, 'Ad Recall': q16[selectedBrand], 'Net Advocacy': q22[selectedBrand]?.net || 45.0, 'Reputation': q24[selectedBrand].Reputation};
+            const sorted = Object.entries(metrics).sort((a, b) => b[1] - a[1]);
+            const strongest = document.getElementById('page3-strongest');
+            const weakest = document.getElementById('page3-weakest');
+            strongest.innerHTML = sorted.slice(0, 3).map((m, i) => `<div class="strength-item"><div class="strength-item-name">${i + 1}. ${m[0]}</div><div class="strength-item-value">${m[1].toFixed(1)}%</div></div>`).join('');
+            weakest.innerHTML = sorted.slice(-3).reverse().map((m, i) => `<div class="strength-item"><div class="strength-item-name">${i + 1}. ${m[0]}</div><div class="strength-item-value">${m[1].toFixed(1)}%</div></div>`).join('');
+
+            const impressionCtx = document.getElementById('page3-impression');
+            if (chartInstances['page3-impression']) chartInstances['page3-impression'].destroy();
+            chartInstances['page3-impression'] = new Chart(impressionCtx, {type: 'bar', data: {labels: BRANDS, datasets: [{label: 'Positive', data: BRANDS.map(b => q19[b].positive), backgroundColor: '#2ECC71'}, {label: 'Neutral', data: BRANDS.map(b => q19[b].neutral), backgroundColor: '#999999'}, {label: 'Negative', data: BRANDS.map(b => q19[b].negative), backgroundColor: '#E74C3C'}]}, options: {indexAxis: 'x', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: true, position: 'bottom'}}, scales: {x: {stacked: true}, y: {stacked: true, beginAtZero: true, max: 100}}}});
+
+            const advocacyCtx = document.getElementById('page3-advocacy');
+            if (chartInstances['page3-advocacy']) chartInstances['page3-advocacy'].destroy();
+            chartInstances['page3-advocacy'] = new Chart(advocacyCtx, {type: 'bar', data: {labels: BRANDS, datasets: [{label: 'Net Advocacy %', data: BRANDS.map(b => q22[b]?.net || 45.0), backgroundColor: BRANDS.map(b => q22[b]?.net > 50 ? '#2ECC71' : '#FFC107')}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 80}}}});
+
+            const table = document.getElementById('page3-table');
+            let tableHTML = '<table class="comparison-table" style="font-size: 11px;"><thead><tr><th>PROMINENCE METRICS</th>';
+            BRANDS.forEach(b => tableHTML += `<th style="font-size: 9px;">${b.substring(0, 3)}</th>`);
+            tableHTML += '</tr></thead><tbody>';
+            const promMetrics = [{label: 'PR1: Positive %', values: BRANDS.map(b => q19[b].positive)}, {label: 'PR2: Good Value %', values: BRANDS.map(b => q20[b].good_value)}, {label: 'PR3: Growth Net %', values: BRANDS.map(b => q21[b].net)}, {label: 'PR4: Ad Recall %', values: BRANDS.map(b => q16[b])}, {label: 'PR5: Net Advocacy %', values: BRANDS.map(b => q22[b]?.net || 45.0)}, {label: 'PR6: Reputation %', values: BRANDS.map(b => q24[b].Reputation)}];
+            promMetrics.forEach((metric, idx) => {
+                tableHTML += `<tr><td class="table-label">${metric.label}</td>`;
+                metric.values.forEach((val, bIdx) => {
+                    const isSelected = BRANDS[bIdx] === selectedBrand;
+                    const color = val > 50 ? 'positive' : val > 30 ? 'neutral' : 'negative';
+                    tableHTML += `<td class="table-value ${color} ${isSelected ? 'table-brand-highlight' : ''}">${val.toFixed(1)}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+            table.innerHTML = tableHTML;
+        }
+
+        function updatePage4() {
+            const PO1 = q24[selectedBrand].Taste;
+            const PO2 = q24[selectedBrand].Innovation;
+            const PO3 = q24[selectedBrand]['Menu Variety'];
+            const PO1Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q24[b].Taste])));
+            const PO2Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q24[b].Innovation])));
+            const PO3Rank = getRank(selectedBrand, Object.fromEntries(BRANDS.map(b => [b, q24[b]['Menu Variety']])));
+            const brandCard = document.getElementById('page4-brand-card');
+            brandCard.innerHTML = `<div class="brand-card-header"><div class="brand-card-avatar" style="background-color: ${BRAND_COLORS[selectedBrand]};">${BRAND_INITIALS[selectedBrand]}</div><div class="brand-card-info"><h2>${selectedBrand}</h2><div class="brand-card-label">PORTFOLIO OVERVIEW</div></div></div><div class="kpi-group"><div class="kpi-item"><div class="kpi-label">Taste Appeal</div><div class="kpi-value">${PO1.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(PO1Rank)}</div><div class="kpi-item"><div class="kpi-label">Innovation</div><div class="kpi-value">${PO2.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(PO2Rank)}</div><div class="kpi-item"><div class="kpi-label">Menu Variety</div><div class="kpi-value">${PO3.toFixed(1)}<span class="kpi-unit">%</span></div>${getRankBadge(PO3Rank)}</div></div>`;
+
+            const radarCtx = document.getElementById('page4-radar');
+            if (chartInstances['page4-radar']) chartInstances['page4-radar'].destroy();
+            const radarAttributes = ['Taste', 'Price/Value', 'Menu Variety', 'Health Options', 'Innovation'];
+            const selectedValues = radarAttributes.map(attr => q24[selectedBrand][attr]);
+            const leaderValues = radarAttributes.map(attr => Math.max(...BRANDS.map(b => q24[b][attr])));
+            chartInstances['page4-radar'] = new Chart(radarCtx, {type: 'radar', data: {labels: radarAttributes, datasets: [{label: selectedBrand, data: selectedValues, borderColor: BRAND_COLORS[selectedBrand], backgroundColor: BRAND_COLORS[selectedBrand] + '33', borderWidth: 2}, {label: 'Category Leader', data: leaderValues, borderColor: '#999999', backgroundColor: 'transparent', borderWidth: 1, borderDash: [5, 5]}]}, options: {responsive: true, maintainAspectRatio: false, scales: {r: {beginAtZero: true, max: 35}}, plugins: {legend: {display: true, position: 'bottom'}}}});
+
+            const demandCtx = document.getElementById('page4-demand');
+            if (chartInstances['page4-demand']) chartInstances['page4-demand'].destroy();
+            const demands = [{name: 'Taste', value: 71.0}, {name: 'Price/Value', value: 55.7}, {name: 'Quality', value: 54.5}, {name: 'Cleanliness', value: 33.6}, {name: 'Menu Variety', value: 31.8}];
+            const demandLabels = demands.map(d => d.name);
+            const demandValues = demands.map(d => d.value);
+            const offerValues = demandLabels.map(attr => q24[selectedBrand][attr] || 0);
+            chartInstances['page4-demand'] = new Chart(demandCtx, {type: 'bar', data: {labels: demandLabels, datasets: [{label: 'Category Demand', data: demandValues, backgroundColor: '#999999'}, {label: selectedBrand, data: offerValues, backgroundColor: BRAND_COLORS[selectedBrand]}]}, options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: {x: {beginAtZero: true, max: 75}}, plugins: {legend: {display: true, position: 'bottom'}}}});
+
+            const reasonsCtx = document.getElementById('page4-reasons');
+            if (chartInstances['page4-reasons']) chartInstances['page4-reasons'].destroy();
+            const topReasons = [{name: 'Effortless choice', value: 51.7}, {name: 'Positive feeling', value: 47.7}, {name: 'Unique menu', value: 47.0}, {name: 'Location convenience', value: 32.0}, {name: 'Reliable ordering', value: 31.8}];
+            chartInstances['page4-reasons'] = new Chart(reasonsCtx, {type: 'bar', data: {labels: topReasons.map(r => r.name), datasets: [{label: 'Decision Drivers', data: topReasons.map(r => r.value), backgroundColor: '#E85D3A'}]}, options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {beginAtZero: true, max: 60}}}});
+
+            const table = document.getElementById('page4-table');
+            let tableHTML = '<table class="heatmap-table" style="font-size: 10px;"><thead><tr><th>ATTRIBUTE</th>';
+            BRANDS.forEach(b => tableHTML += `<th style="font-size: 9px;">${b.substring(0, 3)}</th>`);
+            tableHTML += '</tr></thead><tbody>';
+            const attributes = ['Taste', 'Quality', 'Price/Value', 'Menu Variety', 'Health Options', 'Location', 'Service', 'Innovation', 'Reputation', 'Popularity'];
+            attributes.forEach(attr => {
+                tableHTML += `<tr><td class="table-label">${attr}</td>`;
+                BRANDS.forEach(brand => {
+                    const val = q24[brand][attr] || 0;
+                    let heatClass = 'heatmap-low';
+                    if (val > 20) heatClass = 'heatmap-high';
+                    else if (val > 10) heatClass = 'heatmap-medium';
+                    const isSelected = brand === selectedBrand ? 'font-weight: bold;' : '';
+                    tableHTML += `<td class="heatmap-cell ${heatClass}" style="${isSelected}">${val.toFixed(1)}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+            table.innerHTML = tableHTML;
+        }
+
+        function getLeader(metricFn) {
+            let best = null, bestVal = -Infinity;
+            BRANDS.forEach(b => { const v = metricFn(b); if (v > bestVal) { bestVal = v; best = b; } });
+            return best;
+        }
+
+        function updatePage5() {
+            var brand = selectedBrand;
+            var ATTRS = ["Taste", "Quality", "Price/Value", "Promos", "Menu Variety", "Health Options", "Location", "Ambiance", "Clientele", "Cleanliness", "Service", "Speed", "Reputation", "Popularity", "Innovation"];
+            var Y_THRESHOLD = 60;
+            var reviewPct = {"Taste":{"Al Baik":59.3,"Burger King":92.1,"Burgerizzr":89.9,"Hardees":88.2,"Herfy":52.0,"KFC":82.2,"Kudu":67.9,"McDonald's":null,"Shawarma House":77.2,"Sign Burger":70.2},"Quality":{"Al Baik":19.7,"Burger King":78.4,"Burgerizzr":65.0,"Hardees":68.6,"Herfy":17.0,"KFC":58.8,"Kudu":25.8,"McDonald's":null,"Shawarma House":42.3,"Sign Burger":41.9},"Price/Value":{"Al Baik":44.3,"Burger King":42.4,"Burgerizzr":39.7,"Hardees":41.4,"Herfy":23.9,"KFC":20.5,"Kudu":25.3,"McDonald's":null,"Shawarma House":52.6,"Sign Burger":49.5},"Promos":{"Al Baik":15.4,"Burger King":66.7,"Burgerizzr":59.0,"Hardees":77.8,"Herfy":49.2,"KFC":48.5,"Kudu":39.9,"McDonald's":null,"Shawarma House":0.0,"Sign Burger":33.3},"Menu Variety":{"Al Baik":14.0,"Burger King":37.1,"Burgerizzr":34.3,"Hardees":43.7,"Herfy":11.0,"KFC":21.5,"Kudu":23.4,"McDonald's":null,"Shawarma House":65.1,"Sign Burger":21.2},"Health Options":{"Al Baik":34.5,"Burger King":91.7,"Burgerizzr":75.0,"Hardees":80.0,"Herfy":60.0,"KFC":44.4,"Kudu":62.7,"McDonald's":null,"Shawarma House":57.1,"Sign Burger":75.0},"Location":{"Al Baik":10.4,"Burger King":19.8,"Burgerizzr":19.7,"Hardees":22.4,"Herfy":7.4,"KFC":15.2,"Kudu":13.3,"McDonald's":null,"Shawarma House":25.9,"Sign Burger":15.2},"Ambiance":{"Al Baik":45.8,"Burger King":88.5,"Burgerizzr":65.1,"Hardees":84.4,"Herfy":26.9,"KFC":78.3,"Kudu":60.7,"McDonald's":null,"Shawarma House":60.8,"Sign Burger":71.4},"Clientele":{"Al Baik":20.8,"Burger King":63.6,"Burgerizzr":48.5,"Hardees":52.9,"Herfy":35.8,"KFC":41.9,"Kudu":51.3,"McDonald's":null,"Shawarma House":30.0,"Sign Burger":66.7},"Cleanliness":{"Al Baik":39.7,"Burger King":73.7,"Burgerizzr":63.4,"Hardees":61.2,"Herfy":13.0,"KFC":60.8,"Kudu":52.0,"McDonald's":null,"Shawarma House":54.3,"Sign Burger":60.0},"Service":{"Al Baik":29.7,"Burger King":85.9,"Burgerizzr":83.0,"Hardees":82.4,"Herfy":25.9,"KFC":77.8,"Kudu":54.5,"McDonald's":null,"Shawarma House":61.7,"Sign Burger":85.0},"Speed":{"Al Baik":14.2,"Burger King":69.0,"Burgerizzr":55.2,"Hardees":63.7,"Herfy":10.0,"KFC":54.7,"Kudu":25.5,"McDonald's":null,"Shawarma House":39.8,"Sign Burger":51.4},"Reputation":{"Al Baik":40.5,"Burger King":83.0,"Burgerizzr":75.6,"Hardees":78.4,"Herfy":34.1,"KFC":73.4,"Kudu":51.1,"McDonald's":null,"Shawarma House":81.2,"Sign Burger":64.1},"Popularity":{"Al Baik":20.7,"Burger King":44.7,"Burgerizzr":42.7,"Hardees":53.7,"Herfy":21.2,"KFC":46.2,"Kudu":31.0,"McDonald's":null,"Shawarma House":29.6,"Sign Burger":38.9},"Innovation":{"Al Baik":51.3,"Burger King":100.0,"Burgerizzr":73.3,"Hardees":81.2,"Herfy":43.5,"KFC":80.0,"Kudu":65.0,"McDonald's":null,"Shawarma House":86.7,"Sign Burger":75.0}};
+            var surveyPct = {"Taste":{"Al Baik":31.9,"Burger King":11.7,"Burgerizzr":11.5,"Hardees":13.0,"Herfy":11.4,"KFC":15.4,"Kudu":14.3,"McDonald's":28.7,"Shawarma House":4.9,"Sign Burger":7.4},"Quality":{"Al Baik":31.6,"Burger King":9.9,"Burgerizzr":7.1,"Hardees":6.8,"Herfy":10.5,"KFC":17.4,"Kudu":8.1,"McDonald's":25.2,"Shawarma House":9.4,"Sign Burger":7.1},"Price/Value":{"Al Baik":31.4,"Burger King":9.7,"Burgerizzr":4.3,"Hardees":5.3,"Herfy":12.9,"KFC":10.7,"Kudu":6.3,"McDonald's":26.5,"Shawarma House":13.1,"Sign Burger":5.1},"Promos":{"Al Baik":20.0,"Burger King":9.3,"Burgerizzr":4.9,"Hardees":5.4,"Herfy":10.6,"KFC":10.8,"Kudu":6.8,"McDonald's":26.1,"Shawarma House":8.2,"Sign Burger":3.3},"Menu Variety":{"Al Baik":23.3,"Burger King":8.5,"Burgerizzr":5.7,"Hardees":5.7,"Herfy":7.6,"KFC":11.6,"Kudu":7.2,"McDonald's":19.9,"Shawarma House":14.6,"Sign Burger":3.8},"Health Options":{"Al Baik":17.9,"Burger King":10.3,"Burgerizzr":4.7,"Hardees":4.0,"Herfy":11.4,"KFC":7.5,"Kudu":8.2,"McDonald's":31.5,"Shawarma House":10.4,"Sign Burger":3.4},"Location":{"Al Baik":23.5,"Burger King":8.2,"Burgerizzr":3.4,"Hardees":4.5,"Herfy":10.1,"KFC":12.3,"Kudu":8.1,"McDonald's":27.2,"Shawarma House":11.0,"Sign Burger":3.8},"Ambiance":{"Al Baik":18.6,"Burger King":8.8,"Burgerizzr":4.4,"Hardees":6.5,"Herfy":8.5,"KFC":11.3,"Kudu":6.7,"McDonald's":25.5,"Shawarma House":11.2,"Sign Burger":4.7},"Clientele":{"Al Baik":18.4,"Burger King":9.8,"Burgerizzr":5.3,"Hardees":4.5,"Herfy":10.9,"KFC":11.6,"Kudu":5.5,"McDonald's":28.0,"Shawarma House":12.1,"Sign Burger":3.5},"Cleanliness":{"Al Baik":23.5,"Burger King":10.4,"Burgerizzr":4.8,"Hardees":4.3,"Herfy":11.9,"KFC":11.9,"Kudu":7.1,"McDonald's":27.6,"Shawarma House":11.5,"Sign Burger":7.1},"Service":{"Al Baik":21.8,"Burger King":10.8,"Burgerizzr":6.3,"Hardees":4.1,"Herfy":12.9,"KFC":10.7,"Kudu":6.9,"McDonald's":29.0,"Shawarma House":10.3,"Sign Burger":6.1},"Speed":{"Al Baik":21.9,"Burger King":10.9,"Burgerizzr":4.9,"Hardees":4.3,"Herfy":10.1,"KFC":11.5,"Kudu":6.5,"McDonald's":28.3,"Shawarma House":11.2,"Sign Burger":4.6},"Reputation":{"Al Baik":27.5,"Burger King":10.5,"Burgerizzr":5.7,"Hardees":4.5,"Herfy":10.4,"KFC":12.1,"Kudu":6.4,"McDonald's":32.9,"Shawarma House":12.6,"Sign Burger":5.0},"Popularity":{"Al Baik":30.7,"Burger King":8.8,"Burgerizzr":5.2,"Hardees":4.8,"Herfy":8.9,"KFC":15.2,"Kudu":6.6,"McDonald's":23.7,"Shawarma House":10.8,"Sign Burger":5.2},"Innovation":{"Al Baik":23.7,"Burger King":8.8,"Burgerizzr":5.0,"Hardees":3.2,"Herfy":8.9,"KFC":9.9,"Kudu":5.8,"McDonald's":23.7,"Shawarma House":14.9,"Sign Burger":4.9}};
+            var brandMedians = {"Al Baik": 23.5, "Burger King": 9.8, "Burgerizzr": 5.0, "Hardees": 4.5, "Herfy": 10.5, "KFC": 11.6, "Kudu": 6.8, "McDonald's": 27.2, "Shawarma House": 11.2, "Sign Burger": 4.9};
+
+            var notice = document.getElementById('page5-mcdonalds-notice');
+            if (brand === "McDonald\u2019s" || brand === "McDonald's") {
+                notice.style.display = 'block';
+                document.getElementById('page5-reinforced').innerHTML = '<p style="color:#999;font-size:13px;">No data available</p>';
+                document.getElementById('page5-broken').innerHTML = '<p style="color:#999;font-size:13px;">No data available</p>';
+                document.getElementById('page5-missed').innerHTML = '<p style="color:#999;font-size:13px;">No data available</p>';
+                document.getElementById('page5-low').innerHTML = '<p style="color:#999;font-size:13px;">No data available</p>';
+                document.getElementById('page5-table').innerHTML = '<p style="color:#999;font-size:13px;padding:20px;">No attribute-level review data available for this brand.</p>';
+                if (window.page5Chart) { window.page5Chart.destroy(); window.page5Chart = null; }
+                return;
+            }
+            notice.style.display = 'none';
+
+            var xThreshold = brandMedians[brand];
+
+            // Classify attributes into quadrants
+            var quadrants = {};
+            ATTRS.forEach(function(attr) {
+                var x = surveyPct[attr][brand];
+                var y = reviewPct[attr][brand];
+                var q;
+                if (x >= xThreshold && y >= Y_THRESHOLD) q = 'Reinforced Strength';
+                else if (x >= xThreshold && y < Y_THRESHOLD) q = 'Broken Promise';
+                else if (x < xThreshold && y >= Y_THRESHOLD) q = 'Missed Opportunity';
+                else q = 'Low Priority';
+                quadrants[attr] = {x: x, y: y, q: q};
+            });
+
+            // Build scatter chart data
+            var qColors = {
+                'Reinforced Strength': '#2ECC71',
+                'Broken Promise': '#E74C3C',
+                'Missed Opportunity': '#F39C12',
+                'Low Priority': '#BDC3C7'
+            };
+            var scatterData = ATTRS.map(function(attr) {
+                return {x: quadrants[attr].x, y: quadrants[attr].y, label: attr, q: quadrants[attr].q};
+            });
+
+            if (window.page5Chart) { window.page5Chart.destroy(); }
+            var ctx = document.getElementById('page5-scatter').getContext('2d');
+
+            // Inline plugin to draw threshold lines and labels
+            var thresholdPlugin = {
+                id: 'thresholdLines',
+                afterDraw: function(chart) {
+                    var c = chart.ctx;
+                    var xScale = chart.scales.x;
+                    var yScale = chart.scales.y;
+                    var xPx = xScale.getPixelForValue(xThreshold);
+                    var yPx = yScale.getPixelForValue(Y_THRESHOLD);
+                    c.save();
+                    c.setLineDash([5, 4]);
+                    c.strokeStyle = '#E85D3A';
+                    c.lineWidth = 1.5;
+                    c.beginPath(); c.moveTo(xPx, yScale.top); c.lineTo(xPx, yScale.bottom); c.stroke();
+                    c.beginPath(); c.moveTo(xScale.left, yPx); c.lineTo(xScale.right, yPx); c.stroke();
+                    c.setLineDash([]);
+                    c.font = '10px sans-serif';
+                    c.fillStyle = 'rgba(0,0,0,0.22)';
+                    c.fillText('MISSED OPP.', xScale.left + 4, yScale.top + 13);
+                    c.fillText('REINFORCED STRENGTH', xPx + 4, yScale.top + 13);
+                    c.fillText('LOW PRIORITY', xScale.left + 4, yScale.bottom - 5);
+                    c.fillText('BROKEN PROMISE', xPx + 4, yScale.bottom - 5);
+                    // Attribute point labels
+                    chart.data.datasets[0].data.forEach(function(pt) {
+                        var px = xScale.getPixelForValue(pt.x);
+                        var py = yScale.getPixelForValue(pt.y);
+                        c.font = 'bold 9px sans-serif';
+                        c.fillStyle = '#333';
+                        c.fillText(pt.label, px + 7, py - 4);
+                    });
+                    c.restore();
+                }
+            };
+
+            window.page5Chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        data: scatterData,
+                        backgroundColor: scatterData.map(function(d) { return qColors[d.q] + 'CC'; }),
+                        borderColor: scatterData.map(function(d) { return qColors[d.q]; }),
+                        borderWidth: 2,
+                        pointRadius: 10,
+                        pointHoverRadius: 13
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {display: false},
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) { return ctx.raw.label + ': Survey ' + ctx.raw.x + '% | Reviews ' + ctx.raw.y + '%'; }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {display: true, text: '← MEMORY (Survey Association %) →', font: {size: 11, weight: 'bold'}},
+                            min: 0,
+                            ticks: {callback: function(v) { return v + '%'; }}
+                        },
+                        y: {
+                            title: {display: true, text: '← EXPERIENCE (Review Positive %) →', font: {size: 11, weight: 'bold'}},
+                            min: 0, max: 105,
+                            ticks: {callback: function(v) { return v + '%'; }}
+                        }
+                    }
+                },
+                plugins: [thresholdPlugin]
+            });
+
+            // Quadrant summary cards
+            var quadrantMap = {'Reinforced Strength': [], 'Broken Promise': [], 'Missed Opportunity': [], 'Low Priority': []};
+            ATTRS.forEach(function(attr) { quadrantMap[quadrants[attr].q].push({attr: attr, x: quadrants[attr].x, y: quadrants[attr].y}); });
+
+            function buildCard(items, noDataMsg) {
+                if (!items.length) return '<p style="font-size:12px;color:#999;padding:4px 0;">' + noDataMsg + '</p>';
+                return items.map(function(d) {
+                    return '<div style="padding:8px 0;border-bottom:1px solid #F0F0F0;display:flex;justify-content:space-between;align-items:baseline;">' +
+                        '<span style="font-size:13px;font-weight:600;color:#333;">' + d.attr + '</span>' +
+                        '<span style="font-size:11px;color:#666;white-space:nowrap;margin-left:8px;">Survey ' + d.x + '% · Reviews ' + d.y + '%</span>' +
+                        '</div>';
+                }).join('');
+            }
+
+            document.getElementById('page5-reinforced').innerHTML = buildCard(quadrantMap['Reinforced Strength'], 'None in this quadrant');
+            document.getElementById('page5-broken').innerHTML = buildCard(quadrantMap['Broken Promise'], 'No broken promises detected');
+            document.getElementById('page5-missed').innerHTML = buildCard(quadrantMap['Missed Opportunity'], 'No missed opportunities');
+            document.getElementById('page5-low').innerHTML = buildCard(quadrantMap['Low Priority'], 'None');
+
+            // Full alignment table
+            var qBadge = {
+                'Reinforced Strength': '<span style="background:#2ECC71;color:white;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;">STRENGTH</span>',
+                'Broken Promise': '<span style="background:#E74C3C;color:white;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;">BROKEN</span>',
+                'Missed Opportunity': '<span style="background:#F39C12;color:white;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;">MISSED</span>',
+                'Low Priority': '<span style="background:#BDC3C7;color:#555;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;">LOW</span>'
+            };
+            var tHtml = '<table class="comparison-table" style="font-size:12px;">' +
+                '<thead><tr><th>ATTRIBUTE</th><th style="text-align:right;">SURVEY (MEMORY)</th><th style="text-align:right;">REVIEWS (EXPERIENCE)</th><th style="text-align:center;">QUADRANT</th></tr></thead><tbody>';
+            ATTRS.forEach(function(attr) {
+                var d = quadrants[attr];
+                tHtml += '<tr>' +
+                    '<td class="table-label">' + attr + '</td>' +
+                    '<td class="table-value" style="text-align:right;">' + d.x + '%</td>' +
+                    '<td class="table-value" style="text-align:right;color:' + (d.y >= 60 ? '#2ECC71' : '#E74C3C') + ';">' + d.y + '%</td>' +
+                    '<td style="text-align:center;">' + qBadge[d.q] + '</td>' +
+                    '</tr>';
+            });
+            tHtml += '</tbody></table>';
+            document.getElementById('page5-table').innerHTML = tHtml;
+        }
+
+        function updatePage6() {
+            const presLeader = getLeader(b => q18[b].convenient);
+            const promLeader = getLeader(b => q19[b].positive);
+            const portLeader = getLeader(b => q24[b]['Menu Variety']);
+            const presGap = (q18[selectedBrand].convenient - q18[presLeader].convenient).toFixed(1);
+            const promGap = (q19[selectedBrand].positive - q19[promLeader].positive).toFixed(1);
+            const portGap = (q24[selectedBrand]['Menu Variety'] - q24[portLeader]['Menu Variety']).toFixed(1);
+            document.getElementById('gap-presence').innerHTML = `<span style="color:${presGap >= 0 ? '#2ECC71':'#E74C3C'}">${presGap >= 0 ? '+':''}${presGap}pp</span>`;
+            document.getElementById('gap-prominence').innerHTML = `<span style="color:${promGap >= 0 ? '#2ECC71':'#E74C3C'}">${promGap >= 0 ? '+':''}${promGap}pp</span>`;
+            document.getElementById('gap-portfolio').innerHTML = `<span style="color:${portGap >= 0 ? '#2ECC71':'#E74C3C'}">${portGap >= 0 ? '+':''}${portGap}pp</span>`;
+
+            const leader = presLeader;
+            const metrics18 = [
+                {name:'P1: Ease Score', selected:q18[selectedBrand].convenient, leader:q18[leader].convenient},
+                {name:'P2: Friction Rate', selected:q18[selectedBrand].impossible, leader:q18[leader].impossible},
+                {name:'P3: Trial Penetration', selected:q15[selectedBrand].trial, leader:q15[leader].trial},
+                {name:'P4: Freq Momentum', selected:q17[selectedBrand].net, leader:q17[leader].net},
+                {name:'P5: Location Assoc', selected:q24[selectedBrand].Location, leader:q24[leader].Location},
+                {name:'PR1: Impression', selected:q19[selectedBrand].positive, leader:q19[leader].positive},
+                {name:'PR2: Value Standout', selected:q20[selectedBrand].good_value, leader:q20[leader].good_value},
+                {name:'PR3: Momentum', selected:q21[selectedBrand].net, leader:q21[leader].net},
+                {name:'PR4: Ad Recall', selected:q16[selectedBrand], leader:q16[leader]},
+                {name:'PR5: Net Advocacy', selected:q22[selectedBrand].net, leader:q22[leader].net},
+                {name:'PR6: Reputation', selected:q24[selectedBrand].Reputation, leader:q24[leader].Reputation},
+                {name:'PO1: Menu Variety', selected:q24[selectedBrand]['Menu Variety'], leader:q24[leader]['Menu Variety']},
+                {name:'PO2: Innovation', selected:q24[selectedBrand].Innovation, leader:q24[leader].Innovation},
+                {name:'PO3: Taste', selected:q24[selectedBrand].Taste, leader:q24[leader].Taste},
+                {name:'PO4: Health Options', selected:q24[selectedBrand]['Health Options'], leader:q24[leader]['Health Options']},
+                {name:'PO5: Price Access', selected:q24[selectedBrand]['Price/Value'], leader:q24[leader]['Price/Value']}
+            ];
+            const bulletsCtx = document.getElementById('page6-bullets');
+            if (chartInstances['page6-bullets']) chartInstances['page6-bullets'].destroy();
+            chartInstances['page6-bullets'] = new Chart(bulletsCtx, {type: 'bar', data: {labels: metrics18.map(m => m.name), datasets: [{label: leader + ' (Leader)', data: metrics18.map(m => m.leader), backgroundColor: '#CCCCCC'}, {label: selectedBrand, data: metrics18.map(m => m.selected), backgroundColor: BRAND_COLORS[selectedBrand]}]}, options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: true, position: 'bottom'}}, scales: {x: {beginAtZero: true}}}});
+
+            const heatmap = document.getElementById('page6-heatmap');
+            const metricGetters = [
+                {name:'P1: Ease Score', fn: b => q18[b].convenient},
+                {name:'P2: Friction', fn: b => q18[b].impossible},
+                {name:'P3: Trial', fn: b => q15[b].trial},
+                {name:'P4: Freq Net', fn: b => q17[b].net},
+                {name:'P5: Location', fn: b => q24[b].Location},
+                {name:'PR1: Impression', fn: b => q19[b].positive},
+                {name:'PR2: Value', fn: b => q20[b].good_value},
+                {name:'PR3: Momentum', fn: b => q21[b].net},
+                {name:'PR4: Ad Recall', fn: b => q16[b]},
+                {name:'PR5: Advocacy', fn: b => q22[b].net},
+                {name:'PR6: Reputation', fn: b => q24[b].Reputation},
+                {name:'PO1: Variety', fn: b => q24[b]['Menu Variety']},
+                {name:'PO2: Innovation', fn: b => q24[b].Innovation},
+                {name:'PO3: Taste', fn: b => q24[b].Taste},
+                {name:'PO4: Health', fn: b => q24[b]['Health Options']},
+                {name:'PO5: Price', fn: b => q24[b]['Price/Value']}
+            ];
+            let heatmapHTML = '<table class="heatmap-table"><thead><tr><th>METRIC</th>';
+            BRANDS.forEach(b => heatmapHTML += `<th style="font-size: 9px;">${b.substring(0, 4)}</th>`);
+            heatmapHTML += '</tr></thead><tbody>';
+            metricGetters.forEach(m => {
+                const vals = BRANDS.map(b => m.fn(b));
+                const maxVal = Math.max(...vals);
+                const minVal = Math.min(...vals);
+                heatmapHTML += `<tr><td class="table-label">${m.name}</td>`;
+                BRANDS.forEach((brand, i) => {
+                    const val = vals[i];
+                    const isInverse = m.name.includes('Friction');
+                    let color = '#FFF';
+                    if (!isInverse) {
+                        if (val === maxVal) color = '#D5F5E3';
+                        else if (val === minVal) color = '#FADBD8';
+                    } else {
+                        if (val === minVal) color = '#D5F5E3';
+                        else if (val === maxVal) color = '#FADBD8';
+                    }
+                    const isSel = brand === selectedBrand ? 'font-weight:bold;color:#E85D3A;' : '';
+                    heatmapHTML += `<td class="heatmap-cell" style="background:${color};${isSel}">${val.toFixed(1)}</td>`;
+                });
+                heatmapHTML += '</tr>';
+            });
+            heatmapHTML += '</tbody></table>';
+            heatmap.innerHTML = heatmapHTML;
+        }
+
+        function updatePageSpecificCharts(pageNum) {
+            if (pageNum === 1) updatePage1();
+            else if (pageNum === 2) updatePage2();
+            else if (pageNum === 3) updatePage3();
+            else if (pageNum === 4) updatePage4();
+            else if (pageNum === 5) updatePage5();
+            else if (pageNum === 6) updatePage6();
+        }
+
+        function updateAllPages() {
+            updatePage1(); updatePage2(); updatePage3(); updatePage4(); updatePage5(); updatePage6();
+        }
+
+        initBrandStrip();
+        updateAllPages();
+    </script>
+</body>
+</html>

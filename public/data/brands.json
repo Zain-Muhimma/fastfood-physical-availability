@@ -1,0 +1,12 @@
+[
+  { "id": "kudu", "name": "Kudu", "logo": "/logos/kudu.png", "isDefault": true },
+  { "id": "burgerizzr", "name": "Burgerizzr", "logo": "/logos/burgerizzr.png", "isDefault": false },
+  { "id": "albaik", "name": "Al Baik", "logo": "/logos/al_baik.png", "isDefault": false },
+  { "id": "mcdonalds", "name": "McDonalds", "logo": "/logos/mcdonalds.png", "isDefault": false },
+  { "id": "kfc", "name": "KFC", "logo": "/logos/kfc.png", "isDefault": false },
+  { "id": "signburger", "name": "Sign Burger", "logo": "/logos/sign_burger.png", "isDefault": false },
+  { "id": "burgerking", "name": "Burger King", "logo": "/logos/burger-king-logo-rebrand-bk-jkr_logo_dezeen_2364_col_0.jpg", "isDefault": false },
+  { "id": "baytalshawarma", "name": "Bayt Al-Shawarma", "logo": "/logos/bayt_al_shawarma.png", "isDefault": false },
+  { "id": "hardees", "name": "Hardees", "logo": "/logos/hardees.png", "isDefault": false },
+  { "id": "herfy", "name": "Herfy", "logo": "/logos/herfy.png", "isDefault": false }
+]

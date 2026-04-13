@@ -1,0 +1,37 @@
+{
+  "name": "physical-availability-dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.13.1",
+    "vite": "^6.0.0",
+    "tailwindcss": "^3.4.19",
+    "recharts": "^3.8.1",
+    "@phosphor-icons/react": "^2.1.10",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.7",
+    "react-markdown": "^10.1.0",
+    "groq-sdk": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.19"
+  }
+}
