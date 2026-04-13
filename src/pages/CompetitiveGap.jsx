@@ -65,8 +65,12 @@ const CompetitiveGap = () => {
     if (!allMetrics || brands.length === 0) return {};
     const ranks = {};
     metricKeys.forEach((key) => {
+      const def = METRIC_DEFS[key];
       const values = brands.map((b) => getMetricValue(allMetrics, b, key));
-      const sorted = [...values].sort((a, b) => b - a);
+      // For inverted metrics (Friction Rate), lower is better → sort ascending for top3
+      const sorted = def?.invert
+        ? [...values].sort((a, b) => a - b)
+        : [...values].sort((a, b) => b - a);
       const top3 = sorted.slice(0, 3);
       const bottom3 = sorted.slice(-3);
       ranks[key] = { top3: new Set(top3), bottom3: new Set(bottom3) };

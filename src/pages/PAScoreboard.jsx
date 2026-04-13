@@ -124,31 +124,52 @@ const StrategicRead = ({ allMetrics, focusedBrand, brandNames, leader }) => {
 };
 
 /* ── Strongest & Weakest PA ── */
-const StrengthWeakness = ({ allMetrics, focusedBrand }) => {
+const StrengthWeakness = ({ allMetrics, focusedBrand, brandNames }) => {
   const fb = allMetrics[focusedBrand];
   if (!fb) return null;
 
-  // Gather all 18 metrics with values
-  const all = Object.entries(METRIC_DEFS).map(([key, def]) => ({
-    key, label: def.label, short: def.short, dim: def.dim,
-    value: fb[def.dim]?.[key] ?? 0,
-    format: def.format, invert: def.invert,
-  }));
+  // For each metric, compute the focused brand's RANK among all 10 brands.
+  // A metric is "strong" when the brand ranks high (close to #1) among competitors.
+  // For inverted metrics (Friction Rate), lower raw value = better rank.
+  const all = Object.entries(METRIC_DEFS).map(([key, def]) => {
+    const fbVal = fb[def.dim]?.[key] ?? 0;
 
-  // For inverted metrics (friction), lower is better → sort ascending for strengths
-  const scored = all.map(m => ({
-    ...m,
-    effectiveScore: m.invert ? (1 - m.value) : (m.format === 'net' ? (m.value + 1) / 2 : m.value),
-  }));
+    // Get all brands' values for this metric
+    const brandVals = brandNames.map(b => ({
+      brand: b,
+      val: allMetrics[b]?.[def.dim]?.[key] ?? 0,
+    }));
 
-  const sorted = [...scored].sort((a, b) => b.effectiveScore - a.effectiveScore);
+    // Sort: for inverted metrics (lower=better), sort ascending; otherwise descending
+    if (def.invert) {
+      brandVals.sort((a, b) => a.val - b.val);
+    } else if (def.format === 'net') {
+      brandVals.sort((a, b) => b.val - a.val);
+    } else {
+      brandVals.sort((a, b) => b.val - a.val);
+    }
+
+    const rank = brandVals.findIndex(b => b.brand === focusedBrand) + 1;
+
+    return {
+      key, label: def.label, short: def.short, dim: def.dim,
+      value: fbVal, format: def.format, invert: def.invert,
+      rank, // 1 = best, 10 = worst
+    };
+  });
+
+  // Strongest = lowest rank number (best performing vs competitors)
+  const sorted = [...all].sort((a, b) => a.rank - b.rank);
   const top3 = sorted.slice(0, 3);
+  // Weakest = highest rank number (worst performing vs competitors)
   const bottom3 = sorted.slice(-3).reverse();
 
   const renderItem = (item, color) => (
     <div key={item.key} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
       <div className="flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+        <span className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white" style={{ backgroundColor: color }}>
+          {item.rank}
+        </span>
         <span className="text-[11px] text-text-primary font-medium">{item.label}</span>
         <span className="text-[9px] text-text-secondary uppercase">{item.dim}</span>
       </div>
@@ -420,7 +441,7 @@ const PAScoreboard = () => {
           <StrategicRead allMetrics={allMetrics} focusedBrand={fb} brandNames={brandNames} leader={leader} />
 
           {/* 4. Strongest & Weakest PA */}
-          <StrengthWeakness allMetrics={allMetrics} focusedBrand={fb} />
+          <StrengthWeakness allMetrics={allMetrics} focusedBrand={fb} brandNames={brandNames} />
 
           {/* 5. Customer Journey Funnel */}
           <CustomerFunnel data={data} focusedBrand={fb} />
