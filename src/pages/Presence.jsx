@@ -4,13 +4,14 @@ import { useFilters, useData, useGuide } from '../data/dataLoader.jsx';
 import { guides } from '../data/metricGuides.js';
 import PageViewModeFallback from '../components/PageViewModeFallback.jsx';
 import { METRIC_DEFS, fmtMetric } from '../data/metrics.js';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter, ZAxis, ReferenceLine } from 'recharts';
 import { ChartBar, Table, MagnifyingGlass } from '@phosphor-icons/react';
 
 const ORANGE = '#F36B1F';
 const GRAY = '#D1D5DB';
 const GREEN = '#2E7D32';
 const RED = '#DC2626';
+const AMBER = '#F59E0B';
 
 /* Presence metric keys in order P1-P6 */
 const PRESENCE_KEYS = [
@@ -61,42 +62,46 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, delay 
           const barColor = isFocused ? ORANGE : GRAY;
 
           if (isNet) {
-            // Diverging bar for net scores
             const pct = (Math.abs(item.display) / maxAbs) * 50;
             const isPositive = item.display >= 0;
             return (
               <div key={item.brand} className="flex items-center gap-2">
                 <span
-                  className={`text-[11px] w-20 truncate text-right ${
+                  className={`text-[11px] w-24 truncate text-right ${
                     isFocused ? 'font-semibold text-orange-primary' : 'text-text-secondary'
                   }`}
                 >
                   {item.brand}
                 </span>
-                <div className="flex-1 h-5 relative flex">
+                <div className="flex-1 h-5 flex items-center">
+                  {/* Left half (negative) */}
+                  <div className="w-1/2 flex justify-end">
+                    {!isPositive && (
+                      <div
+                        className="h-4 rounded-l-[4px]"
+                        style={{
+                          width: `${pct}%`,
+                          backgroundColor: isFocused ? ORANGE : '#FCA5A5',
+                        }}
+                      />
+                    )}
+                  </div>
                   {/* Center line */}
-                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300" />
-                  {/* Bar */}
-                  <div className="flex-1 flex items-center" style={{ direction: isPositive ? 'ltr' : 'rtl' }}>
-                    <div
-                      className="h-full rounded-[4px] transition-all duration-700"
-                      style={{
-                        width: `${pct}%`,
-                        backgroundColor: isFocused
-                          ? ORANGE
-                          : isPositive
-                          ? '#86EFAC'
-                          : '#FCA5A5',
-                        marginLeft: isPositive ? '50%' : 'auto',
-                        marginRight: isPositive ? 'auto' : '50%',
-                        position: 'absolute',
-                        left: isPositive ? '50%' : 'auto',
-                        right: isPositive ? 'auto' : '50%',
-                      }}
-                    />
+                  <div className="w-px h-5 bg-gray-300 flex-shrink-0" />
+                  {/* Right half (positive) */}
+                  <div className="w-1/2">
+                    {isPositive && (
+                      <div
+                        className="h-4 rounded-r-[4px]"
+                        style={{
+                          width: `${pct}%`,
+                          backgroundColor: isFocused ? ORANGE : '#86EFAC',
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
-                <span className="text-[11px] font-semibold text-text-primary w-14 text-right">
+                <span className={`text-[11px] font-semibold w-14 text-right ${isPositive ? 'text-green-700' : 'text-red-600'}`}>
                   {fmtMetric(item.raw, 'net')}
                 </span>
               </div>
@@ -345,6 +350,285 @@ const DeepDiveCard = ({ allMetrics, focusedBrand, leader }) => {
   );
 };
 
+/* ---------- helper: find Q18 option key by substring ---------- */
+const findQ18Option = (opts, substring) => {
+  if (!opts) return null;
+  const lc = substring.toLowerCase();
+  const keys = Object.keys(opts);
+  const startsWith = keys.find(k => k.toLowerCase().startsWith(lc));
+  if (startsWith) return startsWith;
+  return keys.find(k => {
+    const klc = k.toLowerCase();
+    const idx = klc.indexOf(lc);
+    return idx >= 0 && (idx === 0 || /[\s\/–—,]/.test(klc[idx - 1]));
+  });
+};
+
+/* ---------- 1. Stacked Bar: Ease Distribution (all brands) ---------- */
+const EaseStackedBars = ({ data, brandNames, focusedBrand }) => {
+  const barData = useMemo(() => {
+    return brandNames.map((brand) => {
+      const opts = data?.paData?.q18?.[brand]?.options;
+      const impossibleKey = findQ18Option(opts, 'Impossible');
+      const inconvenientKey = findQ18Option(opts, 'Inconvenient');
+      const convenientKey = findQ18Option(opts, 'Convenient');
+      const impossible = impossibleKey ? (opts[impossibleKey]?.Total ?? 0) * 100 : 0;
+      const inconvenient = inconvenientKey ? (opts[inconvenientKey]?.Total ?? 0) * 100 : 0;
+      const convenient = convenientKey ? (opts[convenientKey]?.Total ?? 0) * 100 : 0;
+      return { brand, impossible, inconvenient, convenient };
+    }).sort((a, b) => b.convenient - a.convenient);
+  }, [data, brandNames]);
+
+  return (
+    <div
+      className="bg-card rounded-card p-5 animate-slide-up col-span-full"
+      style={{ animationDelay: '500ms' }}
+    >
+      <h3 className="font-display text-lg text-text-primary tracking-wide mb-0.5">
+        Ease of Access Distribution
+      </h3>
+      <p className="text-[10px] text-text-secondary mb-4">
+        Q18: How easy is it to dine at each brand? (Impossible / Inconvenient / Convenient)
+      </p>
+
+      <div className="space-y-2.5">
+        {barData.map((item) => {
+          const isFocused = item.brand === focusedBrand;
+          const total = item.impossible + item.inconvenient + item.convenient;
+          const pctImp = total > 0 ? (item.impossible / total) * 100 : 0;
+          const pctInc = total > 0 ? (item.inconvenient / total) * 100 : 0;
+          const pctCon = total > 0 ? (item.convenient / total) * 100 : 0;
+          return (
+            <div key={item.brand} className="flex items-center gap-2">
+              <span
+                className={`text-[11px] w-24 truncate text-right ${
+                  isFocused ? 'font-semibold text-orange-primary' : 'text-text-secondary'
+                }`}
+              >
+                {item.brand}
+              </span>
+              <div className={`flex-1 h-5 flex rounded-[5px] overflow-hidden ${isFocused ? 'ring-2 ring-orange-primary/40' : ''}`}>
+                {pctImp > 0 && (
+                  <div
+                    className="h-full flex items-center justify-center text-[9px] font-semibold text-white"
+                    style={{ width: `${pctImp}%`, backgroundColor: RED }}
+                    title={`Impossible: ${pctImp.toFixed(1)}%`}
+                  >
+                    {pctImp > 8 ? `${pctImp.toFixed(0)}%` : ''}
+                  </div>
+                )}
+                {pctInc > 0 && (
+                  <div
+                    className="h-full flex items-center justify-center text-[9px] font-semibold text-white"
+                    style={{ width: `${pctInc}%`, backgroundColor: AMBER }}
+                    title={`Inconvenient: ${pctInc.toFixed(1)}%`}
+                  >
+                    {pctInc > 8 ? `${pctInc.toFixed(0)}%` : ''}
+                  </div>
+                )}
+                {pctCon > 0 && (
+                  <div
+                    className="h-full flex items-center justify-center text-[9px] font-semibold text-white"
+                    style={{ width: `${pctCon}%`, backgroundColor: GREEN }}
+                    title={`Convenient: ${pctCon.toFixed(1)}%`}
+                  >
+                    {pctCon > 8 ? `${pctCon.toFixed(0)}%` : ''}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <div className="flex gap-5 mt-4">
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: RED }} />
+          <span className="text-[11px] text-text-secondary">Impossible</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: AMBER }} />
+          <span className="text-[11px] text-text-secondary">Inconvenient</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: GREEN }} />
+          <span className="text-[11px] text-text-secondary">Convenient</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ---------- 2. Regional Ease Breakdown ---------- */
+const REGION_KEYS = ['Riyadh', 'Jeddah', 'Dammam / Al Khobar', 'Mecca / Madinah / Taif', 'Other Regions'];
+
+const RegionalEaseBreakdown = ({ data, focusedBrand }) => {
+  const regionData = useMemo(() => {
+    const opts = data?.paData?.q18?.[focusedBrand]?.options;
+    if (!opts) return [];
+    const convenientKey = findQ18Option(opts, 'Convenient');
+    if (!convenientKey) return [];
+    const convenientObj = opts[convenientKey];
+    if (!convenientObj) return [];
+
+    return REGION_KEYS
+      .map((region) => ({
+        region,
+        value: (convenientObj[region] ?? 0) * 100,
+      }))
+      .filter((d) => d.value > 0)
+      .sort((a, b) => b.value - a.value);
+  }, [data, focusedBrand]);
+
+  if (!regionData.length) return null;
+
+  const maxVal = Math.max(...regionData.map((d) => d.value), 1);
+
+  return (
+    <div
+      className="bg-card rounded-card p-5 animate-slide-up"
+      style={{ animationDelay: '600ms' }}
+    >
+      <h3 className="font-display text-lg text-text-primary tracking-wide mb-0.5">
+        Regional Ease Breakdown
+      </h3>
+      <p className="text-[10px] text-text-secondary mb-4">
+        Q18 Convenient score by region for {focusedBrand}
+      </p>
+
+      <div className="space-y-2.5">
+        {regionData.map((item) => {
+          const barWidth = (item.value / maxVal) * 100;
+          return (
+            <div key={item.region} className="flex items-center gap-2">
+              <span className="text-[11px] w-36 truncate text-right text-text-secondary">
+                {item.region}
+              </span>
+              <div className="flex-1 h-5 bg-gray-100 rounded-[5px] overflow-hidden">
+                <div
+                  className="h-full rounded-[5px] transition-all duration-700"
+                  style={{ width: `${barWidth}%`, backgroundColor: ORANGE }}
+                />
+              </div>
+              <span className="text-[11px] font-semibold text-text-primary w-14 text-right">
+                {item.value.toFixed(1)}%
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+/* ---------- 3. Location Association vs Ease Scatter ---------- */
+const LocationEaseScatter = ({ allMetrics, brandNames, focusedBrand }) => {
+  const scatterData = useMemo(() => {
+    return brandNames.map((brand) => {
+      const p = allMetrics[brand]?.presence ?? {};
+      return {
+        brand,
+        x: (p.P5_locationAssociation ?? 0) * 100,
+        y: (p.P1_easeScore ?? 0) * 100,
+      };
+    });
+  }, [allMetrics, brandNames]);
+
+  const medianX = useMemo(() => {
+    const sorted = [...scatterData].sort((a, b) => a.x - b.x);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 === 0
+      ? (sorted[mid - 1].x + sorted[mid].x) / 2
+      : sorted[mid].x;
+  }, [scatterData]);
+
+  const medianY = useMemo(() => {
+    const sorted = [...scatterData].sort((a, b) => a.y - b.y);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 === 0
+      ? (sorted[mid - 1].y + sorted[mid].y) / 2
+      : sorted[mid].y;
+  }, [scatterData]);
+
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload?.length) {
+      const d = payload[0].payload;
+      return (
+        <div className="bg-white border border-gray-200 rounded-lg px-3 py-2 shadow-md text-[11px]">
+          <p className="font-semibold text-text-primary">{d.brand}</p>
+          <p className="text-text-secondary">Location: {d.x.toFixed(1)}%</p>
+          <p className="text-text-secondary">Ease: {d.y.toFixed(1)}%</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <div
+      className="bg-card rounded-card p-5 animate-slide-up"
+      style={{ animationDelay: '700ms' }}
+    >
+      <h3 className="font-display text-lg text-text-primary tracking-wide mb-0.5">
+        Location Association vs Ease Score
+      </h3>
+      <p className="text-[10px] text-text-secondary mb-4">
+        X = Location Association (P5) | Y = Ease Score (P1) | Dashed lines = median
+      </p>
+
+      <ResponsiveContainer width="100%" height={320}>
+        <ScatterChart margin={{ top: 10, right: 20, bottom: 30, left: 10 }}>
+          <XAxis
+            type="number"
+            dataKey="x"
+            name="Location"
+            unit="%"
+            tick={{ fontSize: 10, fill: '#6B7280' }}
+            label={{ value: 'Location Association (%)', position: 'bottom', fontSize: 10, fill: '#6B7280', offset: 10 }}
+          />
+          <YAxis
+            type="number"
+            dataKey="y"
+            name="Ease"
+            unit="%"
+            tick={{ fontSize: 10, fill: '#6B7280' }}
+            label={{ value: 'Ease Score (%)', angle: -90, position: 'insideLeft', fontSize: 10, fill: '#6B7280', offset: 0 }}
+          />
+          <ZAxis range={[120, 120]} />
+          <Tooltip content={<CustomTooltip />} />
+          <ReferenceLine x={medianX} stroke="#9CA3AF" strokeDasharray="4 4" label="" />
+          <ReferenceLine y={medianY} stroke="#9CA3AF" strokeDasharray="4 4" label="" />
+          <Scatter data={scatterData} shape="circle">
+            {scatterData.map((entry) => (
+              <Cell
+                key={entry.brand}
+                fill={entry.brand === focusedBrand ? ORANGE : GRAY}
+                stroke={entry.brand === focusedBrand ? ORANGE : '#9CA3AF'}
+                strokeWidth={entry.brand === focusedBrand ? 2 : 1}
+              />
+            ))}
+          </Scatter>
+        </ScatterChart>
+      </ResponsiveContainer>
+
+      {/* Brand labels below chart */}
+      <div className="flex flex-wrap gap-3 mt-3 justify-center">
+        {scatterData.map((d) => (
+          <span
+            key={d.brand}
+            className={`text-[10px] ${
+              d.brand === focusedBrand ? 'font-semibold text-orange-primary' : 'text-text-secondary'
+            }`}
+          >
+            {d.brand}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 /* ========== PAGE COMPONENT ========== */
 const Presence = () => {
   const { setViewMode } = useViewMode();
@@ -405,19 +689,30 @@ const Presence = () => {
         </div>
       </div>
 
-      {/* Overview mode: 6 metric bar cards */}
+      {/* Overview mode: 6 metric bar cards + additional visuals */}
       {view === 'overview' && (
-        <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
-          {PRESENCE_KEYS.map((key, i) => (
-            <MetricBarCard
-              key={key}
-              metricKey={key}
-              allMetrics={allMetrics}
-              brandNames={brandNames}
-              focusedBrand={fb}
-              delay={i * 80}
-            />
-          ))}
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
+            {PRESENCE_KEYS.map((key, i) => (
+              <MetricBarCard
+                key={key}
+                metricKey={key}
+                allMetrics={allMetrics}
+                brandNames={brandNames}
+                focusedBrand={fb}
+                delay={i * 80}
+              />
+            ))}
+          </div>
+
+          {/* Stacked Bar: Ease Distribution (all brands) */}
+          <EaseStackedBars data={data} brandNames={brandNames} focusedBrand={fb} />
+
+          {/* Regional Ease Breakdown + Location vs Ease Scatter */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <RegionalEaseBreakdown data={data} focusedBrand={fb} />
+            <LocationEaseScatter allMetrics={allMetrics} brandNames={brandNames} focusedBrand={fb} />
+          </div>
         </div>
       )}
 

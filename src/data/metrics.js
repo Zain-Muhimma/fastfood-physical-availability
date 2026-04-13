@@ -59,7 +59,14 @@ export const locationAssociation = (data, brand, seg = 'Total') => {
   return getVal(data, 'q24', 'Location', brand, seg);
 };
 
-export const locationLoyalty = (data, seg = 'Total') => {
+export const locationLoyalty = (data, brand, seg = 'Total') => {
+  // Per-brand Q25 (cross-tabulated with Q15b main brand)
+  const perBrand = data?.q25_per_brand?.[brand]?.reasons;
+  if (perBrand) {
+    const key = Object.keys(perBrand).find(k => k.toLowerCase().includes('location'));
+    return key ? getVal(perBrand, key, seg) : 0;
+  }
+  // Fallback to global Q25
   const reasons = data?.q25?.reasons;
   if (!reasons) return 0;
   const key = Object.keys(reasons).find(k => k.toLowerCase().includes('location'));
@@ -115,7 +122,12 @@ export const tasteQuality = (data, brand, seg = 'Total') => getVal(data, 'q24', 
 export const healthOptionBreadth = (data, brand, seg = 'Total') => getVal(data, 'q24', 'Health', brand, seg);
 export const priceAccessibility = (data, brand, seg = 'Total') => getVal(data, 'q24', 'Price', brand, seg);
 
-export const portfolioDistinctiveness = (data, seg = 'Total') => {
+export const portfolioDistinctiveness = (data, brand, seg = 'Total') => {
+  const perBrand = data?.q25_per_brand?.[brand]?.reasons;
+  if (perBrand) {
+    const key = Object.keys(perBrand).find(k => k.toLowerCase().includes('unique'));
+    return key ? getVal(perBrand, key, seg) : 0;
+  }
   const reasons = data?.q25?.reasons;
   if (!reasons) return 0;
   const key = Object.keys(reasons).find(k => k.toLowerCase().includes('unique'));
@@ -129,7 +141,7 @@ export const presenceScore = (data, brand, seg = 'Total') => {
   const p3 = trialPenetration(data, brand, seg);
   const p4 = (frequencyMomentum(data, brand, seg) + 1) / 2;
   const p5 = locationAssociation(data, brand, seg);
-  const p6 = locationLoyalty(data, seg);
+  const p6 = locationLoyalty(data, brand, seg);
   return (p1 + p2 + p3 + p4 + p5 + p6) / 6;
 };
 
@@ -149,7 +161,7 @@ export const portfolioScore = (data, brand, seg = 'Total') => {
   const po3 = tasteQuality(data, brand, seg);
   const po4 = healthOptionBreadth(data, brand, seg);
   const po5 = priceAccessibility(data, brand, seg);
-  const po6 = portfolioDistinctiveness(data, seg);
+  const po6 = portfolioDistinctiveness(data, brand, seg);
   return (po1 + po2 + po3 + po4 + po5 + po6) / 6;
 };
 
@@ -161,7 +173,7 @@ export const computeBrandMetrics = (data, brand, seg = 'Total') => ({
     P3_trialPenetration: trialPenetration(data, brand, seg),
     P4_frequencyMomentum: frequencyMomentum(data, brand, seg),
     P5_locationAssociation: locationAssociation(data, brand, seg),
-    P6_locationLoyalty: locationLoyalty(data, seg),
+    P6_locationLoyalty: locationLoyalty(data, brand, seg),
     score: presenceScore(data, brand, seg),
   },
   prominence: {
@@ -179,7 +191,7 @@ export const computeBrandMetrics = (data, brand, seg = 'Total') => ({
     PO3_tasteQuality: tasteQuality(data, brand, seg),
     PO4_healthOptionBreadth: healthOptionBreadth(data, brand, seg),
     PO5_priceAccessibility: priceAccessibility(data, brand, seg),
-    PO6_portfolioDistinctiveness: portfolioDistinctiveness(data, seg),
+    PO6_portfolioDistinctiveness: portfolioDistinctiveness(data, brand, seg),
     score: portfolioScore(data, brand, seg),
   },
 });

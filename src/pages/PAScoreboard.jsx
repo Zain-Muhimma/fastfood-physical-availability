@@ -219,15 +219,10 @@ const CustomerFunnel = ({ data, focusedBrand }) => {
   );
 };
 
-/* ── Radar Comparison (for Overall PA tab) ── */
-const RADAR_METRICS = [
-  { key: 'P1_easeScore', dim: 'presence', label: 'Ease' },
-  { key: 'P3_trialPenetration', dim: 'presence', label: 'Trial' },
-  { key: 'PR1_impressionScore', dim: 'prominence', label: 'Impression' },
-  { key: 'PR3_perceivedMomentum', dim: 'prominence', label: 'Momentum' },
-  { key: 'PO1_varietyPerception', dim: 'portfolio', label: 'Variety' },
-  { key: 'PO3_tasteQuality', dim: 'portfolio', label: 'Taste' },
-];
+/* ── Radar Comparison (for Overall PA tab) — all 18 metrics ── */
+const RADAR_METRICS = Object.entries(METRIC_DEFS).map(([key, def]) => ({
+  key, dim: def.dim, label: def.short,
+}));
 
 const RadarComparison = ({ allMetrics, focusedBrand, leader }) => {
   const radarData = RADAR_METRICS.map(m => ({
@@ -376,6 +371,15 @@ const PAScoreboard = () => {
   const prominenceVal = fbMetrics?.prominence?.score ?? 0;
   const portfolioVal = fbMetrics?.portfolio?.score ?? 0;
 
+  // Blueprint KPI cards: show PRIMARY metric per dimension (P1, PR1, PO1)
+  const p1Val = fbMetrics?.presence?.P1_easeScore ?? 0;
+  const pr1Val = fbMetrics?.prominence?.PR1_impressionScore ?? 0;
+  const po1Val = fbMetrics?.portfolio?.PO1_varietyPerception ?? 0;
+  const leaderMetrics = allMetrics[leader];
+  const p1Leader = leaderMetrics?.presence?.P1_easeScore ?? 0;
+  const pr1Leader = leaderMetrics?.prominence?.PR1_impressionScore ?? 0;
+  const po1Leader = leaderMetrics?.portfolio?.PO1_varietyPerception ?? 0;
+
   return (
     <div className="p-6 min-h-[calc(100vh-155px)]">
       <div className="flex flex-col flex-shrink-0 mb-3">
@@ -386,20 +390,27 @@ const PAScoreboard = () => {
 
       {view === 'overview' ? (
         <div className="space-y-5">
-          {/* 1. Focused Brand KPI Cards */}
+          {/* 1. Focused Brand KPI Cards — Blueprint: show P1, PR1, PO1 with vs-leader delta */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="bg-card rounded-card p-5 text-center animate-slide-up">
-              <p className="text-[10px] text-text-secondary font-medium uppercase tracking-wider mb-1">Presence</p>
-              <p className="font-display text-[42px] leading-none text-orange-primary">{(presenceVal * 100).toFixed(1)}%</p>
-            </div>
-            <div className="bg-card rounded-card p-5 text-center animate-slide-up" style={{ animationDelay: '80ms' }}>
-              <p className="text-[10px] text-text-secondary font-medium uppercase tracking-wider mb-1">Prominence</p>
-              <p className="font-display text-[42px] leading-none text-green-positive">{(prominenceVal * 100).toFixed(1)}%</p>
-            </div>
-            <div className="bg-card rounded-card p-5 text-center animate-slide-up" style={{ animationDelay: '160ms' }}>
-              <p className="text-[10px] text-text-secondary font-medium uppercase tracking-wider mb-1">Portfolio</p>
-              <p className="font-display text-[42px] leading-none text-blue-info">{(portfolioVal * 100).toFixed(1)}%</p>
-            </div>
+            {[
+              { label: 'Presence', sub: 'Ease Score (P1)', val: p1Val, ldrVal: p1Leader, color: ORANGE },
+              { label: 'Prominence', sub: 'Impression Score (PR1)', val: pr1Val, ldrVal: pr1Leader, color: GREEN },
+              { label: 'Portfolio', sub: 'Variety Perception (PO1)', val: po1Val, ldrVal: po1Leader, color: BLUE },
+            ].map((card, i) => {
+              const delta = card.val - card.ldrVal;
+              return (
+                <div key={card.label} className="bg-card rounded-card p-5 text-center animate-slide-up" style={{ animationDelay: `${i * 80}ms` }}>
+                  <p className="text-[10px] text-text-secondary font-medium uppercase tracking-wider mb-1">{card.label}</p>
+                  <p className="font-display text-[42px] leading-none" style={{ color: card.color }}>{(card.val * 100).toFixed(1)}%</p>
+                  <p className="text-[10px] text-text-secondary mt-1">{card.sub}</p>
+                  {leader && leader !== fb && (
+                    <p className={`text-[10px] font-semibold mt-0.5 ${delta >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {delta >= 0 ? '+' : ''}{(delta * 100).toFixed(1)}pp vs {leader}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* 2. Brand Ranking Strip */}

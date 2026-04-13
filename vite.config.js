@@ -5,6 +5,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
+    server: {
+      allowedHosts: ['.trycloudflare.com'],
+    },
     plugins: [
       react(),
       {

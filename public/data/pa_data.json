@@ -6271,1277 +6271,483 @@
   },
   "q24": {
     "Taste": {
-      "McDonalds": {
-        "Total": 0.63773,
-        "Man": 0.662957,
-        "Woman": 0.609842,
-        "16-24": 0.572327,
-        "25-34": 0.678295,
-        "35-45": 0.558491,
-        "Saudi": 0.672535,
-        "Non-Saudi Arab": 0.54251,
-        "Non-Arab": 0.575758,
-        "Riyadh": 0.668403,
-        "Jeddah": 0.621053,
-        "Dammam / Al Khobar": 0.642857,
-        "Mecca / Madinah / Taif": 0.522727,
-        "Other Regions": 0.658228,
-        "Single": 0.558719,
-        "Married": 0.661894
-      },
-      "Burger King": {
-        "Total": 0.268781,
-        "Man": 0.284579,
-        "Woman": 0.251318,
-        "16-24": 0.194969,
-        "25-34": 0.27261,
-        "35-45": 0.301887,
-        "Saudi": 0.271127,
-        "Non-Saudi Arab": 0.271255,
-        "Non-Arab": 0.242424,
-        "Riyadh": 0.274306,
-        "Jeddah": 0.224561,
-        "Dammam / Al Khobar": 0.325397,
-        "Mecca / Madinah / Taif": 0.242424,
-        "Other Regions": 0.341772,
-        "Single": 0.16726,
-        "Married": 0.298458
-      },
-      "Herfy": {
-        "Total": 0.24374,
-        "Man": 0.230525,
-        "Woman": 0.258348,
-        "16-24": 0.194969,
-        "25-34": 0.237726,
-        "35-45": 0.290566,
-        "Saudi": 0.247653,
-        "Non-Saudi Arab": 0.267206,
-        "Non-Arab": 0.151515,
-        "Riyadh": 0.263889,
-        "Jeddah": 0.192982,
-        "Dammam / Al Khobar": 0.261905,
-        "Mecca / Madinah / Taif": 0.219697,
-        "Other Regions": 0.291139,
-        "Single": 0.16726,
-        "Married": 0.268722
-      },
-      "Hardees": {
-        "Total": 0.130217,
-        "Man": 0.127186,
-        "Woman": 0.133568,
-        "16-24": 0.138365,
-        "25-34": 0.126615,
-        "35-45": 0.135849,
-        "Saudi": 0.130282,
-        "Non-Saudi Arab": 0.1417,
-        "Non-Arab": 0.10101,
-        "Riyadh": 0.121528,
-        "Jeddah": 0.126316,
-        "Dammam / Al Khobar": 0.142857,
-        "Mecca / Madinah / Taif": 0.166667,
-        "Other Regions": 0.126582,
-        "Single": 0.092527,
-        "Married": 0.140969
-      },
       "Kudu": {
-        "Total": 0.142738,
-        "Man": 0.101749,
-        "Woman": 0.188049,
-        "16-24": 0.144654,
-        "25-34": 0.134367,
-        "35-45": 0.166038,
-        "Saudi": 0.147887,
-        "Non-Saudi Arab": 0.1417,
-        "Non-Arab": 0.10101,
-        "Riyadh": 0.135417,
-        "Jeddah": 0.14386,
-        "Dammam / Al Khobar": 0.18254,
-        "Mecca / Madinah / Taif": 0.136364,
-        "Other Regions": 0.139241,
-        "Single": 0.156584,
-        "Married": 0.138767
+        "Total": 0.142738
       },
       "Burgerizzr": {
-        "Total": 0.115192,
-        "Man": 0.085851,
-        "Woman": 0.147627,
-        "16-24": 0.119497,
-        "25-34": 0.118863,
-        "35-45": 0.101887,
-        "Saudi": 0.124413,
-        "Non-Saudi Arab": 0.093117,
-        "Non-Arab": 0.090909,
-        "Riyadh": 0.121528,
-        "Jeddah": 0.101754,
-        "Dammam / Al Khobar": 0.087302,
-        "Mecca / Madinah / Taif": 0.151515,
-        "Other Regions": 0.101266,
-        "Single": 0.113879,
-        "Married": 0.11674
-      },
-      "Sign Burger": {
-        "Total": 0.07429,
-        "Man": 0.052464,
-        "Woman": 0.098418,
-        "16-24": 0.08805,
-        "25-34": 0.077519,
-        "35-45": 0.056604,
-        "Saudi": 0.08216,
-        "Non-Saudi Arab": 0.068826,
-        "Non-Arab": 0.020202,
-        "Riyadh": 0.081597,
-        "Jeddah": 0.063158,
-        "Dammam / Al Khobar": 0.047619,
-        "Mecca / Madinah / Taif": 0.113636,
-        "Other Regions": 0.037975,
-        "Single": 0.092527,
-        "Married": 0.068282
-      },
-      "KFC": {
-        "Total": 0.154424,
-        "Man": 0.170111,
-        "Woman": 0.137083,
-        "16-24": 0.18239,
-        "25-34": 0.148579,
-        "35-45": 0.154717,
-        "Saudi": 0.137324,
-        "Non-Saudi Arab": 0.182186,
-        "Non-Arab": 0.232323,
-        "Riyadh": 0.147569,
-        "Jeddah": 0.157895,
-        "Dammam / Al Khobar": 0.150794,
-        "Mecca / Madinah / Taif": 0.159091,
-        "Other Regions": 0.189873,
-        "Single": 0.188612,
-        "Married": 0.145374
+        "Total": 0.115192
       },
       "Al Baik": {
-        "Total": 0.318865,
-        "Man": 0.341812,
-        "Woman": 0.293497,
-        "16-24": 0.36478,
-        "25-34": 0.299742,
-        "35-45": 0.34717,
-        "Saudi": 0.273474,
-        "Non-Saudi Arab": 0.421053,
-        "Non-Arab": 0.454545,
-        "Riyadh": 0.300347,
-        "Jeddah": 0.37193,
-        "Dammam / Al Khobar": 0.238095,
-        "Mecca / Madinah / Taif": 0.325758,
-        "Other Regions": 0.379747,
-        "Single": 0.409253,
-        "Married": 0.290749
+        "Total": 0.318865
+      },
+      "McDonalds": {
+        "Total": 0.63773
+      },
+      "KFC": {
+        "Total": 0.154424
+      },
+      "Sign Burger": {
+        "Total": 0.07429
+      },
+      "Burger King": {
+        "Total": 0.268781
       },
       "Bayt Al-Shawarma": {
-        "Total": 0.049249,
-        "Man": 0.058824,
-        "Woman": 0.038664,
-        "16-24": 0.025157,
-        "25-34": 0.05168,
-        "35-45": 0.056604,
-        "Saudi": 0.036385,
-        "Non-Saudi Arab": 0.097166,
-        "Non-Arab": 0.040404,
-        "Riyadh": 0.076389,
-        "Jeddah": 0.021053,
-        "Dammam / Al Khobar": 0.047619,
-        "Mecca / Madinah / Taif": 0.007576,
-        "Other Regions": 0.025316,
-        "Single": 0.046263,
-        "Married": 0.050661
+        "Total": 0.049249
+      },
+      "Hardees": {
+        "Total": 0.130217
+      },
+      "Herfy": {
+        "Total": 0.24374
+      }
+    },
+    "Quality": {
+      "Kudu": {
+        "Total": 0.080968
+      },
+      "Burgerizzr": {
+        "Total": 0.070952
+      },
+      "Al Baik": {
+        "Total": 0.315526
+      },
+      "McDonalds": {
+        "Total": 0.287145
+      },
+      "KFC": {
+        "Total": 0.174457
+      },
+      "Sign Burger": {
+        "Total": 0.070952
+      },
+      "Burger King": {
+        "Total": 0.116861
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.094324
+      },
+      "Hardees": {
+        "Total": 0.068447
+      },
+      "Herfy": {
+        "Total": 0.113523
       }
     },
     "Price": {
-      "McDonalds": {
-        "Total": 0.252087,
-        "Man": 0.254372,
-        "Woman": 0.249561,
-        "16-24": 0.194969,
-        "25-34": 0.27261,
-        "35-45": 0.226415,
-        "Saudi": 0.265258,
-        "Non-Saudi Arab": 0.222672,
-        "Non-Arab": 0.212121,
-        "Riyadh": 0.267361,
-        "Jeddah": 0.249123,
-        "Dammam / Al Khobar": 0.293651,
-        "Mecca / Madinah / Taif": 0.166667,
-        "Other Regions": 0.227848,
-        "Single": 0.217082,
-        "Married": 0.262115
-      },
-      "Burger King": {
-        "Total": 0.099332,
-        "Man": 0.09539,
-        "Woman": 0.103691,
-        "16-24": 0.044025,
-        "25-34": 0.108527,
-        "35-45": 0.10566,
-        "Saudi": 0.102113,
-        "Non-Saudi Arab": 0.08502,
-        "Non-Arab": 0.111111,
-        "Riyadh": 0.085069,
-        "Jeddah": 0.108772,
-        "Dammam / Al Khobar": 0.174603,
-        "Mecca / Madinah / Taif": 0.083333,
-        "Other Regions": 0.075949,
-        "Single": 0.067616,
-        "Married": 0.10793
-      },
-      "Herfy": {
-        "Total": 0.105175,
-        "Man": 0.08903,
-        "Woman": 0.123023,
-        "16-24": 0.081761,
-        "25-34": 0.105943,
-        "35-45": 0.116981,
-        "Saudi": 0.106808,
-        "Non-Saudi Arab": 0.117409,
-        "Non-Arab": 0.060606,
-        "Riyadh": 0.100694,
-        "Jeddah": 0.098246,
-        "Dammam / Al Khobar": 0.126984,
-        "Mecca / Madinah / Taif": 0.106061,
-        "Other Regions": 0.126582,
-        "Single": 0.092527,
-        "Married": 0.110132
-      },
-      "Hardees": {
-        "Total": 0.052588,
-        "Man": 0.044515,
-        "Woman": 0.061511,
-        "16-24": 0.037736,
-        "25-34": 0.055556,
-        "35-45": 0.05283,
-        "Saudi": 0.053991,
-        "Non-Saudi Arab": 0.048583,
-        "Non-Arab": 0.050505,
-        "Riyadh": 0.053819,
-        "Jeddah": 0.059649,
-        "Dammam / Al Khobar": 0.047619,
-        "Mecca / Madinah / Taif": 0.045455,
-        "Other Regions": 0.037975,
-        "Single": 0.035587,
-        "Married": 0.05837
-      },
       "Kudu": {
-        "Total": 0.063439,
-        "Man": 0.052464,
-        "Woman": 0.075571,
-        "16-24": 0.062893,
-        "25-34": 0.056848,
-        "35-45": 0.083019,
-        "Saudi": 0.062207,
-        "Non-Saudi Arab": 0.068826,
-        "Non-Arab": 0.060606,
-        "Riyadh": 0.0625,
-        "Jeddah": 0.063158,
-        "Dammam / Al Khobar": 0.063492,
-        "Mecca / Madinah / Taif": 0.068182,
-        "Other Regions": 0.063291,
-        "Single": 0.064057,
-        "Married": 0.063877
+        "Total": 0.063439
       },
       "Burgerizzr": {
-        "Total": 0.043406,
-        "Man": 0.028617,
-        "Woman": 0.059754,
-        "16-24": 0.018868,
-        "25-34": 0.049096,
-        "35-45": 0.041509,
-        "Saudi": 0.050469,
-        "Non-Saudi Arab": 0.032389,
-        "Non-Arab": 0.010101,
-        "Riyadh": 0.048611,
-        "Jeddah": 0.035088,
-        "Dammam / Al Khobar": 0.02381,
-        "Mecca / Madinah / Taif": 0.037879,
-        "Other Regions": 0.075949,
-        "Single": 0.017794,
-        "Married": 0.051762
-      },
-      "Sign Burger": {
-        "Total": 0.050918,
-        "Man": 0.027027,
-        "Woman": 0.077329,
-        "16-24": 0.056604,
-        "25-34": 0.052972,
-        "35-45": 0.041509,
-        "Saudi": 0.053991,
-        "Non-Saudi Arab": 0.052632,
-        "Non-Arab": 0.020202,
-        "Riyadh": 0.050347,
-        "Jeddah": 0.05614,
-        "Dammam / Al Khobar": 0.02381,
-        "Mecca / Madinah / Taif": 0.060606,
-        "Other Regions": 0.063291,
-        "Single": 0.060498,
-        "Married": 0.048458
-      },
-      "KFC": {
-        "Total": 0.106845,
-        "Man": 0.114467,
-        "Woman": 0.098418,
-        "16-24": 0.125786,
-        "25-34": 0.105943,
-        "35-45": 0.098113,
-        "Saudi": 0.099765,
-        "Non-Saudi Arab": 0.117409,
-        "Non-Arab": 0.141414,
-        "Riyadh": 0.102431,
-        "Jeddah": 0.129825,
-        "Dammam / Al Khobar": 0.079365,
-        "Mecca / Madinah / Taif": 0.098485,
-        "Other Regions": 0.113924,
-        "Single": 0.117438,
-        "Married": 0.103524
+        "Total": 0.043406
       },
       "Al Baik": {
-        "Total": 0.313856,
-        "Man": 0.330684,
-        "Woman": 0.295255,
-        "16-24": 0.314465,
-        "25-34": 0.301034,
-        "35-45": 0.350943,
-        "Saudi": 0.273474,
-        "Non-Saudi Arab": 0.404858,
-        "Non-Arab": 0.434343,
-        "Riyadh": 0.277778,
-        "Jeddah": 0.392982,
-        "Dammam / Al Khobar": 0.261905,
-        "Mecca / Madinah / Taif": 0.371212,
-        "Other Regions": 0.278481,
-        "Single": 0.366548,
-        "Married": 0.296256
+        "Total": 0.313856
+      },
+      "McDonalds": {
+        "Total": 0.252087
+      },
+      "KFC": {
+        "Total": 0.106845
+      },
+      "Sign Burger": {
+        "Total": 0.050918
+      },
+      "Burger King": {
+        "Total": 0.099332
       },
       "Bayt Al-Shawarma": {
-        "Total": 0.131052,
-        "Man": 0.133545,
-        "Woman": 0.128295,
-        "16-24": 0.194969,
-        "25-34": 0.124031,
-        "35-45": 0.113208,
-        "Saudi": 0.124413,
-        "Non-Saudi Arab": 0.178138,
-        "Non-Arab": 0.070707,
-        "Riyadh": 0.190972,
-        "Jeddah": 0.05614,
-        "Dammam / Al Khobar": 0.103175,
-        "Mecca / Madinah / Taif": 0.075758,
-        "Other Regions": 0.101266,
-        "Single": 0.128114,
-        "Married": 0.131057
+        "Total": 0.131052
+      },
+      "Hardees": {
+        "Total": 0.052588
+      },
+      "Herfy": {
+        "Total": 0.105175
+      }
+    },
+    "Promos": {
+      "Kudu": {
+        "Total": 0.068447
+      },
+      "Burgerizzr": {
+        "Total": 0.049249
+      },
+      "Al Baik": {
+        "Total": 0.200334
+      },
+      "McDonalds": {
+        "Total": 0.265442
+      },
+      "KFC": {
+        "Total": 0.107679
+      },
+      "Sign Burger": {
+        "Total": 0.032554
+      },
+      "Burger King": {
+        "Total": 0.096828
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.081803
+      },
+      "Hardees": {
+        "Total": 0.054257
+      },
+      "Herfy": {
+        "Total": 0.128548
       }
     },
     "Variety": {
-      "McDonalds": {
-        "Total": 0.261269,
-        "Man": 0.257552,
-        "Woman": 0.265378,
-        "16-24": 0.213836,
-        "25-34": 0.280362,
-        "35-45": 0.233962,
-        "Saudi": 0.267606,
-        "Non-Saudi Arab": 0.251012,
-        "Non-Arab": 0.232323,
-        "Riyadh": 0.270833,
-        "Jeddah": 0.280702,
-        "Dammam / Al Khobar": 0.293651,
-        "Mecca / Madinah / Taif": 0.181818,
-        "Other Regions": 0.202532,
-        "Single": 0.231317,
-        "Married": 0.269824
-      },
-      "Burger King": {
-        "Total": 0.093489,
-        "Man": 0.081081,
-        "Woman": 0.107206,
-        "16-24": 0.100629,
-        "25-34": 0.093023,
-        "35-45": 0.090566,
-        "Saudi": 0.089202,
-        "Non-Saudi Arab": 0.089069,
-        "Non-Arab": 0.141414,
-        "Riyadh": 0.090278,
-        "Jeddah": 0.084211,
-        "Dammam / Al Khobar": 0.134921,
-        "Mecca / Madinah / Taif": 0.098485,
-        "Other Regions": 0.075949,
-        "Single": 0.067616,
-        "Married": 0.10022
-      },
-      "Herfy": {
-        "Total": 0.10601,
-        "Man": 0.076312,
-        "Woman": 0.13884,
-        "16-24": 0.09434,
-        "25-34": 0.112403,
-        "35-45": 0.09434,
-        "Saudi": 0.107981,
-        "Non-Saudi Arab": 0.105263,
-        "Non-Arab": 0.090909,
-        "Riyadh": 0.126736,
-        "Jeddah": 0.070175,
-        "Dammam / Al Khobar": 0.119048,
-        "Mecca / Madinah / Taif": 0.098485,
-        "Other Regions": 0.075949,
-        "Single": 0.05694,
-        "Married": 0.118943
-      },
-      "Hardees": {
-        "Total": 0.056761,
-        "Man": 0.054054,
-        "Woman": 0.059754,
-        "16-24": 0.050314,
-        "25-34": 0.062016,
-        "35-45": 0.045283,
-        "Saudi": 0.055164,
-        "Non-Saudi Arab": 0.068826,
-        "Non-Arab": 0.040404,
-        "Riyadh": 0.055556,
-        "Jeddah": 0.049123,
-        "Dammam / Al Khobar": 0.079365,
-        "Mecca / Madinah / Taif": 0.060606,
-        "Other Regions": 0.050633,
-        "Single": 0.039146,
-        "Married": 0.062775
-      },
       "Kudu": {
-        "Total": 0.071786,
-        "Man": 0.058824,
-        "Woman": 0.086116,
-        "16-24": 0.044025,
-        "25-34": 0.069767,
-        "35-45": 0.09434,
-        "Saudi": 0.070423,
-        "Non-Saudi Arab": 0.080972,
-        "Non-Arab": 0.060606,
-        "Riyadh": 0.071181,
-        "Jeddah": 0.084211,
-        "Dammam / Al Khobar": 0.071429,
-        "Mecca / Madinah / Taif": 0.05303,
-        "Other Regions": 0.063291,
-        "Single": 0.074733,
-        "Married": 0.070485
+        "Total": 0.071786
       },
       "Burgerizzr": {
-        "Total": 0.056761,
-        "Man": 0.044515,
-        "Woman": 0.070299,
-        "16-24": 0.044025,
-        "25-34": 0.060724,
-        "35-45": 0.05283,
-        "Saudi": 0.068075,
-        "Non-Saudi Arab": 0.036437,
-        "Non-Arab": 0.010101,
-        "Riyadh": 0.0625,
-        "Jeddah": 0.045614,
-        "Dammam / Al Khobar": 0.055556,
-        "Mecca / Madinah / Taif": 0.060606,
-        "Other Regions": 0.050633,
-        "Single": 0.039146,
-        "Married": 0.062775
-      },
-      "Sign Burger": {
-        "Total": 0.038397,
-        "Man": 0.039746,
-        "Woman": 0.036907,
-        "16-24": 0.037736,
-        "25-34": 0.037468,
-        "35-45": 0.041509,
-        "Saudi": 0.038732,
-        "Non-Saudi Arab": 0.036437,
-        "Non-Arab": 0.040404,
-        "Riyadh": 0.036458,
-        "Jeddah": 0.02807,
-        "Dammam / Al Khobar": 0.031746,
-        "Mecca / Madinah / Taif": 0.068182,
-        "Other Regions": 0.050633,
-        "Single": 0.042705,
-        "Married": 0.036344
-      },
-      "KFC": {
-        "Total": 0.116027,
-        "Man": 0.128776,
-        "Woman": 0.101933,
-        "16-24": 0.125786,
-        "25-34": 0.104651,
-        "35-45": 0.143396,
-        "Saudi": 0.103286,
-        "Non-Saudi Arab": 0.1417,
-        "Non-Arab": 0.161616,
-        "Riyadh": 0.112847,
-        "Jeddah": 0.136842,
-        "Dammam / Al Khobar": 0.079365,
-        "Mecca / Madinah / Taif": 0.113636,
-        "Other Regions": 0.126582,
-        "Single": 0.163701,
-        "Married": 0.102423
+        "Total": 0.056761
       },
       "Al Baik": {
-        "Total": 0.232888,
-        "Man": 0.267091,
-        "Woman": 0.195079,
-        "16-24": 0.245283,
-        "25-34": 0.218346,
-        "35-45": 0.267925,
-        "Saudi": 0.203052,
-        "Non-Saudi Arab": 0.315789,
-        "Non-Arab": 0.282828,
-        "Riyadh": 0.197917,
-        "Jeddah": 0.308772,
-        "Dammam / Al Khobar": 0.174603,
-        "Mecca / Madinah / Taif": 0.242424,
-        "Other Regions": 0.291139,
-        "Single": 0.30605,
-        "Married": 0.20815
+        "Total": 0.232888
+      },
+      "McDonalds": {
+        "Total": 0.261269
+      },
+      "KFC": {
+        "Total": 0.116027
+      },
+      "Sign Burger": {
+        "Total": 0.038397
+      },
+      "Burger King": {
+        "Total": 0.093489
       },
       "Bayt Al-Shawarma": {
-        "Total": 0.146077,
-        "Man": 0.151033,
-        "Woman": 0.140598,
-        "16-24": 0.188679,
-        "25-34": 0.135659,
-        "35-45": 0.150943,
-        "Saudi": 0.144366,
-        "Non-Saudi Arab": 0.17004,
-        "Non-Arab": 0.10101,
-        "Riyadh": 0.204861,
-        "Jeddah": 0.080702,
-        "Dammam / Al Khobar": 0.079365,
-        "Mecca / Madinah / Taif": 0.083333,
-        "Other Regions": 0.164557,
-        "Single": 0.149466,
-        "Married": 0.143172
+        "Total": 0.146077
+      },
+      "Hardees": {
+        "Total": 0.056761
+      },
+      "Herfy": {
+        "Total": 0.10601
       }
     },
     "Health": {
-      "McDonalds": {
-        "Total": 0.198664,
-        "Man": 0.18442,
-        "Woman": 0.214411,
-        "16-24": 0.100629,
-        "25-34": 0.23385,
-        "35-45": 0.154717,
-        "Saudi": 0.211268,
-        "Non-Saudi Arab": 0.174089,
-        "Non-Arab": 0.151515,
-        "Riyadh": 0.213542,
-        "Jeddah": 0.221053,
-        "Dammam / Al Khobar": 0.18254,
-        "Mecca / Madinah / Taif": 0.151515,
-        "Other Regions": 0.113924,
-        "Single": 0.156584,
-        "Married": 0.212555
-      },
-      "Burger King": {
-        "Total": 0.085142,
-        "Man": 0.068362,
-        "Woman": 0.103691,
-        "16-24": 0.056604,
-        "25-34": 0.091731,
-        "35-45": 0.083019,
-        "Saudi": 0.086854,
-        "Non-Saudi Arab": 0.076923,
-        "Non-Arab": 0.090909,
-        "Riyadh": 0.085069,
-        "Jeddah": 0.080702,
-        "Dammam / Al Khobar": 0.103175,
-        "Mecca / Madinah / Taif": 0.083333,
-        "Other Regions": 0.075949,
-        "Single": 0.042705,
-        "Married": 0.095815
-      },
-      "Herfy": {
-        "Total": 0.07596,
-        "Man": 0.062003,
-        "Woman": 0.091388,
-        "16-24": 0.050314,
-        "25-34": 0.080103,
-        "35-45": 0.079245,
-        "Saudi": 0.078638,
-        "Non-Saudi Arab": 0.08502,
-        "Non-Arab": 0.030303,
-        "Riyadh": 0.078125,
-        "Jeddah": 0.066667,
-        "Dammam / Al Khobar": 0.079365,
-        "Mecca / Madinah / Taif": 0.075758,
-        "Other Regions": 0.088608,
-        "Single": 0.02847,
-        "Married": 0.09141
-      },
-      "Hardees": {
-        "Total": 0.040067,
-        "Man": 0.036566,
-        "Woman": 0.043937,
-        "16-24": 0.018868,
-        "25-34": 0.043928,
-        "35-45": 0.041509,
-        "Saudi": 0.039906,
-        "Non-Saudi Arab": 0.048583,
-        "Non-Arab": 0.020202,
-        "Riyadh": 0.050347,
-        "Jeddah": 0.021053,
-        "Dammam / Al Khobar": 0.031746,
-        "Mecca / Madinah / Taif": 0.022727,
-        "Other Regions": 0.075949,
-        "Single": 0.02847,
-        "Married": 0.042952
-      },
       "Kudu": {
-        "Total": 0.081803,
-        "Man": 0.068362,
-        "Woman": 0.096661,
-        "16-24": 0.08805,
-        "25-34": 0.083979,
-        "35-45": 0.071698,
-        "Saudi": 0.091549,
-        "Non-Saudi Arab": 0.05668,
-        "Non-Arab": 0.060606,
-        "Riyadh": 0.079861,
-        "Jeddah": 0.084211,
-        "Dammam / Al Khobar": 0.071429,
-        "Mecca / Madinah / Taif": 0.083333,
-        "Other Regions": 0.101266,
-        "Single": 0.096085,
-        "Married": 0.078194
+        "Total": 0.081803
       },
       "Burgerizzr": {
-        "Total": 0.046745,
-        "Man": 0.038156,
-        "Woman": 0.056239,
-        "16-24": 0.050314,
-        "25-34": 0.049096,
-        "35-45": 0.037736,
-        "Saudi": 0.049296,
-        "Non-Saudi Arab": 0.036437,
-        "Non-Arab": 0.050505,
-        "Riyadh": 0.057292,
-        "Jeddah": 0.024561,
-        "Dammam / Al Khobar": 0.047619,
-        "Mecca / Madinah / Taif": 0.030303,
-        "Other Regions": 0.075949,
-        "Single": 0.035587,
-        "Married": 0.050661
-      },
-      "Sign Burger": {
-        "Total": 0.034224,
-        "Man": 0.019078,
-        "Woman": 0.050967,
-        "16-24": 0.050314,
-        "25-34": 0.034884,
-        "35-45": 0.022642,
-        "Saudi": 0.036385,
-        "Non-Saudi Arab": 0.032389,
-        "Non-Arab": 0.020202,
-        "Riyadh": 0.038194,
-        "Jeddah": 0.038596,
-        "Dammam / Al Khobar": 0.015873,
-        "Mecca / Madinah / Taif": 0.030303,
-        "Other Regions": 0.025316,
-        "Single": 0.039146,
-        "Married": 0.03304
-      },
-      "KFC": {
-        "Total": 0.075125,
-        "Man": 0.09062,
-        "Woman": 0.057996,
-        "16-24": 0.075472,
-        "25-34": 0.067183,
-        "35-45": 0.098113,
-        "Saudi": 0.066901,
-        "Non-Saudi Arab": 0.080972,
-        "Non-Arab": 0.131313,
-        "Riyadh": 0.081597,
-        "Jeddah": 0.070175,
-        "Dammam / Al Khobar": 0.063492,
-        "Mecca / Madinah / Taif": 0.045455,
-        "Other Regions": 0.113924,
-        "Single": 0.060498,
-        "Married": 0.080396
+        "Total": 0.046745
       },
       "Al Baik": {
-        "Total": 0.179466,
-        "Man": 0.220986,
-        "Woman": 0.133568,
-        "16-24": 0.138365,
-        "25-34": 0.184755,
-        "35-45": 0.188679,
-        "Saudi": 0.15493,
-        "Non-Saudi Arab": 0.234818,
-        "Non-Arab": 0.252525,
-        "Riyadh": 0.1875,
-        "Jeddah": 0.178947,
-        "Dammam / Al Khobar": 0.142857,
-        "Mecca / Madinah / Taif": 0.159091,
-        "Other Regions": 0.21519,
-        "Single": 0.145907,
-        "Married": 0.189427
+        "Total": 0.179466
+      },
+      "McDonalds": {
+        "Total": 0.198664
+      },
+      "KFC": {
+        "Total": 0.075125
+      },
+      "Sign Burger": {
+        "Total": 0.034224
+      },
+      "Burger King": {
+        "Total": 0.085142
       },
       "Bayt Al-Shawarma": {
-        "Total": 0.103506,
-        "Man": 0.124006,
-        "Woman": 0.080844,
-        "16-24": 0.106918,
-        "25-34": 0.093023,
-        "35-45": 0.132075,
-        "Saudi": 0.08216,
-        "Non-Saudi Arab": 0.190283,
-        "Non-Arab": 0.070707,
-        "Riyadh": 0.135417,
-        "Jeddah": 0.052632,
-        "Dammam / Al Khobar": 0.063492,
-        "Mecca / Madinah / Taif": 0.098485,
-        "Other Regions": 0.126582,
-        "Single": 0.074733,
-        "Married": 0.110132
+        "Total": 0.103506
+      },
+      "Hardees": {
+        "Total": 0.040067
+      },
+      "Herfy": {
+        "Total": 0.07596
       }
     },
     "Location": {
-      "McDonalds": {
-        "Total": 0.314691,
-        "Man": 0.300477,
-        "Woman": 0.330404,
-        "16-24": 0.245283,
-        "25-34": 0.334625,
-        "35-45": 0.298113,
-        "Saudi": 0.314554,
-        "Non-Saudi Arab": 0.331984,
-        "Non-Arab": 0.272727,
-        "Riyadh": 0.319444,
-        "Jeddah": 0.329825,
-        "Dammam / Al Khobar": 0.31746,
-        "Mecca / Madinah / Taif": 0.272727,
-        "Other Regions": 0.291139,
-        "Single": 0.316726,
-        "Married": 0.311674
-      },
-      "Burger King": {
-        "Total": 0.102671,
-        "Man": 0.100159,
-        "Woman": 0.105448,
-        "16-24": 0.081761,
-        "25-34": 0.105943,
-        "35-45": 0.10566,
-        "Saudi": 0.09507,
-        "Non-Saudi Arab": 0.105263,
-        "Non-Arab": 0.161616,
-        "Riyadh": 0.098958,
-        "Jeddah": 0.091228,
-        "Dammam / Al Khobar": 0.134921,
-        "Mecca / Madinah / Taif": 0.113636,
-        "Other Regions": 0.101266,
-        "Single": 0.064057,
-        "Married": 0.113436
-      },
-      "Herfy": {
-        "Total": 0.114357,
-        "Man": 0.09062,
-        "Woman": 0.140598,
-        "16-24": 0.08805,
-        "25-34": 0.116279,
-        "35-45": 0.124528,
-        "Saudi": 0.109155,
-        "Non-Saudi Arab": 0.149798,
-        "Non-Arab": 0.070707,
-        "Riyadh": 0.130208,
-        "Jeddah": 0.080702,
-        "Dammam / Al Khobar": 0.15873,
-        "Mecca / Madinah / Taif": 0.068182,
-        "Other Regions": 0.126582,
-        "Single": 0.078292,
-        "Married": 0.124449
-      },
-      "Hardees": {
-        "Total": 0.045075,
-        "Man": 0.039746,
-        "Woman": 0.050967,
-        "16-24": 0.062893,
-        "25-34": 0.041344,
-        "35-45": 0.045283,
-        "Saudi": 0.046948,
-        "Non-Saudi Arab": 0.044534,
-        "Non-Arab": 0.030303,
-        "Riyadh": 0.041667,
-        "Jeddah": 0.038596,
-        "Dammam / Al Khobar": 0.039683,
-        "Mecca / Madinah / Taif": 0.060606,
-        "Other Regions": 0.075949,
-        "Single": 0.039146,
-        "Married": 0.047357
-      },
       "Kudu": {
-        "Total": 0.080968,
-        "Man": 0.060413,
-        "Woman": 0.103691,
-        "16-24": 0.037736,
-        "25-34": 0.078811,
-        "35-45": 0.113208,
-        "Saudi": 0.080986,
-        "Non-Saudi Arab": 0.101215,
-        "Non-Arab": 0.030303,
-        "Riyadh": 0.092014,
-        "Jeddah": 0.063158,
-        "Dammam / Al Khobar": 0.111111,
-        "Mecca / Madinah / Taif": 0.045455,
-        "Other Regions": 0.075949,
-        "Single": 0.092527,
-        "Married": 0.077093
+        "Total": 0.080968
       },
       "Burgerizzr": {
-        "Total": 0.034224,
-        "Man": 0.023847,
-        "Woman": 0.045694,
-        "16-24": 0.018868,
-        "25-34": 0.040052,
-        "35-45": 0.026415,
-        "Saudi": 0.04108,
-        "Non-Saudi Arab": 0.020243,
-        "Non-Arab": 0.010101,
-        "Riyadh": 0.041667,
-        "Jeddah": 0.02807,
-        "Dammam / Al Khobar": 0.02381,
-        "Mecca / Madinah / Taif": 0.037879,
-        "Other Regions": 0.012658,
-        "Single": 0.014235,
-        "Married": 0.040749
-      },
-      "Sign Burger": {
-        "Total": 0.037563,
-        "Man": 0.027027,
-        "Woman": 0.049209,
-        "16-24": 0.044025,
-        "25-34": 0.037468,
-        "35-45": 0.033962,
-        "Saudi": 0.045775,
-        "Non-Saudi Arab": 0.020243,
-        "Non-Arab": 0.010101,
-        "Riyadh": 0.039931,
-        "Jeddah": 0.049123,
-        "Dammam / Al Khobar": 0.031746,
-        "Mecca / Madinah / Taif": 0.030303,
-        "Other Regions": 0.0,
-        "Single": 0.02847,
-        "Married": 0.040749
-      },
-      "KFC": {
-        "Total": 0.122705,
-        "Man": 0.117647,
-        "Woman": 0.128295,
-        "16-24": 0.138365,
-        "25-34": 0.118863,
-        "35-45": 0.124528,
-        "Saudi": 0.117371,
-        "Non-Saudi Arab": 0.117409,
-        "Non-Arab": 0.181818,
-        "Riyadh": 0.126736,
-        "Jeddah": 0.119298,
-        "Dammam / Al Khobar": 0.111111,
-        "Mecca / Madinah / Taif": 0.136364,
-        "Other Regions": 0.101266,
-        "Single": 0.149466,
-        "Married": 0.115639
+        "Total": 0.034224
       },
       "Al Baik": {
-        "Total": 0.234558,
-        "Man": 0.257552,
-        "Woman": 0.209139,
-        "16-24": 0.207547,
-        "25-34": 0.244186,
-        "35-45": 0.222642,
-        "Saudi": 0.200704,
-        "Non-Saudi Arab": 0.303644,
-        "Non-Arab": 0.353535,
-        "Riyadh": 0.182292,
-        "Jeddah": 0.347368,
-        "Dammam / Al Khobar": 0.190476,
-        "Mecca / Madinah / Taif": 0.295455,
-        "Other Regions": 0.177215,
-        "Single": 0.27758,
-        "Married": 0.221366
+        "Total": 0.234558
+      },
+      "McDonalds": {
+        "Total": 0.314691
+      },
+      "KFC": {
+        "Total": 0.122705
+      },
+      "Sign Burger": {
+        "Total": 0.037563
+      },
+      "Burger King": {
+        "Total": 0.102671
       },
       "Bayt Al-Shawarma": {
-        "Total": 0.110184,
-        "Man": 0.119237,
-        "Woman": 0.100176,
-        "16-24": 0.132075,
-        "25-34": 0.107235,
-        "35-45": 0.10566,
-        "Saudi": 0.109155,
-        "Non-Saudi Arab": 0.133603,
-        "Non-Arab": 0.060606,
-        "Riyadh": 0.133681,
-        "Jeddah": 0.066667,
-        "Dammam / Al Khobar": 0.079365,
-        "Mecca / Madinah / Taif": 0.106061,
-        "Other Regions": 0.151899,
-        "Single": 0.124555,
-        "Married": 0.104626
+        "Total": 0.110184
+      },
+      "Hardees": {
+        "Total": 0.045075
+      },
+      "Herfy": {
+        "Total": 0.114357
+      }
+    },
+    "Ambiance": {
+      "Kudu": {
+        "Total": 0.066778
+      },
+      "Burgerizzr": {
+        "Total": 0.04424
+      },
+      "Al Baik": {
+        "Total": 0.186144
+      },
+      "McDonalds": {
+        "Total": 0.27212
+      },
+      "KFC": {
+        "Total": 0.112688
+      },
+      "Sign Burger": {
+        "Total": 0.046745
+      },
+      "Burger King": {
+        "Total": 0.081803
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.111853
+      },
+      "Hardees": {
+        "Total": 0.065109
+      },
+      "Herfy": {
+        "Total": 0.101002
+      }
+    },
+    "Clientele": {
+      "Kudu": {
+        "Total": 0.055092
+      },
+      "Burgerizzr": {
+        "Total": 0.053422
+      },
+      "Al Baik": {
+        "Total": 0.184474
+      },
+      "McDonalds": {
+        "Total": 0.255426
+      },
+      "KFC": {
+        "Total": 0.116027
+      },
+      "Sign Burger": {
+        "Total": 0.035058
+      },
+      "Burger King": {
+        "Total": 0.087646
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.121035
+      },
+      "Hardees": {
+        "Total": 0.045075
+      },
+      "Herfy": {
+        "Total": 0.085142
+      }
+    },
+    "Cleanliness": {
+      "Kudu": {
+        "Total": 0.070952
+      },
+      "Burgerizzr": {
+        "Total": 0.047579
+      },
+      "Al Baik": {
+        "Total": 0.235392
+      },
+      "McDonalds": {
+        "Total": 0.279633
+      },
+      "KFC": {
+        "Total": 0.119366
+      },
+      "Sign Burger": {
+        "Total": 0.070952
+      },
+      "Burger King": {
+        "Total": 0.097663
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.115192
+      },
+      "Hardees": {
+        "Total": 0.043406
+      },
+      "Herfy": {
+        "Total": 0.109349
+      }
+    },
+    "Service": {
+      "Kudu": {
+        "Total": 0.069282
+      },
+      "Burgerizzr": {
+        "Total": 0.062604
+      },
+      "Al Baik": {
+        "Total": 0.217863
+      },
+      "McDonalds": {
+        "Total": 0.276294
+      },
+      "KFC": {
+        "Total": 0.106845
+      },
+      "Sign Burger": {
+        "Total": 0.060935
+      },
+      "Burger King": {
+        "Total": 0.103506
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.102671
+      },
+      "Hardees": {
+        "Total": 0.040902
+      },
+      "Herfy": {
+        "Total": 0.118531
+      }
+    },
+    "Speed": {
+      "Kudu": {
+        "Total": 0.065109
+      },
+      "Burgerizzr": {
+        "Total": 0.049249
+      },
+      "Al Baik": {
+        "Total": 0.218698
+      },
+      "McDonalds": {
+        "Total": 0.289649
+      },
+      "KFC": {
+        "Total": 0.115192
+      },
+      "Sign Burger": {
+        "Total": 0.04591
+      },
+      "Burger King": {
+        "Total": 0.107679
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.111853
+      },
+      "Hardees": {
+        "Total": 0.042571
+      },
+      "Herfy": {
+        "Total": 0.129382
       }
     },
     "Reputation": {
-      "McDonalds": {
-        "Total": 0.282972,
-        "Man": 0.289348,
-        "Woman": 0.275923,
-        "16-24": 0.220126,
-        "25-34": 0.307494,
-        "35-45": 0.249057,
-        "Saudi": 0.293427,
-        "Non-Saudi Arab": 0.267206,
-        "Non-Arab": 0.232323,
-        "Riyadh": 0.286458,
-        "Jeddah": 0.284211,
-        "Dammam / Al Khobar": 0.325397,
-        "Mecca / Madinah / Taif": 0.212121,
-        "Other Regions": 0.303797,
-        "Single": 0.266904,
-        "Married": 0.287445
-      },
-      "Burger King": {
-        "Total": 0.109349,
-        "Man": 0.103339,
-        "Woman": 0.115993,
-        "16-24": 0.056604,
-        "25-34": 0.108527,
-        "35-45": 0.143396,
-        "Saudi": 0.110329,
-        "Non-Saudi Arab": 0.101215,
-        "Non-Arab": 0.121212,
-        "Riyadh": 0.111111,
-        "Jeddah": 0.105263,
-        "Dammam / Al Khobar": 0.119048,
-        "Mecca / Madinah / Taif": 0.106061,
-        "Other Regions": 0.101266,
-        "Single": 0.067616,
-        "Married": 0.123348
-      },
-      "Herfy": {
-        "Total": 0.101002,
-        "Man": 0.09221,
-        "Woman": 0.110721,
-        "16-24": 0.056604,
-        "25-34": 0.104651,
-        "35-45": 0.116981,
-        "Saudi": 0.10446,
-        "Non-Saudi Arab": 0.101215,
-        "Non-Arab": 0.070707,
-        "Riyadh": 0.116319,
-        "Jeddah": 0.084211,
-        "Dammam / Al Khobar": 0.095238,
-        "Mecca / Madinah / Taif": 0.090909,
-        "Other Regions": 0.075949,
-        "Single": 0.071174,
-        "Married": 0.111233
-      },
-      "Hardees": {
-        "Total": 0.045075,
-        "Man": 0.042925,
-        "Woman": 0.047452,
-        "16-24": 0.037736,
-        "25-34": 0.03876,
-        "35-45": 0.067925,
-        "Saudi": 0.042254,
-        "Non-Saudi Arab": 0.05668,
-        "Non-Arab": 0.040404,
-        "Riyadh": 0.043403,
-        "Jeddah": 0.035088,
-        "Dammam / Al Khobar": 0.095238,
-        "Mecca / Madinah / Taif": 0.030303,
-        "Other Regions": 0.037975,
-        "Single": 0.046263,
-        "Married": 0.044053
-      },
       "Kudu": {
-        "Total": 0.064274,
-        "Man": 0.049285,
-        "Woman": 0.080844,
-        "16-24": 0.056604,
-        "25-34": 0.062016,
-        "35-45": 0.075472,
-        "Saudi": 0.069249,
-        "Non-Saudi Arab": 0.05668,
-        "Non-Arab": 0.040404,
-        "Riyadh": 0.069444,
-        "Jeddah": 0.052632,
-        "Dammam / Al Khobar": 0.087302,
-        "Mecca / Madinah / Taif": 0.060606,
-        "Other Regions": 0.037975,
-        "Single": 0.067616,
-        "Married": 0.062775
+        "Total": 0.064274
       },
       "Burgerizzr": {
-        "Total": 0.056761,
-        "Man": 0.038156,
-        "Woman": 0.077329,
-        "16-24": 0.037736,
-        "25-34": 0.062016,
-        "35-45": 0.05283,
-        "Saudi": 0.058685,
-        "Non-Saudi Arab": 0.060729,
-        "Non-Arab": 0.030303,
-        "Riyadh": 0.067708,
-        "Jeddah": 0.035088,
-        "Dammam / Al Khobar": 0.047619,
-        "Mecca / Madinah / Taif": 0.05303,
-        "Other Regions": 0.075949,
-        "Single": 0.049822,
-        "Married": 0.05837
-      },
-      "Sign Burger": {
-        "Total": 0.050083,
-        "Man": 0.027027,
-        "Woman": 0.075571,
-        "16-24": 0.056604,
-        "25-34": 0.054264,
-        "35-45": 0.033962,
-        "Saudi": 0.056338,
-        "Non-Saudi Arab": 0.044534,
-        "Non-Arab": 0.010101,
-        "Riyadh": 0.050347,
-        "Jeddah": 0.045614,
-        "Dammam / Al Khobar": 0.031746,
-        "Mecca / Madinah / Taif": 0.090909,
-        "Other Regions": 0.025316,
-        "Single": 0.064057,
-        "Married": 0.045154
-      },
-      "KFC": {
-        "Total": 0.121035,
-        "Man": 0.131955,
-        "Woman": 0.108963,
-        "16-24": 0.144654,
-        "25-34": 0.109819,
-        "35-45": 0.139623,
-        "Saudi": 0.102113,
-        "Non-Saudi Arab": 0.145749,
-        "Non-Arab": 0.222222,
-        "Riyadh": 0.107639,
-        "Jeddah": 0.129825,
-        "Dammam / Al Khobar": 0.095238,
-        "Mecca / Madinah / Taif": 0.151515,
-        "Other Regions": 0.177215,
-        "Single": 0.13879,
-        "Married": 0.11674
+        "Total": 0.056761
       },
       "Al Baik": {
-        "Total": 0.275459,
-        "Man": 0.310016,
-        "Woman": 0.237258,
-        "16-24": 0.264151,
-        "25-34": 0.276486,
-        "35-45": 0.279245,
-        "Saudi": 0.247653,
-        "Non-Saudi Arab": 0.352227,
-        "Non-Arab": 0.323232,
-        "Riyadh": 0.230903,
-        "Jeddah": 0.333333,
-        "Dammam / Al Khobar": 0.285714,
-        "Mecca / Madinah / Taif": 0.30303,
-        "Other Regions": 0.329114,
-        "Single": 0.330961,
-        "Married": 0.257709
+        "Total": 0.275459
+      },
+      "McDonalds": {
+        "Total": 0.282972
+      },
+      "KFC": {
+        "Total": 0.121035
+      },
+      "Sign Burger": {
+        "Total": 0.050083
+      },
+      "Burger King": {
+        "Total": 0.109349
       },
       "Bayt Al-Shawarma": {
-        "Total": 0.126043,
-        "Man": 0.128776,
-        "Woman": 0.123023,
-        "16-24": 0.113208,
-        "25-34": 0.129199,
-        "35-45": 0.124528,
-        "Saudi": 0.10446,
-        "Non-Saudi Arab": 0.174089,
-        "Non-Arab": 0.191919,
-        "Riyadh": 0.166667,
-        "Jeddah": 0.063158,
-        "Dammam / Al Khobar": 0.095238,
-        "Mecca / Madinah / Taif": 0.083333,
-        "Other Regions": 0.177215,
-        "Single": 0.113879,
-        "Married": 0.129956
+        "Total": 0.126043
+      },
+      "Hardees": {
+        "Total": 0.045075
+      },
+      "Herfy": {
+        "Total": 0.101002
+      }
+    },
+    "Popularity": {
+      "Kudu": {
+        "Total": 0.065943
+      },
+      "Burgerizzr": {
+        "Total": 0.051753
+      },
+      "Al Baik": {
+        "Total": 0.307179
+      },
+      "McDonalds": {
+        "Total": 0.328881
+      },
+      "KFC": {
+        "Total": 0.15192
+      },
+      "Sign Burger": {
+        "Total": 0.051753
+      },
+      "Burger King": {
+        "Total": 0.105175
+      },
+      "Bayt Al-Shawarma": {
+        "Total": 0.107679
+      },
+      "Hardees": {
+        "Total": 0.048414
+      },
+      "Herfy": {
+        "Total": 0.103506
       }
     },
     "Innovation": {
-      "McDonalds": {
-        "Total": 0.237062,
-        "Man": 0.260731,
-        "Woman": 0.210896,
-        "16-24": 0.144654,
-        "25-34": 0.262274,
-        "35-45": 0.218868,
-        "Saudi": 0.238263,
-        "Non-Saudi Arab": 0.259109,
-        "Non-Arab": 0.171717,
-        "Riyadh": 0.248264,
-        "Jeddah": 0.259649,
-        "Dammam / Al Khobar": 0.206349,
-        "Mecca / Madinah / Taif": 0.189394,
-        "Other Regions": 0.202532,
-        "Single": 0.181495,
-        "Married": 0.255507
-      },
-      "Burger King": {
-        "Total": 0.087646,
-        "Man": 0.085851,
-        "Woman": 0.089631,
-        "16-24": 0.050314,
-        "25-34": 0.090439,
-        "35-45": 0.101887,
-        "Saudi": 0.083333,
-        "Non-Saudi Arab": 0.101215,
-        "Non-Arab": 0.090909,
-        "Riyadh": 0.092014,
-        "Jeddah": 0.087719,
-        "Dammam / Al Khobar": 0.095238,
-        "Mecca / Madinah / Taif": 0.075758,
-        "Other Regions": 0.063291,
-        "Single": 0.046263,
-        "Married": 0.10022
-      },
-      "Herfy": {
-        "Total": 0.089316,
-        "Man": 0.082671,
-        "Woman": 0.096661,
-        "16-24": 0.050314,
-        "25-34": 0.086563,
-        "35-45": 0.120755,
-        "Saudi": 0.08216,
-        "Non-Saudi Arab": 0.121457,
-        "Non-Arab": 0.070707,
-        "Riyadh": 0.092014,
-        "Jeddah": 0.084211,
-        "Dammam / Al Khobar": 0.111111,
-        "Mecca / Madinah / Taif": 0.075758,
-        "Other Regions": 0.075949,
-        "Single": 0.05694,
-        "Married": 0.098018
-      },
-      "Hardees": {
-        "Total": 0.03172,
-        "Man": 0.030207,
-        "Woman": 0.033392,
-        "16-24": 0.025157,
-        "25-34": 0.029716,
-        "35-45": 0.041509,
-        "Saudi": 0.03169,
-        "Non-Saudi Arab": 0.032389,
-        "Non-Arab": 0.030303,
-        "Riyadh": 0.032986,
-        "Jeddah": 0.024561,
-        "Dammam / Al Khobar": 0.039683,
-        "Mecca / Madinah / Taif": 0.037879,
-        "Other Regions": 0.025316,
-        "Single": 0.02847,
-        "Married": 0.03304
-      },
       "Kudu": {
-        "Total": 0.058431,
-        "Man": 0.052464,
-        "Woman": 0.065026,
-        "16-24": 0.044025,
-        "25-34": 0.056848,
-        "35-45": 0.071698,
-        "Saudi": 0.059859,
-        "Non-Saudi Arab": 0.05668,
-        "Non-Arab": 0.050505,
-        "Riyadh": 0.060764,
-        "Jeddah": 0.070175,
-        "Dammam / Al Khobar": 0.071429,
-        "Mecca / Madinah / Taif": 0.022727,
-        "Other Regions": 0.037975,
-        "Single": 0.049822,
-        "Married": 0.060573
+        "Total": 0.058431
       },
       "Burgerizzr": {
-        "Total": 0.050083,
-        "Man": 0.028617,
-        "Woman": 0.073814,
-        "16-24": 0.031447,
-        "25-34": 0.05814,
-        "35-45": 0.037736,
-        "Saudi": 0.059859,
-        "Non-Saudi Arab": 0.02834,
-        "Non-Arab": 0.020202,
-        "Riyadh": 0.059028,
-        "Jeddah": 0.02807,
-        "Dammam / Al Khobar": 0.039683,
-        "Mecca / Madinah / Taif": 0.05303,
-        "Other Regions": 0.075949,
-        "Single": 0.032028,
-        "Married": 0.056167
-      },
-      "Sign Burger": {
-        "Total": 0.049249,
-        "Man": 0.034976,
-        "Woman": 0.065026,
-        "16-24": 0.069182,
-        "25-34": 0.050388,
-        "35-45": 0.033962,
-        "Saudi": 0.055164,
-        "Non-Saudi Arab": 0.040486,
-        "Non-Arab": 0.020202,
-        "Riyadh": 0.060764,
-        "Jeddah": 0.038596,
-        "Dammam / Al Khobar": 0.007937,
-        "Mecca / Madinah / Taif": 0.068182,
-        "Other Regions": 0.037975,
-        "Single": 0.046263,
-        "Married": 0.050661
-      },
-      "KFC": {
-        "Total": 0.099332,
-        "Man": 0.119237,
-        "Woman": 0.077329,
-        "16-24": 0.081761,
-        "25-34": 0.094315,
-        "35-45": 0.124528,
-        "Saudi": 0.092723,
-        "Non-Saudi Arab": 0.11336,
-        "Non-Arab": 0.121212,
-        "Riyadh": 0.097222,
-        "Jeddah": 0.122807,
-        "Dammam / Al Khobar": 0.063492,
-        "Mecca / Madinah / Taif": 0.060606,
-        "Other Regions": 0.151899,
-        "Single": 0.099644,
-        "Married": 0.10022
+        "Total": 0.050083
       },
       "Al Baik": {
-        "Total": 0.237062,
-        "Man": 0.260731,
-        "Woman": 0.210896,
-        "16-24": 0.176101,
-        "25-34": 0.242894,
-        "35-45": 0.256604,
-        "Saudi": 0.210094,
-        "Non-Saudi Arab": 0.307692,
-        "Non-Arab": 0.292929,
-        "Riyadh": 0.222222,
-        "Jeddah": 0.294737,
-        "Dammam / Al Khobar": 0.238095,
-        "Mecca / Madinah / Taif": 0.189394,
-        "Other Regions": 0.21519,
-        "Single": 0.259786,
-        "Married": 0.230176
+        "Total": 0.237062
+      },
+      "McDonalds": {
+        "Total": 0.237062
+      },
+      "KFC": {
+        "Total": 0.099332
+      },
+      "Sign Burger": {
+        "Total": 0.049249
+      },
+      "Burger King": {
+        "Total": 0.087646
       },
       "Bayt Al-Shawarma": {
-        "Total": 0.149416,
-        "Man": 0.144674,
-        "Woman": 0.154657,
-        "16-24": 0.163522,
-        "25-34": 0.149871,
-        "35-45": 0.139623,
-        "Saudi": 0.140845,
-        "Non-Saudi Arab": 0.190283,
-        "Non-Arab": 0.121212,
-        "Riyadh": 0.197917,
-        "Jeddah": 0.084211,
-        "Dammam / Al Khobar": 0.134921,
-        "Mecca / Madinah / Taif": 0.098485,
-        "Other Regions": 0.139241,
-        "Single": 0.153025,
-        "Married": 0.147577
+        "Total": 0.149416
+      },
+      "Hardees": {
+        "Total": 0.03172
+      },
+      "Herfy": {
+        "Total": 0.089316
       }
     }
   },
@@ -8180,6 +7386,652 @@
         "Other Regions": 0.0625,
         "Single": 0.035211,
         "Married": 0.042952
+      }
+    }
+  },
+  "q25_per_brand": {
+    "Kudu": {
+      "base": 25,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.4
+        },
+        "Personal connection": {
+          "Total": 0.2
+        },
+        "Social influence": {
+          "Total": 0.28
+        },
+        "Unique menu appeal": {
+          "Total": 0.64
+        },
+        "Positive physical feeling": {
+          "Total": 0.52
+        },
+        "Emotional comfort": {
+          "Total": 0.36
+        },
+        "Location convenience": {
+          "Total": 0.28
+        },
+        "Routine": {
+          "Total": 0.08
+        },
+        "Cultural fit": {
+          "Total": 0.16
+        },
+        "Consistent promotions": {
+          "Total": 0.16
+        },
+        "Customizable experience": {
+          "Total": 0.28
+        },
+        "Lack of alternatives": {
+          "Total": 0.08
+        },
+        "Reliable ordering": {
+          "Total": 0.44
+        },
+        "Branch loyalty": {
+          "Total": 0.16
+        },
+        "Feeling special": {
+          "Total": 0.16
+        }
+      }
+    },
+    "Burgerizzr": {
+      "base": 63,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.396825
+        },
+        "Personal connection": {
+          "Total": 0.253968
+        },
+        "Social influence": {
+          "Total": 0.333333
+        },
+        "Unique menu appeal": {
+          "Total": 0.571429
+        },
+        "Positive physical feeling": {
+          "Total": 0.555556
+        },
+        "Emotional comfort": {
+          "Total": 0.269841
+        },
+        "Location convenience": {
+          "Total": 0.365079
+        },
+        "Routine": {
+          "Total": 0.174603
+        },
+        "Cultural fit": {
+          "Total": 0.31746
+        },
+        "Consistent promotions": {
+          "Total": 0.253968
+        },
+        "Customizable experience": {
+          "Total": 0.333333
+        },
+        "Lack of alternatives": {
+          "Total": 0.111111
+        },
+        "Reliable ordering": {
+          "Total": 0.349206
+        },
+        "Branch loyalty": {
+          "Total": 0.063492
+        },
+        "Feeling special": {
+          "Total": 0.206349
+        }
+      }
+    },
+    "Al Baik": {
+      "base": 310,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.545161
+        },
+        "Personal connection": {
+          "Total": 0.270968
+        },
+        "Social influence": {
+          "Total": 0.277419
+        },
+        "Unique menu appeal": {
+          "Total": 0.474194
+        },
+        "Positive physical feeling": {
+          "Total": 0.53871
+        },
+        "Emotional comfort": {
+          "Total": 0.325806
+        },
+        "Location convenience": {
+          "Total": 0.325806
+        },
+        "Routine": {
+          "Total": 0.216129
+        },
+        "Cultural fit": {
+          "Total": 0.212903
+        },
+        "Consistent promotions": {
+          "Total": 0.216129
+        },
+        "Customizable experience": {
+          "Total": 0.222581
+        },
+        "Lack of alternatives": {
+          "Total": 0.119355
+        },
+        "Reliable ordering": {
+          "Total": 0.3
+        },
+        "Branch loyalty": {
+          "Total": 0.151613
+        },
+        "Feeling special": {
+          "Total": 0.135484
+        }
+      }
+    },
+    "McDonalds": {
+      "base": 405,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.518519
+        },
+        "Personal connection": {
+          "Total": 0.264198
+        },
+        "Social influence": {
+          "Total": 0.25679
+        },
+        "Unique menu appeal": {
+          "Total": 0.437037
+        },
+        "Positive physical feeling": {
+          "Total": 0.479012
+        },
+        "Emotional comfort": {
+          "Total": 0.291358
+        },
+        "Location convenience": {
+          "Total": 0.320988
+        },
+        "Routine": {
+          "Total": 0.197531
+        },
+        "Cultural fit": {
+          "Total": 0.190123
+        },
+        "Consistent promotions": {
+          "Total": 0.244444
+        },
+        "Customizable experience": {
+          "Total": 0.254321
+        },
+        "Lack of alternatives": {
+          "Total": 0.106173
+        },
+        "Reliable ordering": {
+          "Total": 0.345679
+        },
+        "Branch loyalty": {
+          "Total": 0.123457
+        },
+        "Feeling special": {
+          "Total": 0.138272
+        }
+      }
+    },
+    "KFC": {
+      "base": 54,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.444444
+        },
+        "Personal connection": {
+          "Total": 0.351852
+        },
+        "Social influence": {
+          "Total": 0.240741
+        },
+        "Unique menu appeal": {
+          "Total": 0.574074
+        },
+        "Positive physical feeling": {
+          "Total": 0.37037
+        },
+        "Emotional comfort": {
+          "Total": 0.240741
+        },
+        "Location convenience": {
+          "Total": 0.333333
+        },
+        "Routine": {
+          "Total": 0.203704
+        },
+        "Cultural fit": {
+          "Total": 0.074074
+        },
+        "Consistent promotions": {
+          "Total": 0.166667
+        },
+        "Customizable experience": {
+          "Total": 0.222222
+        },
+        "Lack of alternatives": {
+          "Total": 0.148148
+        },
+        "Reliable ordering": {
+          "Total": 0.203704
+        },
+        "Branch loyalty": {
+          "Total": 0.12963
+        },
+        "Feeling special": {
+          "Total": 0.166667
+        }
+      }
+    },
+    "Sign Burger": {
+      "base": 22,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.363636
+        },
+        "Personal connection": {
+          "Total": 0.181818
+        },
+        "Social influence": {
+          "Total": 0.272727
+        },
+        "Unique menu appeal": {
+          "Total": 0.318182
+        },
+        "Positive physical feeling": {
+          "Total": 0.5
+        },
+        "Emotional comfort": {
+          "Total": 0.272727
+        },
+        "Location convenience": {
+          "Total": 0.409091
+        },
+        "Routine": {
+          "Total": 0.090909
+        },
+        "Cultural fit": {
+          "Total": 0.363636
+        },
+        "Consistent promotions": {
+          "Total": 0.181818
+        },
+        "Customizable experience": {
+          "Total": 0.363636
+        },
+        "Lack of alternatives": {
+          "Total": 0.045455
+        },
+        "Reliable ordering": {
+          "Total": 0.318182
+        },
+        "Branch loyalty": {
+          "Total": 0.227273
+        },
+        "Feeling special": {
+          "Total": 0.136364
+        }
+      }
+    },
+    "Burger King": {
+      "base": 50,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.6
+        },
+        "Personal connection": {
+          "Total": 0.52
+        },
+        "Social influence": {
+          "Total": 0.28
+        },
+        "Unique menu appeal": {
+          "Total": 0.52
+        },
+        "Positive physical feeling": {
+          "Total": 0.44
+        },
+        "Emotional comfort": {
+          "Total": 0.26
+        },
+        "Location convenience": {
+          "Total": 0.28
+        },
+        "Routine": {
+          "Total": 0.2
+        },
+        "Cultural fit": {
+          "Total": 0.18
+        },
+        "Consistent promotions": {
+          "Total": 0.26
+        },
+        "Customizable experience": {
+          "Total": 0.18
+        },
+        "Lack of alternatives": {
+          "Total": 0.1
+        },
+        "Reliable ordering": {
+          "Total": 0.24
+        },
+        "Branch loyalty": {
+          "Total": 0.14
+        },
+        "Feeling special": {
+          "Total": 0.18
+        }
+      }
+    },
+    "Bayt Al-Shawarma": {
+      "base": 33,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.636364
+        },
+        "Personal connection": {
+          "Total": 0.121212
+        },
+        "Social influence": {
+          "Total": 0.363636
+        },
+        "Unique menu appeal": {
+          "Total": 0.606061
+        },
+        "Positive physical feeling": {
+          "Total": 0.272727
+        },
+        "Emotional comfort": {
+          "Total": 0.151515
+        },
+        "Location convenience": {
+          "Total": 0.333333
+        },
+        "Routine": {
+          "Total": 0.060606
+        },
+        "Cultural fit": {
+          "Total": 0.121212
+        },
+        "Consistent promotions": {
+          "Total": 0.212121
+        },
+        "Customizable experience": {
+          "Total": 0.121212
+        },
+        "Lack of alternatives": {
+          "Total": 0.090909
+        },
+        "Reliable ordering": {
+          "Total": 0.272727
+        },
+        "Branch loyalty": {
+          "Total": 0.151515
+        },
+        "Feeling special": {
+          "Total": 0.030303
+        }
+      }
+    },
+    "Hardees": {
+      "base": 29,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.655172
+        },
+        "Personal connection": {
+          "Total": 0.241379
+        },
+        "Social influence": {
+          "Total": 0.344828
+        },
+        "Unique menu appeal": {
+          "Total": 0.517241
+        },
+        "Positive physical feeling": {
+          "Total": 0.448276
+        },
+        "Emotional comfort": {
+          "Total": 0.344828
+        },
+        "Location convenience": {
+          "Total": 0.310345
+        },
+        "Routine": {
+          "Total": 0.172414
+        },
+        "Cultural fit": {
+          "Total": 0.172414
+        },
+        "Consistent promotions": {
+          "Total": 0.241379
+        },
+        "Customizable experience": {
+          "Total": 0.275862
+        },
+        "Lack of alternatives": {
+          "Total": 0.137931
+        },
+        "Reliable ordering": {
+          "Total": 0.62069
+        },
+        "Branch loyalty": {
+          "Total": 0.103448
+        },
+        "Feeling special": {
+          "Total": 0.103448
+        }
+      }
+    },
+    "Herfy": {
+      "base": 54,
+      "reasons": {
+        "Effortless choice": {
+          "Total": 0.5
+        },
+        "Personal connection": {
+          "Total": 0.296296
+        },
+        "Social influence": {
+          "Total": 0.296296
+        },
+        "Unique menu appeal": {
+          "Total": 0.37037
+        },
+        "Positive physical feeling": {
+          "Total": 0.462963
+        },
+        "Emotional comfort": {
+          "Total": 0.333333
+        },
+        "Location convenience": {
+          "Total": 0.37037
+        },
+        "Routine": {
+          "Total": 0.166667
+        },
+        "Cultural fit": {
+          "Total": 0.111111
+        },
+        "Consistent promotions": {
+          "Total": 0.351852
+        },
+        "Customizable experience": {
+          "Total": 0.240741
+        },
+        "Lack of alternatives": {
+          "Total": 0.092593
+        },
+        "Reliable ordering": {
+          "Total": 0.333333
+        },
+        "Branch loyalty": {
+          "Total": 0.166667
+        },
+        "Feeling special": {
+          "Total": 0.148148
+        }
+      }
+    }
+  },
+  "q15b": {
+    "Kudu": {
+      "count": 25,
+      "pct": 0.021044
+    },
+    "Burgerizzr": {
+      "count": 63,
+      "pct": 0.05303
+    },
+    "Al Baik": {
+      "count": 310,
+      "pct": 0.260943
+    },
+    "McDonalds": {
+      "count": 405,
+      "pct": 0.340909
+    },
+    "KFC": {
+      "count": 54,
+      "pct": 0.045455
+    },
+    "Sign Burger": {
+      "count": 22,
+      "pct": 0.018519
+    },
+    "Burger King": {
+      "count": 50,
+      "pct": 0.042088
+    },
+    "Bayt Al-Shawarma": {
+      "count": 33,
+      "pct": 0.027778
+    },
+    "Hardees": {
+      "count": 29,
+      "pct": 0.024411
+    },
+    "Herfy": {
+      "count": 54,
+      "pct": 0.045455
+    }
+  },
+  "q3": {
+    "Dine-in": {
+      "base": 1201,
+      "options": {
+        "2–3 times a week or more often": {
+          "Total": 0.185679
+        },
+        "1–2 times a week": {
+          "Total": 0.321399
+        },
+        "1–2 times a month": {
+          "Total": 0.247294
+        },
+        "1–2 times every 3 months": {
+          "Total": 0.165695
+        },
+        "Never / Almost never": {
+          "Total": 0.079933
+        }
+      }
+    },
+    "Takeaway": {
+      "base": 1201,
+      "options": {
+        "1–2 times a week": {
+          "Total": 0.412989
+        },
+        "1–2 times a month": {
+          "Total": 0.285595
+        },
+        "2–3 times a week or more often": {
+          "Total": 0.175687
+        },
+        "1–2 times every 3 months": {
+          "Total": 0.094921
+        },
+        "Never / Almost never": {
+          "Total": 0.030808
+        }
+      }
+    },
+    "Drive-through": {
+      "base": 1201,
+      "options": {
+        "1–2 times a week": {
+          "Total": 0.34388
+        },
+        "Never / Almost never": {
+          "Total": 0.123231
+        },
+        "1–2 times a month": {
+          "Total": 0.247294
+        },
+        "1–2 times every 3 months": {
+          "Total": 0.13239
+        },
+        "2–3 times a week or more often": {
+          "Total": 0.153206
+        }
+      }
+    },
+    "Restaurant app": {
+      "base": 1201,
+      "options": {
+        "1–2 times a month": {
+          "Total": 0.26811
+        },
+        "2–3 times a week or more often": {
+          "Total": 0.160699
+        },
+        "1–2 times a week": {
+          "Total": 0.338884
+        },
+        "1–2 times every 3 months": {
+          "Total": 0.130724
+        },
+        "Never / Almost never": {
+          "Total": 0.101582
+        }
+      }
+    },
+    "Aggregator app": {
+      "base": 1201,
+      "options": {
+        "1–2 times a week": {
+          "Total": 0.361366
+        },
+        "Never / Almost never": {
+          "Total": 0.054954
+        },
+        "1–2 times a month": {
+          "Total": 0.19234
+        },
+        "2–3 times a week or more often": {
+          "Total": 0.290591
+        },
+        "1–2 times every 3 months": {
+          "Total": 0.100749
+        }
       }
     }
   }

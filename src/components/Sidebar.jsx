@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { House, MapPin, Star, GridFour, ChatCircle, TrendUp, Warning } from '@phosphor-icons/react';
 
 const navItems = [
-  { path: '/', label: 'PA Scoreboard', icon: House },
+  { path: '/', label: 'Executive Summary', icon: House },
   { path: '/presence', label: 'Presence', icon: MapPin },
   { path: '/prominence', label: 'Prominence', icon: Star },
   { path: '/portfolio', label: 'Portfolio', icon: GridFour },

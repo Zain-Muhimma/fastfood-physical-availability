@@ -16,6 +16,38 @@ import {
 
 const ORANGE = '#F36B1F';
 const GREY = '#D1D5DB';
+const AMBER = '#D97706';
+const BLUE = '#2563EB';
+const GREEN = '#059669';
+
+/* ─── Q12 factor → Q24 metric mapping (for gap chart) ─── */
+const Q12_Q24_MAP = [
+  { label: 'Taste', q12Key: 'Taste and flavour of food', q24Key: 'PO3_tasteQuality' },
+  { label: 'Price', q12Key: 'Price and value for money', q24Key: 'PO5_priceAccessibility' },
+  { label: 'Variety', q12Key: 'Menu variety and range of options', q24Key: 'PO1_varietyPerception' },
+  { label: 'Health', q12Key: 'Healthy and nutritional options', q24Key: 'PO4_healthOptionBreadth' },
+  { label: 'Innovation', q12Key: 'Innovation and unique offerings', q24Key: 'PO2_innovationPerception' },
+];
+
+/* ─── Q25 reason color-coding by type ─── */
+const REASON_TYPE = {
+  'Unique menu appeal': 'portfolio',
+  'Customizable experience': 'portfolio',
+  'Consistent promotions': 'portfolio',
+  'Positive physical feeling': 'portfolio',
+  'Location convenience': 'convenience',
+  'Reliable ordering': 'convenience',
+  'Effortless choice': 'convenience',
+  'Routine': 'convenience',
+  'Branch loyalty': 'convenience',
+  'Lack of alternatives': 'convenience',
+  'Personal connection': 'emotional',
+  'Social influence': 'emotional',
+  'Emotional comfort': 'emotional',
+  'Cultural fit': 'emotional',
+  'Feeling special': 'emotional',
+};
+const REASON_COLORS = { portfolio: AMBER, convenience: BLUE, emotional: GREEN };
 
 const PO_METRICS = [
   'PO1_varietyPerception',
@@ -99,11 +131,188 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, index 
   );
 };
 
+/* ───────── Gap Chart: Q12 Category Demand vs Q24 Brand Portfolio ───────── */
+const GapChart = ({ paData, allMetrics, focusedBrand, activeSegment }) => {
+  const factors = paData?.q12?.factors;
+  const brandPortfolio = allMetrics?.[focusedBrand]?.portfolio;
+  if (!factors || !brandPortfolio) return null;
+
+  const seg = activeSegment || 'Total';
+
+  return (
+    <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '320ms' }}>
+      <h3 className="font-display text-base text-text-primary tracking-wide mb-1">
+        Gap Chart: Category Demand vs Brand Portfolio
+      </h3>
+      <p className="text-[10px] text-text-secondary mb-4">
+        Q12 category importance (what buyers want) vs Q24 brand association for {focusedBrand}
+      </p>
+
+      <div className="space-y-4">
+        {Q12_Q24_MAP.map(({ label, q12Key, q24Key }) => {
+          const demandVal = (factors[q12Key]?.[seg] || 0) * 100;
+          const brandVal = (brandPortfolio[q24Key] || 0) * 100;
+          const gap = demandVal - brandVal;
+          const maxBar = Math.max(demandVal, brandVal, 1);
+
+          return (
+            <div key={label}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] font-medium text-text-primary">{label}</span>
+                {Math.abs(gap) > 10 && (
+                  <span className={`text-[10px] font-semibold ${gap > 0 ? 'text-red-500' : 'text-green-600'}`}>
+                    Gap: {gap > 0 ? '+' : ''}{gap.toFixed(1)}pp
+                  </span>
+                )}
+              </div>
+              {/* Category demand bar */}
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[9px] text-text-secondary w-20 text-right">Category (Q12)</span>
+                <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full"
+                    style={{ width: `${(demandVal / maxBar) * 100}%`, backgroundColor: '#6B7280' }}
+                  />
+                </div>
+                <span className="text-[10px] tabular-nums w-12 text-right">{demandVal.toFixed(1)}%</span>
+              </div>
+              {/* Brand association bar */}
+              <div className="flex items-center gap-2">
+                <span className="text-[9px] text-text-secondary w-20 text-right">{focusedBrand} (Q24)</span>
+                <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full"
+                    style={{ width: `${(brandVal / maxBar) * 100}%`, backgroundColor: ORANGE }}
+                  />
+                </div>
+                <span className="text-[10px] tabular-nums w-12 text-right">{brandVal.toFixed(1)}%</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex gap-4 mt-4 text-[10px] text-text-secondary">
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: '#6B7280' }} /> Category demand
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: ORANGE }} /> Brand delivery
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* ───────── Bar Chart: Main Brand Reasons (Q25) ───────── */
+const BrandReasonsChart = ({ paData, focusedBrand }) => {
+  const reasonsObj = paData?.q25_per_brand?.[focusedBrand]?.reasons;
+  if (!reasonsObj) return null;
+
+  const sorted = Object.entries(reasonsObj)
+    .map(([reason, vals]) => ({ reason, value: vals?.Total || 0 }))
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 10);
+
+  const maxVal = Math.max(0.01, ...sorted.map((r) => r.value));
+
+  return (
+    <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '400ms' }}>
+      <h3 className="font-display text-base text-text-primary tracking-wide mb-1">
+        Main Brand Reasons (Q25)
+      </h3>
+      <p className="text-[10px] text-text-secondary mb-4">
+        Why main-brand users chose {focusedBrand} &mdash; top 10 reasons sorted by importance
+      </p>
+
+      <div className="space-y-1.5">
+        {sorted.map(({ reason, value }) => {
+          const type = REASON_TYPE[reason] || 'portfolio';
+          const color = REASON_COLORS[type];
+          const pct = (value / maxVal) * 100;
+
+          return (
+            <div key={reason} className="flex items-center gap-2 text-[11px]">
+              <span className="w-36 text-right truncate text-text-secondary">{reason}</span>
+              <div className="flex-1 h-3.5 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all"
+                  style={{ width: `${pct}%`, backgroundColor: color }}
+                />
+              </div>
+              <span className="w-12 text-right tabular-nums font-medium">
+                {(value * 100).toFixed(0)}%
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex gap-4 mt-4 text-[10px] text-text-secondary">
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: AMBER }} /> Portfolio
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: BLUE }} /> Convenience
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: GREEN }} /> Emotional
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* ───────── Category Context: What Buyers Value Most (Q12) ───────── */
+const CategoryContextPanel = ({ paData, activeSegment }) => {
+  const factors = paData?.q12?.factors;
+  if (!factors) return null;
+
+  const seg = activeSegment || 'Total';
+  const sorted = Object.entries(factors)
+    .map(([name, vals]) => ({ name, value: vals?.[seg] || 0 }))
+    .sort((a, b) => b.value - a.value);
+
+  const maxVal = Math.max(0.01, ...sorted.map((f) => f.value));
+
+  return (
+    <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '480ms' }}>
+      <h3 className="font-display text-base text-text-primary tracking-wide mb-1">
+        What Buyers Value Most (Q12)
+      </h3>
+      <p className="text-[10px] text-text-secondary mb-4">
+        All 18 category choice factors sorted by importance &mdash; fixed reference (not brand-specific)
+      </p>
+
+      <div className="space-y-1">
+        {sorted.map(({ name, value }, i) => {
+          const pct = (value / maxVal) * 100;
+          return (
+            <div key={name} className="flex items-center gap-2 text-[11px]">
+              <span className="w-4 text-right text-[9px] text-text-secondary">{i + 1}</span>
+              <span className="w-52 text-right truncate text-text-secondary">{name}</span>
+              <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: `${pct}%`, backgroundColor: '#6B7280' }}
+                />
+              </div>
+              <span className="w-12 text-right tabular-nums font-medium">
+                {(value * 100).toFixed(1)}%
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 /* ───────── PAGE ───────── */
 const Portfolio = () => {
   const { setViewMode } = useViewMode();
-  const { focusedBrand, brandNames, allMetrics, leader, setFocusedBrand } = useFilters();
-  const { loading } = useData();
+  const { focusedBrand, brandNames, allMetrics, leader, setFocusedBrand, activeSegment } = useFilters();
+  const { data, loading } = useData();
   const { setCurrentGuide } = useGuide();
   const [view, setView] = useState('overview');
 
@@ -491,6 +700,21 @@ const Portfolio = () => {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Blueprint elements: Gap Chart, Brand Reasons, Category Context */}
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <GapChart
+          paData={data?.paData}
+          allMetrics={allMetrics}
+          focusedBrand={fb}
+          activeSegment={activeSegment}
+        />
+        <BrandReasonsChart paData={data?.paData} focusedBrand={fb} />
+      </div>
+
+      <div className="mt-4">
+        <CategoryContextPanel paData={data?.paData} activeSegment={activeSegment} />
       </div>
     </div>
   );
