@@ -1,530 +1,513 @@
-# Feature Implementation Guide: How to Read + Report Export + Chatbot
+# Feature Implementation Guide: Top-Right Buttons + Dock/Undock Panels + Chatbot + Report Export
 
-> Detailed guide for replicating these three features in a new dashboard with a different topic.
+> Complete guide for replicating these features in a new dashboard.
 
 ---
 
-## 1. "How to Read" Guide System
+## 0. Top-Right Action Buttons (TopBar)
 
 ### How It Works
 
-A floating info button appears on every page. When clicked, it opens a draggable panel showing metric definitions and color legends specific to the current page and view mode.
+Three action buttons sit in the top-right corner of the TopBar: **HOW TO READ** (blue outline), **GENERATE REPORT** (filled orange), **RESET** (orange outline). These are always visible on every page.
 
-### Architecture
+### Implementation
 
-```
-Page mounts → registers guide content via setCurrentGuide()
-                ↓
-GuideContext stores it → GuideButton appears (bottom-right)
-                ↓
-User clicks → GuidePanel opens → renders sections
-```
+**File: `src/components/TopBar.jsx`**
 
-### Files
+```jsx
+import { ArrowCounterClockwise, Info, FileArrowDown } from '@phosphor-icons/react';
+import BrandFilter from './BrandFilter.jsx';
+import DemographicFilters from './DemographicFilters.jsx';
+import ExportButton from './ExportButton.jsx';
+import { useFilters, useGuide } from '../data/dataLoader.jsx';
 
-| File | Role |
-|---|---|
-| `src/components/GuideContext.jsx` | React context: `currentGuide`, `guideOpen`, `setCurrentGuide`, `setGuideOpen` |
-| `src/components/GuideButton.jsx` | Floating info button (appears only if guide content exists) |
-| `src/components/GuidePanel.jsx` | Draggable panel that renders guide sections |
-| `src/data/metricGuides.js` | All guide content organized by route + view mode |
+const TopBar = () => {
+  const { setFocusedBrand, defaultBrand, setActiveSegment } = useFilters();
+  const { guideOpen, setGuideOpen, currentGuide } = useGuide();
 
-### Data Structure
+  const handleReset = () => {
+    setFocusedBrand(defaultBrand);
+    setActiveSegment('Total');
+  };
 
-```javascript
-// metricGuides.js
-export const guides = {
-  '/':       { overview: [...], deepDive: [...], title: 'Executive Summary' },
-  '/cep':    { overview: [...], deepDive: [...], title: 'CEP Opportunity Map' },
-  '/mpen':   { overview: [...], deepDive: [...], title: 'Mental Penetration' },
-  // ... one entry per page route
+  return (
+    <header className="bg-card border-b border-gray-200 px-6 py-3 space-y-3">
+      <div className="flex items-center justify-between">
+        <BrandFilter />
+        <div className="flex items-center gap-2.5 flex-shrink-0">
+          {/* HOW TO READ — blue outline, opens guide panel */}
+          {currentGuide && (
+            <button
+              onClick={() => setGuideOpen(!guideOpen)}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-blue-info text-blue-info text-[12px] font-bold uppercase tracking-wide hover:bg-blue-50 transition-colors"
+            >
+              <Info size={16} weight="fill" />
+              How to Read
+            </button>
+          )}
+
+          {/* GENERATE REPORT — filled orange, dropdown */}
+          <ExportButton />
+
+          {/* RESET — orange outline */}
+          <button
+            onClick={handleReset}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-orange-primary text-orange-primary text-[12px] font-bold uppercase tracking-wide hover:bg-orange-light transition-colors"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+      <DemographicFilters />
+    </header>
+  );
 };
 ```
 
-Each guide is an array of sections. Three section types are supported:
+### Button Styles
 
-#### Type: `definitions`
-```javascript
-{
-  title: 'Key Metrics',
-  type: 'definitions',
-  items: [
-    { term: 'Mental Market Share (MMS)', def: 'Share of all brand-CEP associations...' },
-    { term: 'Mental Penetration (MPen%)', def: '% of buyers who associate...' },
-  ]
-}
-```
-Renders: **Bold term** with gray definition text below.
+| Button | Style | Behavior |
+|--------|-------|----------|
+| HOW TO READ | `border-2 border-blue-info text-blue-info` (outline, blue `#1565C0`) | Toggles `guideOpen` via `useGuide()`. Only visible when `currentGuide` is registered by a page. |
+| GENERATE REPORT | `bg-orange-primary text-white` (filled, `#F36B1F`) | Opens dropdown with "Quick Summary" and "Full Report" options. Navigates to `/report?scope=...` |
+| RESET | `border-2 border-orange-primary text-orange-primary` (outline, orange) | Resets `focusedBrand` to default and `activeSegment` to 'Total'. Always visible. |
 
-#### Type: `legend`
-```javascript
-{
-  title: 'Color Coding',
-  type: 'legend',
-  items: [
-    { color: '#2E7D32', label: 'Positive MA', desc: 'Brand outperforms expected share...' },
-    { color: '#C62828', label: 'Negative MA', desc: 'Brand underperforms...' },
-    // Also supports Tailwind classes: { color: 'bg-red-500', label: '...', desc: '...' }
-  ]
-}
-```
-Renders: Colored dot + bold label + smaller description.
+### Color Tokens (from `tailwind.config.js`)
 
-#### Type: `colors`
-```javascript
-{
-  title: 'Bar Colors',
-  type: 'colors',
-  items: [
-    { color: '#94a3b8', label: 'CEP Incidence' },
-    { color: '#F36B1F', label: 'Content Mix' },
-  ]
-}
-```
-Renders: Colored square + label (inline, wrapping).
-
-### How Pages Register Their Guide
-
-Every page registers its guide in a `useEffect`:
-
-```javascript
-import { useGuide } from '../components/GuideContext';
-import { guides } from '../data/metricGuides';
-
-// Inside your page component:
-const { setCurrentGuide } = useGuide();
-useEffect(() => {
-  setCurrentGuide({
-    sections: isDeepDive ? guides['/your-route'].deepDive : guides['/your-route'].overview
-  });
-  return () => setCurrentGuide(null);  // Clean up on unmount
-}, [isDeepDive, setCurrentGuide]);
-```
-
-### What to Customize for a New Topic
-
-1. **`src/data/metricGuides.js`** — Replace ALL metric definitions and legend items:
-   - Change term names (e.g. "Mental Penetration" → "Distribution Reach")
-   - Change definitions to match your framework
-   - Update color legend descriptions
-   - Add/remove sections as needed
-
-2. **Page registration** — Update route keys to match your new routes
-
-3. **No changes needed** to GuideContext, GuideButton, or GuidePanel — they're generic.
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `orange-primary` | `#F36B1F` | Primary CTA, focused brand highlight, presence dimension |
+| `orange-hover` | `#E05E15` | Hover state for orange buttons |
+| `orange-light` | `#FEF0E7` | Light orange backgrounds |
+| `blue-info` | `#1565C0` | How to Read button, info accents |
+| `text-primary` | `#3B3B3B` | Main body text |
+| `text-secondary` | `#5A5A5A` | Muted/secondary text |
 
 ---
 
-## 2. Report / Export System
-
-### How It Works
-
-User clicks "Generate Report" → navigates to `/report` page with URL params → Report page renders printable React components → User clicks "Save as PDF" → browser print dialog.
+## 1. "How to Read" Guide System (with Dock/Undock)
 
 ### Architecture
 
 ```
-ExportButton dropdown → navigate('/report?scope=...&from=...')
-          ↓
-Report.jsx reads URL params → loads metrics
-          ↓
-Renders CoverSection + page-specific sections
-          ↓
-User clicks "Save as PDF" → window.print() → browser PDF dialog
+TopBar "HOW TO READ" button  →  toggles guideOpen
+                                     ↓
+Page mounts  →  registers sections via setCurrentGuide()
+                                     ↓
+GuidePanel renders  →  dockable/undockable panel
 ```
+
+### The Two Floating Buttons (Bottom-Right Corner)
+
+Both buttons are rendered **OUTSIDE** the main layout `<div>` in `App.jsx` — this is critical because the main content has `overflow-hidden`, which would clip fixed elements.
+
+```
+Bottom-right corner stack:
+┌──────────────────┐
+│  Guide Button    │  ← fixed, bottom: 96px, right: 24px (blue circle, Info icon)
+│  (How to Read)   │
+├──────────────────┤
+│  Chat Button     │  ← fixed, bottom: 24px, right: 24px (orange circle, Chat icon)
+│  (Ask the Data)  │
+└──────────────────┘
+```
+
+**Guide button**: `bottom: 96px` — sits ABOVE the chat button
+**Chat button**: `bottom: 24px` — sits at the very bottom
+**Both**: `right: 24px`, `z-50`, `w-14 h-14` (56px circle)
 
 ### Files
 
 | File | Role |
 |---|---|
-| `src/components/ExportButton.jsx` | Dropdown button with scope options + filter/deep-dive toggles |
-| `src/pages/Report.jsx` | Report page: reads params, loads data, renders sections |
-| `src/components/report/ReportPage.jsx` | Print-ready page wrapper (A4 landscape) |
-| `src/components/report/ReportBrandTable.jsx` | Printable brand ranking table |
-| `src/components/report/ReportHeroKPI.jsx` | Large KPI card for reports |
-| `src/components/report/ReportInsightCard.jsx` | Narrative + highlights card |
-| `src/components/report/ReportSegmentCard.jsx` | Segment breakdown card |
-| `src/components/report/SectionGuide.jsx` | Inline guide for report pages |
-| `src/components/report/sections/CoverSection.jsx` | Title/cover page |
-| `src/components/report/sections/ExecOverviewSection.jsx` | Executive Summary section |
-| `src/components/report/sections/CEPSection.jsx` | CEP section |
-| `src/components/report/sections/MPenSection.jsx` | Mental Penetration section |
-| `src/components/report/sections/NSSection.jsx` | Network Size section |
-| `src/components/report/sections/MASection.jsx` | Mental Advantage section |
-| `src/components/report/sections/SocialSection.jsx` | Social Listening section |
-| `src/components/report/sections/HowToReadSection.jsx` | Methodology guide page |
-| `src/lib/export/pdfGenerator.js` | jsPDF helpers (createDoc, addHeader, addTable, etc.) |
-| `src/lib/export/pdfTheme.js` | PDF styling constants (colors, fonts, margins) |
-| `src/components/export/ExportRenderer.jsx` | Browser print engine (alternative flow) |
+| `src/data/dataLoader.jsx` | GuideProvider context: `currentGuide`, `guideOpen`, `setCurrentGuide`, `setGuideOpen` |
+| `src/components/GuideButton.jsx` | Floating blue circle button (bottom-right, above chat) |
+| `src/components/GuidePanel.jsx` | Dockable panel with dock/undock toggle |
+| `src/hooks/useDraggable.js` | Shared hook for dock/undock + drag behavior |
+| `src/data/metricGuides.js` | All guide content organized by route |
 
-### Export Scopes
+### The Hook: useDraggable(initialPos)
 
-| Button | URL Param | What Renders |
-|---|---|---|
-| Quick Summary | `scope=summary` | CoverSection only |
-| This Page | `scope=page&from=/cep` | Cover + one section matching `from` route |
-| Full Dashboard | `scope=full` | Cover + all 6 page sections |
-
-### URL Parameters
-
-| Param | Values | Effect |
-|---|---|---|
-| `scope` | `summary`, `page`, `full` | What to render |
-| `from` | `/`, `/cep`, `/mpen`, etc. | Which page (for scope=page) |
-| `unfiltered` | `1` | Use full-sample metrics (ignore active filters) |
-| `nodeepdive` | `1` | Skip deep-dive detail pages |
-
-### Props Passed to Every Section
+**`src/hooks/useDraggable.js`** — shared by both Guide and Chat panels.
 
 ```javascript
-{
-  metrics,           // Filtered or full-sample computeAllMetrics result
-  filters,           // Active filter state (or empty if unfiltered)
-  selectedBrands,    // Array of selected brand names (or [] for all)
-  focusedBrand,      // Currently focused brand name
-  activeBrands,      // Effective visible brand list
-  includeDeepDive,   // Boolean — show detailed pages?
-  data,              // Raw data (demographics, q23, etc.)
-  totalRespondents,  // Number of respondents in sample
+import { useState, useCallback, useEffect, useRef } from 'react';
+
+export default function useDraggable(initialPos = { x: 400, y: 100 }) {
+  const [pos, setPos] = useState(initialPos);
+  const [dragging, setDragging] = useState(false);
+  const [docked, setDocked] = useState(true);
+  const offset = useRef({ x: 0, y: 0 });
+
+  const onMouseDown = useCallback((e) => {
+    if (docked) return; // Can't drag when docked
+    if (e.target.closest('button, input, textarea, select, a')) return;
+    setDragging(true);
+    offset.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
+    e.preventDefault();
+  }, [docked, pos]);
+
+  const toggleDock = useCallback(() => {
+    setDocked(prev => {
+      if (!prev) setPos(initialPos); // Reset position on dock
+      return !prev;
+    });
+  }, [initialPos]);
+
+  // Mouse move/up listeners while dragging
+  useEffect(() => { /* ... mousemove/mouseup handlers ... */ }, [dragging]);
+
+  return { pos, onMouseDown, dragging, docked, toggleDock };
 }
 ```
 
-### How a Report Section Works (Example: ExecOverviewSection)
+**State it manages:**
+
+| Property | Type | Purpose |
+|---|---|---|
+| `pos` | `{x, y}` | Current panel position (pixels from top-left) |
+| `dragging` | `boolean` | Is user currently dragging? |
+| `docked` | `boolean` | Is panel pinned to default position? (starts `true`) |
+| `onMouseDown` | `function` | Attach to header's `onMouseDown` — starts drag |
+| `toggleDock` | `function` | Switches between docked/undocked |
+
+### How Panels Use the Dock/Undock System
+
+Both panels follow the same pattern:
+
+```jsx
+import { X, DotsSixVertical, ArrowsOutCardinal, PushPin } from '@phosphor-icons/react';
+import useDraggable from '../hooks/useDraggable';
+
+export default function MyPanel({ isOpen, onClose }) {
+  const { pos, onMouseDown, dragging, docked, toggleDock } = useDraggable({
+    x: typeof window !== 'undefined' ? window.innerWidth - 444 : 400,
+    y: typeof window !== 'undefined' ? Math.max(window.innerHeight - 700, 60) : 100,
+  });
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed z-50 w-[min(380px,90vw)] max-h-[min(500px,70vh)] bg-white rounded-card flex flex-col overflow-hidden"
+      style={docked
+        ? { bottom: '164px', right: '24px', boxShadow: '0 8px 32px rgba(0,0,0,0.14)' }
+        : { left: pos.x, top: pos.y, boxShadow: '0 8px 32px rgba(0,0,0,0.14)',
+            userSelect: dragging ? 'none' : undefined }
+      }
+    >
+      {/* Header — drag handle */}
+      <div
+        className={`px-4 py-2.5 border-b border-gray-100 bg-gray-50 flex items-center justify-between select-none ${docked ? '' : 'cursor-move'}`}
+        onMouseDown={onMouseDown}
+      >
+        <div className="flex items-center gap-2">
+          {!docked && <DotsSixVertical size={14} weight="bold" className="text-gray-400" />}
+          <span className="text-[13px] font-bold text-text-primary">Panel Title</span>
+        </div>
+        <div className="flex items-center gap-1">
+          {/* Dock/Undock toggle */}
+          <button
+            onClick={toggleDock}
+            title={docked ? 'Undock to move freely' : 'Dock to default position'}
+            className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
+              docked
+                ? 'text-gray-400 hover:text-orange-primary hover:bg-orange-light'
+                : 'text-orange-primary bg-orange-light hover:bg-orange-200'
+            }`}
+            onMouseDown={e => e.stopPropagation()}
+          >
+            {docked ? <ArrowsOutCardinal size={14} weight="bold" /> : <PushPin size={14} weight="bold" />}
+          </button>
+          {/* Close */}
+          <button
+            onClick={onClose}
+            className="w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-text-primary hover:bg-gray-100 transition-colors"
+            onMouseDown={e => e.stopPropagation()}
+          >
+            <X size={15} weight="bold" />
+          </button>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="flex-1 overflow-y-auto px-4 py-3">
+        {/* Your content here */}
+      </div>
+    </div>
+  );
+}
+```
+
+**Key detail**: The dock/undock button has `onMouseDown={e => e.stopPropagation()}` — this prevents clicking the button from starting a drag.
+
+### Visual States
+
+| State | Position | Cursor | Drag Dots | Dock Button Icon |
+|-------|----------|--------|-----------|------------------|
+| **Docked** | CSS `bottom/right` | Default | Hidden | `ArrowsOutCardinal` (undock me) |
+| **Undocked** | `left: pos.x, top: pos.y` | `cursor-move` | Visible `DotsSixVertical` | `PushPin` (dock me back) |
+
+### Guide Content Data Structure
+
+**`src/data/metricGuides.js`**
 
 ```javascript
-export default function ExecOverviewSection({ metrics, focusedBrand, activeBrands, includeDeepDive }) {
-  // 1. Extract focused brand metrics
-  const mmsRow = metrics.mms.find(r => r.brand === focusedBrand);
-  const mpenRow = metrics.mpen.find(r => r.brand === focusedBrand);
+export const guides = {
+  '/': {
+    title: 'Executive Summary',
+    sections: [
+      {
+        title: 'Three Dimensions',
+        type: 'definitions',    // Bold term + gray definition
+        items: [
+          { term: 'Presence Score', def: 'Equal to the Ease of Access score...' },
+        ],
+      },
+      {
+        title: 'Dimension Colors',
+        type: 'legend',         // Colored dot + bold label + description
+        items: [
+          { color: '#F36B1F', label: 'Presence', desc: 'Orange — Ease of Access' },
+          { color: '#FDB55B', label: 'Prominence', desc: 'Golden — Positive Standout' },
+          { color: '#707070', label: 'Portfolio', desc: 'Grey — Range Coverage' },
+        ],
+      },
+      {
+        title: 'Bar Colors',
+        type: 'colors',         // Colored square + label (inline)
+        items: [
+          { color: '#F36B1F', label: 'Focused Brand' },
+          { color: '#D1D5DB', label: 'Other Brands' },
+        ],
+      },
+    ],
+  },
+  '/your-route': { ... },
+};
+```
 
-  // 2. Generate insight narrative
-  const insight = generateBrandInsight(focusedBrand, metrics);
+**Three section types**: `definitions`, `legend`, `colors`
 
-  // 3. Render printable pages
+### How Pages Register Their Guide
+
+```javascript
+import { useGuide } from '../data/dataLoader.jsx';
+import { guides } from '../data/metricGuides.js';
+
+const { setCurrentGuide } = useGuide();
+useEffect(() => {
+  setCurrentGuide({ sections: guides['/your-route'].sections });
+  return () => setCurrentGuide(null);
+}, [setCurrentGuide]);
+```
+
+### Mounting in App.jsx
+
+```jsx
+function AppShell() {
   return (
     <>
-      <ReportPage title={`${focusedBrand} — Executive Overview`}>
-        {/* KPI cards */}
-        <ReportHeroKPI label="Market Share" value={pct(mmsRow.mms)} rank={mmsRow.rank} />
-        {/* Brand table */}
-        <ReportBrandTable columns={[...]} rows={[...]} focusedBrand={focusedBrand} />
-      </ReportPage>
-
-      {includeDeepDive && (
-        <ReportPage title="Detailed Analysis">
-          <ReportInsightCard title="Strategic Read" narrative={insight.narrative} />
-        </ReportPage>
-      )}
+      <div className="flex h-screen bg-page">
+        {/* Sidebar + Main content */}
+      </div>
+      {/* OUTSIDE overflow-hidden div */}
+      <GuideButton />
+      <GuidePanel />
+      <ChatWidget />
     </>
   );
 }
 ```
 
-### Print CSS (in Report.jsx)
+### Stacking Multiple Buttons
 
-- `@page { size: A4 landscape; margin: 10mm 15mm; }`
-- `.report-page` gets `break-before: always` (except first)
-- Background colors forced: `-webkit-print-color-adjust: exact`
-- Control bar hidden in print
+| Button | Bottom | Purpose |
+|--------|--------|---------|
+| Chat | 24px | Primary floating button |
+| Guide | 96px | Secondary (24 + 56 button + 16 gap) |
+| Button 3 | 168px | Add another 72px per button |
 
-### What to Customize for a New Topic
-
-1. **`src/components/report/sections/`** — Rewrite each section:
-   - Change metric names, labels, descriptions
-   - Adjust which KPIs are shown as ReportHeroKPI cards
-   - Update table columns for your metrics
-   - Update insight generation calls
-
-2. **`src/components/report/sections/CoverSection.jsx`** — Update title, subtitle, branding
-
-3. **`src/components/report/sections/HowToReadSection.jsx`** — Rewrite methodology guide
-
-4. **`src/pages/Report.jsx`** — Update `PAGE_TO_SECTION` mapping if routes change
-
-5. **`src/lib/export/pdfGenerator.js`** — Update footer text, filename prefix
-
-6. **`src/components/ExportButton.jsx`** — No changes needed (generic)
-
-7. **Reusable components** (no changes needed):
-   - ReportPage, ReportHeroKPI, ReportBrandTable, ReportInsightCard, ReportSegmentCard
+Each panel's docked `bottom` should be its button's bottom + ~68px.
 
 ---
 
-## 3. AI Chatbot System
-
-### How It Works
-
-Floating chat button → opens chat panel → user types question → system prompt with ALL metrics injected → sent to Groq LLM API → response rendered as markdown.
-
-### Architecture
-
-```
-ChatButton (FAB) → toggles ChatPanel
-          ↓
-ChatPanel loads data → computes fullMetrics (always unfiltered)
-          ↓
-useChatbot hook builds system prompt with all metric data
-          ↓
-User sends message → POST /api/chat (messages array)
-          ↓
-Groq API (llama-3.3-70b-versatile) → response
-          ↓
-Response rendered as Markdown in chat bubble
-```
+## 2. AI Chatbot System (with Dock/Undock)
 
 ### Files
 
 | File | Role |
 |---|---|
 | `src/hooks/useChatbot.js` | Core hook: message state, system prompt builder, send function |
-| `src/components/ChatButton.jsx` | Floating orange button (bottom-right) with unread badge |
-| `src/components/ChatPanel.jsx` | Draggable chat drawer with message list + input |
-| `vite.config.js` | Dev server middleware for `/api/chat` |
-| `worker.js` | Cloudflare Worker for production `/api/chat` |
+| `src/components/ChatButton.jsx` | Floating orange FAB (bottom: 24px, right: 24px) |
+| `src/components/ChatPanel.jsx` | `ChatWidget` — self-contained component with button + dockable panel |
+| `vite.config.js` | Dev server `/api/chat` middleware |
+| `functions/api/chat.js` | Cloudflare Pages Function for production |
 
-### System Prompt Structure
+### ChatButton
 
-The system prompt is rebuilt on EVERY message send. It contains:
+```jsx
+import { ChatCircle } from '@phosphor-icons/react';
 
-```
-1. ROLE DEFINITION
-   "You are an expert [topic] analyst embedded in the [platform] dashboard..."
-
-2. FRAMEWORK DEFINITIONS
-   - Each metric defined: what it measures, how to interpret
-   - Key interpretation patterns (e.g. "High MPen + Low NS = reach without depth")
-
-3. CEP/OCCASION LIST
-   - All 14 category entry points with numbers
-
-4. BRAND LIST
-   - Dynamically generated from metrics data (alphabetical)
-
-5. FILTER AWARENESS
-   - Current dashboard filters shown (but AI told to use full-sample data)
-
-6. FULL-SAMPLE METRICS (injected as text tables)
-   --- Mental Market Share (ranked) ---
-     1. Brand1: 15.3%
-     2. Brand2: 14.1%
-
-   --- Mental Penetration (ranked) ---
-   --- Network Size (ranked) ---
-   --- MPen by Segment ---
-   --- NS by Segment ---
-   --- Brand MA Aggregates ---
-   --- Mental Advantage per Brand×CEP ---
-
-7. SOCIAL LISTENING DATA (if available)
-   - Brand scorecard (posts, breadth, avgSOV per brand)
-   - Top RED gaps (high priority content gaps)
-   - Top YELLOW gaps (demand gaps)
-
-8. WHAT YOU CAN ANSWER (scope definition)
-   - Factual, interpretive, forward-looking, methodology, competitive, social, cross-data
-
-9. FORMAT RULES
-   - How to display percentages, NS values, MA values, traffic lights
-```
-
-### Key Code: buildSystemPrompt()
-
-```javascript
-function buildSystemPrompt(metrics, filters, socialMetrics) {
-  // 1. Build filter awareness section
-  const filterLines = [
-    filters.region?.length ? `Region: ${filters.region.join(', ')}` : null,
-    // ... nationality, gender, ageGroup
-  ].filter(Boolean);
-
-  // 2. Format metric tables as text
-  const mmsTable = metrics.mms
-    .sort((a, b) => a.rank - b.rank)
-    .map(r => `  ${r.rank}. ${r.brand}: ${pct(r.mms)}`)
-    .join('\n');
-  // ... same for mpen, ns, segments, MA, brandInsights
-
-  // 3. Build social listening section
-  const socialSection = buildSocialSection(socialMetrics);
-
-  // 4. Combine into one massive string
-  return `You are an expert...
-    FRAMEWORK: ...
-    THE 14 CEPs: ...
-    THE ${brands.length} BRANDS: ${brandList}
-    ${filtersSection}
-    FULL-SAMPLE METRICS:
-    ${mmsTable}
-    ${mpenTable}
-    ...
-    ${socialSection}
-    WHAT YOU CAN ANSWER: ...
-    FORMAT RULES: ...`;
+export default function ChatButton({ onClick, unreadCount = 0 }) {
+  return (
+    <button
+      onClick={onClick}
+      className="z-50 w-14 h-14 rounded-full bg-orange-primary flex items-center justify-center transition-transform duration-200 hover:scale-110"
+      style={{ position: 'fixed', bottom: '24px', right: '24px', boxShadow: '0 4px 12px rgba(243,107,31,0.45)' }}
+    >
+      <ChatCircle size={22} weight="fill" color="white" />
+      {unreadCount > 0 && (
+        <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+          {unreadCount > 9 ? '9+' : unreadCount}
+        </span>
+      )}
+    </button>
+  );
 }
 ```
 
-### Social Listening Section Builder
+### ChatPanel (ChatWidget)
 
-```javascript
-function buildSocialSection(socialMetrics) {
-  // Builds a text block with:
-  // 1. Brand Scorecard (one line per brand):
-  //    Brand: 2847 posts, breadth 11/14, avgSOV 8.3%, 2RED 3YEL 7GRN 2BLU 0GRY
-  // 2. Top 15 RED gaps (sorted by incidence):
-  //    Brand × CEP: incidence=35.2%, contentMix=8.1%, SOV=4.2%
-  // 3. Top 10 YELLOW gaps
+The `ChatWidget` component manages its own open/close state and renders both the button and the dockable panel. Uses `useDraggable` for dock/undock.
+
+```jsx
+export default function ChatWidget() {
+  const [open, setOpen] = useState(false);
+  const { pos, onMouseDown, dragging, docked, toggleDock } = useDraggable({...});
+
+  return (
+    <>
+      {!open && <ChatButton onClick={() => setOpen(true)} />}
+      {open && (
+        <div
+          className="fixed z-50 w-[min(400px,90vw)] h-[min(560px,75vh)] bg-white rounded-card flex flex-col"
+          style={docked
+            ? { bottom: '96px', right: '24px', boxShadow: '...' }
+            : { left: pos.x, top: pos.y, boxShadow: '...' }
+          }
+        >
+          {/* Header with dock/undock + close + clear */}
+          {/* Message list with ReactMarkdown rendering */}
+          {/* Input field with send button */}
+        </div>
+      )}
+    </>
+  );
 }
 ```
 
 ### API Endpoint
 
-**Dev** (vite.config.js middleware):
+**Dev** (`vite.config.js` middleware):
 ```javascript
-server.middlewares.use('/api/chat', async (req, res) => {
-  const groq = new Groq({ apiKey: env.GROQ_API_KEY });
-  const completion = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
-    messages: req.body.messages,
-    max_tokens: 1024,
-  });
-  res.end(JSON.stringify({ content: completion.choices[0].message.content }));
-});
-```
-
-**Production** (worker.js — Cloudflare Worker):
-```javascript
-// Fetches Groq API directly via fetch()
+// Uses fetch() to call Groq API directly
 const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
   method: 'POST',
-  headers: { 'Authorization': `Bearer ${apiKey}` },
+  headers: { 'Authorization': `Bearer ${env.GROQ_API_KEY}`, 'Content-Type': 'application/json' },
   body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages, max_tokens: 1024 }),
 });
 ```
 
-### Message Flow
-
-```
-User types message
-  → sendMessage(text) called
-  → Build messages array:
-      [
-        { role: 'system', content: buildSystemPrompt(...) },  // ALL context
-        { role: 'user', content: 'earlier question' },
-        { role: 'assistant', content: 'earlier response' },
-        { role: 'user', content: 'new question' }
-      ]
-  → POST /api/chat with { messages }
-  → Groq returns { content: '...' }
-  → Append to messages state
-  → ChatPanel renders via ReactMarkdown
+**Production** (`functions/api/chat.js` — Cloudflare Pages Function):
+```javascript
+export async function onRequestPost(context) {
+  const { messages } = await context.request.json();
+  const apiKey = context.env.GROQ_API_KEY;
+  // Same fetch to Groq API
+}
 ```
 
 ### Environment Variables
 
-| Variable | Where | Purpose |
+| Variable | Dev | Production |
 |---|---|---|
-| `GROQ_API_KEY` | `.env.local` (dev) | API key for Groq LLM (starts with `gsk_`) |
-| `GROQ_API_KEY` | Cloudflare Workers secret (prod) | Same key, set via `wrangler secret put GROQ_API_KEY` |
-
-**Security**: API key NEVER reaches the browser. Server-side only (Vite middleware / Cloudflare Worker).
-
-### What to Customize for a New Topic
-
-#### Required Changes:
-
-1. **`src/hooks/useChatbot.js`** — This is the MAIN file to customize:
-
-   a. **WELCOME_MESSAGE** — Update greeting text:
-   ```javascript
-   export const WELCOME_MESSAGE = {
-     id: 'welcome',
-     role: 'assistant',
-     content: "Hi! I can answer questions about Physical Availability data for these brands..."
-   };
-   ```
-
-   b. **Role definition** — Change the opening line:
-   ```javascript
-   return `You are an expert Physical Availability analyst embedded in the Muhimma dashboard.
-   This tool analyzes [N] brands in [country] using [your framework]...`
-   ```
-
-   c. **FRAMEWORK section** — Replace ALL metric definitions:
-   ```
-   - Distribution Reach: % of stores carrying the brand...
-   - Shelf Space Index: Average shelf facings per store...
-   // etc.
-   ```
-
-   d. **KEY INTERPRETATION PATTERNS** — Write new patterns for your metrics:
-   ```
-   - High Reach + High Shelf = dominant physical presence
-   - High Reach + Low Shelf = listed but poorly merchandised
-   // etc.
-   ```
-
-   e. **CEP/OCCASION LIST** — Replace with your category's buying situations
-
-   f. **Metric table formatting** — Update to match your metric names and formats:
-   ```javascript
-   const reachTable = metrics.reach
-     .sort((a, b) => a.rank - b.rank)
-     .map(r => `  ${r.rank}. ${r.brand}: ${pct(r.reach)}`)
-     .join('\n');
-   ```
-
-   g. **WHAT YOU CAN ANSWER** — Update scope of questions
-
-   h. **FORMAT RULES** — Update display formats for your metrics
-
-2. **`src/data/socialMetrics.js`** — If you have social listening data, update the `computeSocialMetrics()` function or remove the social section from the system prompt if not applicable.
-
-3. **`worker.js`** + **`vite.config.js`** — No changes needed unless switching LLM provider.
-
-4. **`src/components/ChatPanel.jsx`** — Update placeholder text:
-   ```javascript
-   placeholder="Ask about distribution, shelf space, availability..."
-   ```
-
-5. **`src/components/ChatButton.jsx`** — No changes needed (generic).
-
-#### Optional: Change LLM Provider
-
-To use a different LLM (e.g. Claude, OpenAI):
-- **vite.config.js**: Replace Groq SDK with your provider's SDK
-- **worker.js**: Replace Groq API URL with your provider's endpoint
-- Update model name in both files
-- Env var name can stay `GROQ_API_KEY` or rename to match provider
+| `GROQ_API_KEY` | `.env.local` file | Cloudflare Dashboard → Settings → Environment Variables (Secret/Encrypted) |
 
 ---
 
-## Quick Reference: Files to Touch per Feature
+## 3. Report / Export System
 
-### "How to Read" Guide
-- [ ] `src/data/metricGuides.js` — ALL content (definitions, legends, colors)
-- [ ] Page components — Update route keys in `setCurrentGuide`
+### ExportButton (Top-Right, filled orange)
+
+```jsx
+const ExportButton = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="relative inline-block" ref={ref}>
+      <button
+        onClick={() => setOpen(v => !v)}
+        className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-orange-primary text-white text-[12px] font-bold uppercase tracking-wide hover:bg-orange-hover transition-colors"
+      >
+        <FileArrowDown size={16} weight="bold" />
+        Generate Report
+      </button>
+      {open && (
+        <div className="absolute right-0 mt-1 bg-white rounded-card shadow-lg border z-50 min-w-[160px]">
+          <button onClick={() => navigate('/report?scope=summary')}>Quick Summary</button>
+          <button onClick={() => navigate('/report?scope=full')}>Full Report</button>
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
+### Report Page
+
+Renders printable sections with A4 landscape print CSS:
+```css
+@media print {
+  @page { size: A4 landscape; margin: 10mm 15mm; }
+  .no-print { display: none !important; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+```
+
+---
+
+## 4. Dimension Color System
+
+Use these colors consistently across ALL charts, bars, legends:
+
+| Dimension | Hex | Tailwind | Usage |
+|-----------|-----|----------|-------|
+| Presence | `#F36B1F` | `bg-orange-primary` | Ease of Access bars, KPI cards, legends |
+| Prominence | `#FDB55B` | custom | Positive Standout bars, KPI cards, legends |
+| Portfolio | `#707070` | custom | Range Coverage bars, KPI cards, legends |
+
+---
+
+## Quick Reference: Files to Copy per Feature
+
+### Top-Right Buttons
+- [ ] `src/components/TopBar.jsx` — Button layout + HOW TO READ + GENERATE REPORT + RESET
+- [ ] `src/components/ExportButton.jsx` — Dropdown export button
+
+### "How to Read" Guide (with Dock/Undock)
+- [ ] `src/hooks/useDraggable.js` — Dock/undock + drag hook (shared)
+- [ ] `src/components/GuideButton.jsx` — Blue floating FAB
+- [ ] `src/components/GuidePanel.jsx` — Dockable guide panel
+- [ ] `src/data/metricGuides.js` — ALL guide content (customize per topic)
+- [ ] Page components — `setCurrentGuide()` registration in each page
+
+### Chatbot (with Dock/Undock)
+- [ ] `src/hooks/useChatbot.js` — System prompt builder (customize per topic)
+- [ ] `src/components/ChatButton.jsx` — Orange floating FAB
+- [ ] `src/components/ChatPanel.jsx` — Dockable chat panel with ReactMarkdown
+- [ ] `vite.config.js` — Dev API middleware
+- [ ] `functions/api/chat.js` — Production Cloudflare Pages Function
+- [ ] `.env.local` — `GROQ_API_KEY`
 
 ### Report Export
-- [ ] `src/components/report/sections/*.jsx` — ALL section content
-- [ ] `src/components/report/sections/CoverSection.jsx` — Branding
-- [ ] `src/components/report/sections/HowToReadSection.jsx` — Methodology
-- [ ] `src/lib/export/pdfGenerator.js` — Footer text, filename
-- [ ] `src/pages/Report.jsx` — Route mappings (if routes change)
+- [ ] `src/components/ExportButton.jsx` — Dropdown button
+- [ ] `src/pages/Report.jsx` — Report page with print CSS
+- [ ] `src/components/report/*.jsx` — Report section components
 
-### Chatbot
-- [ ] `src/hooks/useChatbot.js` — System prompt (this is 90% of the work)
-- [ ] `src/components/ChatPanel.jsx` — Placeholder text
-- [ ] `.env.local` — API key
-- [ ] `worker.js` — Production API key (via wrangler secret)
-
-### Shared Dependencies (no changes needed)
-- `src/components/GuideContext.jsx`
-- `src/components/GuideButton.jsx`
-- `src/components/GuidePanel.jsx`
-- `src/components/ChatButton.jsx`
-- `src/components/report/ReportPage.jsx`
-- `src/components/report/ReportHeroKPI.jsx`
-- `src/components/report/ReportBrandTable.jsx`
-- `src/components/report/ReportInsightCard.jsx`
-- `src/components/export/ExportRenderer.jsx`
+### Shared Dependencies (copy as-is)
 - `src/hooks/useDraggable.js`
+- `@phosphor-icons/react` (npm dependency)
+- `react-markdown` (npm dependency for chatbot)
+- `groq-sdk` (npm dependency for chatbot)
