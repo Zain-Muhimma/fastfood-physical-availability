@@ -5,12 +5,14 @@ import { useViewMode } from '../components/ViewModeContext.jsx';
 import PageViewModeFallback from '../components/PageViewModeFallback.jsx';
 import { METRIC_DEFS, fmtMetric } from '../data/metrics.js';
 
+import ExpandableCard from '../components/ExpandableCard.jsx';
+
 const ORANGE = '#F36B1F';
 
 const DIMENSIONS = [
   { key: 'presence', label: 'Presence', color: '#F36B1F' },
-  { key: 'prominence', label: 'Prominence', color: '#1565C0' },
-  { key: 'portfolio', label: 'Portfolio', color: '#2E7D32' },
+  { key: 'prominence', label: 'Prominence', color: '#FDB55B' },
+  { key: 'portfolio', label: 'Portfolio', color: '#707070' },
 ];
 
 const metricKeys = Object.keys(METRIC_DEFS);
@@ -20,12 +22,12 @@ const getMetricValue = (allMetrics, brand, key) => {
   return allMetrics[brand]?.[dim]?.[key] ?? 0;
 };
 
-const overallScore = (m) => (m.presence.score + m.prominence.score + m.portfolio.score) / 3;
+const presenceRankScore = (m) => m.presence.score;
 
 const CompetitiveGap = () => {
   const { setViewMode } = useViewMode();
-  const { focusedBrand, brandNames, allMetrics, leader } = useFilters();
-  const { loading } = useData();
+  const { focusedBrand, setFocusedBrand, brandNames, allMetrics, leader } = useFilters();
+  const { data, loading } = useData();
   const { setCurrentGuide } = useGuide();
   const [view, setView] = useState('overview');
 
@@ -57,7 +59,7 @@ const CompetitiveGap = () => {
 
   const rankedBrands = useMemo(() => {
     if (!allMetrics) return [];
-    return [...brands].sort((a, b) => overallScore(allMetrics[b]) - overallScore(allMetrics[a]));
+    return [...brands].sort((a, b) => presenceRankScore(allMetrics[b]) - presenceRankScore(allMetrics[a]));
   }, [allMetrics, brands]);
 
   // Precompute column min/max ranks for conditional coloring
@@ -135,40 +137,57 @@ const CompetitiveGap = () => {
           </div>
 
           {/* Brand Ranking */}
+          <ExpandableCard title="Brand Ranking by Physical Availability">
           <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '240ms' }}>
-            <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">Brand Ranking by Overall PA Score</h3>
-            <div className="space-y-2">
+            <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">Brand Ranking by Physical Availability</h3>
+            {/* Legend */}
+            <div className="flex gap-4 mb-3 text-[10px]">
+              <span className="flex items-center gap-1.5"><span className="w-3 h-1.5 rounded-full" style={{ backgroundColor: '#F36B1F' }} />Presence</span>
+              <span className="flex items-center gap-1.5"><span className="w-3 h-1.5 rounded-full" style={{ backgroundColor: '#FDB55B' }} />Prominence</span>
+              <span className="flex items-center gap-1.5"><span className="w-3 h-1.5 rounded-full" style={{ backgroundColor: '#707070' }} />Portfolio</span>
+            </div>
+            <div className="space-y-3">
               {rankedBrands.map((brand, i) => {
-                const score = overallScore(allMetrics[brand]) * 100;
-                const maxScore = overallScore(allMetrics[rankedBrands[0]]) * 100;
+                const m = allMetrics[brand];
+                const presence = (m?.presence?.score ?? 0) * 100;
+                const prominence = (m?.prominence?.score ?? 0) * 100;
+                const portfolio = (m?.portfolio?.score ?? 0) * 100;
                 const isFocused = brand === fb;
                 return (
                   <div
                     key={brand}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] ${isFocused ? 'bg-orange-light' : 'bg-gray-50'}`}
+                    className={`px-3 py-2 rounded-lg text-[12px] ${isFocused ? 'bg-orange-light' : 'bg-gray-50'}`}
                   >
-                    <span className="w-6 text-text-secondary font-semibold">#{i + 1}</span>
-                    <span className={`w-28 truncate ${isFocused ? 'text-orange-primary font-semibold' : 'text-text-primary'}`}>{brand}</span>
-                    <div className="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all"
-                        style={{
-                          width: `${(score / maxScore) * 100}%`,
-                          backgroundColor: isFocused ? ORANGE : '#D1D5DB',
-                        }}
-                      />
+                    <div className="flex items-center gap-3 mb-1">
+                      <span className="w-6 text-text-secondary font-semibold">#{i + 1}</span>
+                      <span className={`w-28 truncate ${isFocused ? 'text-orange-primary font-semibold' : 'text-text-primary'}`}>{brand}</span>
                     </div>
-                    <span className="w-14 text-right font-semibold text-text-primary">{score.toFixed(1)}%</span>
+                    <div className="ml-9 space-y-1">
+                      {[
+                        { label: 'Presence', val: presence, color: '#F36B1F' },
+                        { label: 'Prominence', val: prominence, color: '#FDB55B' },
+                        { label: 'Portfolio', val: portfolio, color: '#707070' },
+                      ].map(d => (
+                        <div key={d.label} className="flex items-center gap-2">
+                          <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full" style={{ width: `${d.val}%`, backgroundColor: d.color, opacity: isFocused ? 1 : 0.5 }} />
+                          </div>
+                          <span className="text-[10px] text-text-secondary w-10 text-right">{d.val.toFixed(0)}%</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 );
               })}
             </div>
           </div>
+          </ExpandableCard>
         </div>
       )}
 
       {/* ── COMPARISON ── */}
       {view === 'comparison' && (
+        <ExpandableCard title="Full Metric Comparison">
         <div className="bg-card rounded-card p-5 animate-slide-up overflow-x-auto">
           <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">Full Metric Comparison</h3>
           <table className="w-full text-[11px] border-collapse">
@@ -208,76 +227,187 @@ const CompetitiveGap = () => {
             </tbody>
           </table>
         </div>
+        </ExpandableCard>
       )}
 
       {/* ── DEEP-DIVE ── */}
-      {view === 'deepdive' && (
+      {view === 'deepdive' && (() => {
+        const fbRank = rankedBrands.indexOf(fb) + 1;
+        const leaderBrand = rankedBrands[0];
+        const fbLogo = data?.brands?.find(b => b.name === fb)?.logo;
+        const leaderLogo = data?.brands?.find(b => b.name === leaderBrand)?.logo;
+        const fbOverall = presenceRankScore(allMetrics[fb]) * 100;
+        const leaderOverall = presenceRankScore(allMetrics[leaderBrand]) * 100;
+
+        // Dimension gaps for EBI narrative
+        const dimGaps = DIMENSIONS.map(dim => ({
+          ...dim,
+          fbScore: allMetrics[fb]?.[dim.key]?.score ?? 0,
+          leaderScore: allMetrics[leaderBrand]?.[dim.key]?.score ?? 0,
+          gap: (allMetrics[fb]?.[dim.key]?.score ?? 0) - (allMetrics[leaderBrand]?.[dim.key]?.score ?? 0),
+        }));
+        const sortedByGap = [...dimGaps].sort((a, b) => a.gap - b.gap);
+        const biggestGap = sortedByGap[0];
+        const closestDim = [...dimGaps].sort((a, b) => Math.abs(a.gap) - Math.abs(b.gap))[0];
+
+        return (
         <div className="space-y-6">
-          <div className="bg-card rounded-card p-5 animate-slide-up">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded" style={{ backgroundColor: ORANGE }} />
-                <span className="text-[12px] font-semibold text-text-primary">{fb}</span>
+          {/* 1. Brand Cards side-by-side */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Focused Brand Card */}
+            <div className="bg-card rounded-card p-5 animate-slide-up flex items-center gap-4 border border-gray-100 shadow-sm">
+              <div className="w-14 h-14 rounded-full bg-orange-50 overflow-hidden flex-shrink-0">
+                {fbLogo ? (
+                  <img src={fbLogo} alt={fb} className="w-full h-full object-contain p-1" />
+                ) : (
+                  <div className="w-full h-full bg-orange-light flex items-center justify-center">
+                    <span className="font-display text-xl text-orange-primary">{fb?.[0]}</span>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-gray-400" />
-                <span className="text-[12px] font-semibold text-text-primary">{leader} (Leader)</span>
+              <div>
+                <p className="text-[10px] text-text-secondary font-medium uppercase tracking-wider">Focused Brand</p>
+                <h3 className="font-display text-xl text-text-primary tracking-wide">{fb}</h3>
+                <p className="text-[12px] text-text-secondary mt-1">Rank <span className="font-semibold text-text-primary">#{fbRank}</span></p>
               </div>
             </div>
 
-            {DIMENSIONS.map((dim) => {
-              const dimMetrics = metricKeys.filter((k) => METRIC_DEFS[k].dim === dim.key);
-              return (
-                <div key={dim.key} className="mb-8 last:mb-0">
-                  <h4 className="font-display text-lg text-text-primary tracking-wide mb-3 border-b border-gray-200 pb-1">{dim.label}</h4>
-                  <div className="space-y-3">
-                    {dimMetrics.map((key) => {
-                      const fbVal = getMetricValue(allMetrics, fb, key);
-                      const leaderVal = getMetricValue(allMetrics, leader, key);
-                      const maxVal = Math.max(Math.abs(fbVal), Math.abs(leaderVal), 0.01);
-                      const fmt = METRIC_DEFS[key].format;
-                      return (
-                        <div key={key} className="flex items-center gap-3">
-                          <span className="w-32 text-[11px] text-text-secondary truncate" title={METRIC_DEFS[key].label}>
-                            {METRIC_DEFS[key].label}
-                          </span>
-                          <div className="flex-1 space-y-1">
-                            {/* Focused brand bar */}
-                            <div className="flex items-center gap-2">
-                              <div className="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                                <div
-                                  className="h-full rounded-full"
-                                  style={{
-                                    width: `${Math.max((Math.abs(fbVal) / maxVal) * 100, 2)}%`,
-                                    backgroundColor: ORANGE,
-                                  }}
-                                />
-                              </div>
-                              <span className="w-16 text-[11px] text-right font-semibold text-text-primary">{fmtMetric(fbVal, fmt)}</span>
-                            </div>
-                            {/* Leader bar */}
-                            <div className="flex items-center gap-2">
-                              <div className="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                                <div
-                                  className="h-full rounded-full bg-gray-400"
-                                  style={{
-                                    width: `${Math.max((Math.abs(leaderVal) / maxVal) * 100, 2)}%`,
-                                  }}
-                                />
-                              </div>
-                              <span className="w-16 text-[11px] text-right font-semibold text-text-primary">{fmtMetric(leaderVal, fmt)}</span>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+            {/* Leader Card */}
+            <div className="bg-card rounded-card p-5 animate-slide-up flex items-center gap-4 border border-gray-100 shadow-sm" style={{ animationDelay: '80ms' }}>
+              <div className="w-14 h-14 rounded-full bg-gray-50 overflow-hidden flex-shrink-0">
+                {leaderLogo ? (
+                  <img src={leaderLogo} alt={leaderBrand} className="w-full h-full object-contain p-1" />
+                ) : (
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                    <span className="font-display text-xl text-gray-500">{leaderBrand?.[0]}</span>
+                  </div>
+                )}
+              </div>
+              <div>
+                <p className="text-[10px] text-text-secondary font-medium uppercase tracking-wider">Market Leader</p>
+                <h3 className="font-display text-xl text-text-primary tracking-wide">{leaderBrand}</h3>
+                <p className="text-[12px] text-text-secondary mt-1">Rank <span className="font-semibold text-text-primary">#1</span></p>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. EBI Strategic Actions */}
+          <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '160ms' }}>
+            <h3 className="font-display text-lg text-text-primary tracking-wide mb-4">EBI Strategic Actions</h3>
+            <div className="space-y-3 text-[13px] text-text-primary leading-relaxed">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="font-semibold text-red-800 mb-1">Biggest Gap: {biggestGap.label}</p>
+                <p className="text-red-900">
+                  {fb} trails {leaderBrand} by <span className="font-bold">{(Math.abs(biggestGap.gap) * 100).toFixed(1)}pp</span> in {biggestGap.label}.
+                  {biggestGap.key === 'presence' && ' Prioritise expanding distribution footprint.'}
+                  {biggestGap.key === 'prominence' && ' Invest in in-store visibility and point-of-sale salience.'}
+                  {biggestGap.key === 'portfolio' && ' Broaden the product range to cover more occasions.'}
+                </p>
+              </div>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <p className="font-semibold text-green-800 mb-1">Closest Dimension: {closestDim.label}</p>
+                <p className="text-green-900">
+                  {closestDim.gap >= 0
+                    ? `${fb} leads by ${(closestDim.gap * 100).toFixed(1)}pp — protect this advantage.`
+                    : `${fb} is within ${(Math.abs(closestDim.gap) * 100).toFixed(1)}pp of ${leaderBrand} — a focused push could close the gap.`
+                  }
+                </p>
+              </div>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="font-semibold text-blue-800 mb-1">Distribution Investment</p>
+                <p className="text-blue-900">
+                  {fbOverall >= leaderOverall
+                    ? `${fb} holds an overall PA advantage. Focus on sustaining leadership.`
+                    : `Concentrate investment on ${biggestGap.label} (largest deficit) while leveraging ${closestDim.label} (nearest parity) as foundation.`
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Dimension Gap Cards with per-metric paired bars */}
+          {DIMENSIONS.map((dim, di) => {
+            const dimMetrics = metricKeys.filter((k) => METRIC_DEFS[k].dim === dim.key);
+            const fbDimScore = allMetrics[fb]?.[dim.key]?.score ?? 0;
+            const leaderDimScore = allMetrics[leaderBrand]?.[dim.key]?.score ?? 0;
+            const dimGap = fbDimScore - leaderDimScore;
+            return (
+              <ExpandableCard key={dim.key} title={`${dim.label} Gap — ${fb} vs ${leaderBrand}`}>
+              <div
+                className="bg-card rounded-card p-5 animate-slide-up"
+                style={{ animationDelay: `${(di + 2) * 80}ms` }}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: dim.color }} />
+                    <h4 className="font-display text-lg text-text-primary tracking-wide">{dim.label}</h4>
+                  </div>
+                  <div className="flex items-center gap-4 text-[12px]">
+                    <span className="text-text-secondary">{fb}: <span className="font-semibold" style={{ color: ORANGE }}>{(fbDimScore * 100).toFixed(1)}%</span></span>
+                    <span className="text-text-secondary">{leaderBrand}: <span className="font-semibold text-gray-600">{(leaderDimScore * 100).toFixed(1)}%</span></span>
+                    <span className={`font-display text-sm ${dimGap >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      Gap: {dimGap >= 0 ? '+' : ''}{(dimGap * 100).toFixed(1)}%
+                    </span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+                <div className="flex items-center gap-4 mb-4 text-[11px]">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-3 h-3 rounded" style={{ backgroundColor: ORANGE }} />
+                    <span className="text-text-secondary">{fb}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-3 h-3 rounded bg-gray-400" />
+                    <span className="text-text-secondary">{leaderBrand}</span>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {dimMetrics.map((key) => {
+                    const fbVal = getMetricValue(allMetrics, fb, key);
+                    const leaderVal = getMetricValue(allMetrics, leaderBrand, key);
+                    const maxVal = Math.max(Math.abs(fbVal), Math.abs(leaderVal), 0.01);
+                    const fmt = METRIC_DEFS[key].format;
+                    return (
+                      <div key={key} className="flex items-center gap-3">
+                        <span className="w-32 text-[11px] text-text-secondary truncate" title={METRIC_DEFS[key].label}>
+                          {METRIC_DEFS[key].label}
+                        </span>
+                        <div className="flex-1 space-y-1">
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full rounded-full"
+                                style={{
+                                  width: `${Math.max((Math.abs(fbVal) / maxVal) * 100, 2)}%`,
+                                  backgroundColor: ORANGE,
+                                }}
+                              />
+                            </div>
+                            <span className="w-16 text-[11px] text-right font-semibold text-text-primary">{fmtMetric(fbVal, fmt)}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full rounded-full bg-gray-400"
+                                style={{
+                                  width: `${Math.max((Math.abs(leaderVal) / maxVal) * 100, 2)}%`,
+                                }}
+                              />
+                            </div>
+                            <span className="w-16 text-[11px] text-right font-semibold text-text-primary">{fmtMetric(leaderVal, fmt)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              </ExpandableCard>
+            );
+          })}
+
         </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

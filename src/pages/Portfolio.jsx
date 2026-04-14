@@ -13,12 +13,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import ExpandableCard from '../components/ExpandableCard.jsx';
 
 const ORANGE = '#F36B1F';
 const GREY = '#D1D5DB';
-const AMBER = '#D97706';
-const BLUE = '#2563EB';
-const GREEN = '#059669';
+const AMBER = '#F36B1F';
+const BLUE = '#FDB55B';
+const GREEN = '#707070';
 
 /* ─── Q12 factor → Q24 metric mapping (for gap chart) ─── */
 const Q12_Q24_MAP = [
@@ -89,6 +90,7 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, index 
   const maxVal = Math.max(0.01, ...values);
 
   return (
+    <ExpandableCard title={def.label}>
     <div
       className="bg-card rounded-card p-5 animate-slide-up"
       style={{ animationDelay: `${index * 60}ms` }}
@@ -128,6 +130,7 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, index 
         })}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -140,6 +143,7 @@ const GapChart = ({ paData, allMetrics, focusedBrand, activeSegment }) => {
   const seg = activeSegment || 'Total';
 
   return (
+    <ExpandableCard title="Gap Chart: Category Demand vs Brand Portfolio">
     <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '320ms' }}>
       <h3 className="font-display text-base text-text-primary tracking-wide mb-1">
         Gap Chart: Category Demand vs Brand Portfolio
@@ -201,6 +205,7 @@ const GapChart = ({ paData, allMetrics, focusedBrand, activeSegment }) => {
         </span>
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -276,6 +281,7 @@ const CategoryContextPanel = ({ paData, activeSegment }) => {
   const maxVal = Math.max(0.01, ...sorted.map((f) => f.value));
 
   return (
+    <ExpandableCard title="What Buyers Value Most (Q12)">
     <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '480ms' }}>
       <h3 className="font-display text-base text-text-primary tracking-wide mb-1">
         What Buyers Value Most (Q12)
@@ -305,6 +311,7 @@ const CategoryContextPanel = ({ paData, activeSegment }) => {
         })}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -395,40 +402,6 @@ const Portfolio = () => {
           ))}
         </div>
 
-        {/* Radar chart */}
-        <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '380ms' }}>
-          <h3 className="font-display text-base text-text-primary tracking-wide mb-2">
-            Portfolio Profile: {fb} vs {leader}
-            {fb === leader && ' (Leader)'}
-          </h3>
-          <ResponsiveContainer width="100%" height={340}>
-            <RadarChart data={radarData} outerRadius="75%">
-              <PolarGrid stroke="#E5E7EB" />
-              <PolarAngleAxis dataKey="axis" tick={{ fontSize: 11, fill: '#6B7280' }} />
-              <PolarRadiusAxis tick={{ fontSize: 9 }} domain={[0, 'auto']} />
-              <Radar
-                name={fb}
-                dataKey={fb}
-                stroke={ORANGE}
-                fill={ORANGE}
-                fillOpacity={0.25}
-                strokeWidth={2}
-              />
-              {fb !== leader && (
-                <Radar
-                  name={leader}
-                  dataKey={leader}
-                  stroke="#6B7280"
-                  fill="#6B7280"
-                  fillOpacity={0.1}
-                  strokeWidth={1.5}
-                  strokeDasharray="4 4"
-                />
-              )}
-              <Legend wrapperStyle={{ fontSize: 11 }} />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
       </div>
     );
   }
@@ -447,79 +420,74 @@ const Portfolio = () => {
           <div className="mt-2"><PageViewModeFallback /></div>
         </div>
 
-        <div className="bg-card rounded-card p-5 animate-slide-up">
+        <ExpandableCard title="Portfolio Metrics Comparison">
+        <div className="bg-card rounded-card p-6 animate-slide-up overflow-x-auto min-h-[calc(100vh-280px)]">
+          <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">Portfolio Metrics Comparison</h3>
           {/* Legend */}
-          <div className="flex gap-4 mb-4 text-[10px]">
-            <span className="flex items-center gap-1">
+          <div className="flex gap-4 mb-6 text-[11px]">
+            <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded bg-green-200" /> &gt;30%
             </span>
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded bg-yellow-200" /> 15-30%
             </span>
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded bg-orange-200" /> 5-15%
             </span>
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded bg-gray-100" /> &lt;5%
             </span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-[12px]">
-              <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-2 px-3">Rank</th>
-                  <th className="text-left py-2 px-3">Brand</th>
-                  {PO_METRICS.map((key) => (
-                    <th key={key} className="text-center py-2 px-3">
-                      {METRIC_DEFS[key].short}
-                    </th>
-                  ))}
-                  <th className="text-right py-2 px-3">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ranked.map((brand, i) => {
-                  const port = allMetrics[brand]?.portfolio || {};
-                  const isFocused = brand === fb;
-                  return (
-                    <tr
-                      key={brand}
-                      className={`border-b border-gray-100 cursor-pointer transition-colors ${
-                        isFocused ? 'ring-1 ring-orange-primary' : 'hover:bg-gray-50'
-                      }`}
-                      onClick={() => setFocusedBrand(brand)}
-                    >
-                      <td className="py-2 px-3">{i + 1}</td>
-                      <td
-                        className={`py-2 px-3 font-medium ${
-                          isFocused ? 'text-orange-primary' : ''
-                        }`}
-                      >
-                        {brand}
-                      </td>
-                      {PO_METRICS.map((key) => {
-                        const val = port[key] || 0;
-                        return (
-                          <td key={key} className="py-1.5 px-2 text-center">
-                            <span
-                              className={`inline-block px-2 py-1 rounded text-[11px] tabular-nums font-medium ${heatColor(val)}`}
-                            >
-                              {fmtMetric(val, 'pct')}
-                            </span>
-                          </td>
-                        );
-                      })}
-                      <td className="py-2 px-3 text-right tabular-nums font-semibold">
-                        {fmtMetric(port.score || 0, 'pct')}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <table className="w-full text-[13px]">
+            <thead>
+              <tr className="border-b-2 border-gray-200">
+                <th className="text-left py-3 px-4 text-text-secondary font-semibold">Rank</th>
+                <th className="text-left py-3 px-4 text-text-secondary font-semibold">Brand</th>
+                {PO_METRICS.map((key) => (
+                  <th key={key} className="text-center py-3 px-3 text-text-secondary font-semibold whitespace-nowrap">
+                    {METRIC_DEFS[key].short}
+                  </th>
+                ))}
+                <th className="text-right py-3 px-4 text-text-secondary font-bold">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ranked.map((brand, i) => {
+                const port = allMetrics[brand]?.portfolio || {};
+                const isFocused = brand === fb;
+                return (
+                  <tr
+                    key={brand}
+                    className={`border-b border-gray-100 cursor-pointer transition-colors ${
+                      isFocused ? 'bg-orange-light font-semibold' : 'hover:bg-gray-50'
+                    }`}
+                    onClick={() => setFocusedBrand(brand)}
+                  >
+                    <td className="py-4 px-4">{i + 1}</td>
+                    <td className={`py-4 px-4 font-medium ${isFocused ? 'text-orange-primary' : ''}`}>
+                      {brand}
+                    </td>
+                    {PO_METRICS.map((key) => {
+                      const val = port[key] || 0;
+                      return (
+                        <td key={key} className="py-3 px-2 text-center">
+                          <span className={`inline-block px-3 py-1.5 rounded text-[12px] tabular-nums font-medium ${heatColor(val)}`}>
+                            {fmtMetric(val, 'pct')}
+                          </span>
+                        </td>
+                      );
+                    })}
+                    <td className="py-4 px-4 text-right tabular-nums font-semibold">
+                      {fmtMetric(port.score || 0, 'pct')}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
+        </ExpandableCard>
       </div>
     );
   }
@@ -540,26 +508,32 @@ const Portfolio = () => {
       <div className="grid grid-cols-3 gap-4">
         {/* Focused brand profile */}
         <div className="bg-card rounded-card p-6 animate-slide-up">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-14 h-14 rounded-lg bg-orange-50 flex items-center justify-center">
-              <span className="font-display text-xl text-orange-primary">{fb?.[0]}</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-14 h-14 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0 overflow-hidden">
+              {data?.brands?.find(b => b.name === fb)?.logo ? (
+                <img src={data.brands.find(b => b.name === fb).logo} alt={fb} className="w-full h-full object-contain p-0.5" />
+              ) : (
+                <span className="font-display text-xl text-orange-primary">{fb?.[0]}</span>
+              )}
+            </div>
+            <div className="flex-1">
+              <h2 className="font-display text-2xl text-text-primary">{fb}</h2>
+              <p className="text-[11px] text-text-secondary">Rank #{fbRank} of {brandNames.length}</p>
             </div>
             {fbRank <= 3 && <span className="text-orange-primary text-xl">&#9733;</span>}
           </div>
-          <h2 className="font-display text-2xl text-text-primary">{fb}</h2>
-          <p className="text-[11px] text-text-secondary mb-4">
-            Rank #{fbRank} of {brandNames.length}
-          </p>
 
           <div className="text-center py-4 bg-orange-50 rounded-card mb-4">
             <p className="font-display text-[48px] text-orange-primary">
               {fmtMetric(fbData.score || 0, 'pct')}
             </p>
             <p className="text-[11px] text-text-secondary">Portfolio Score</p>
+            <p className="text-[12px] text-text-primary font-medium mt-1">Range Coverage</p>
           </div>
 
+          <p className="font-display text-sm text-text-primary tracking-wide mb-2">What's Driving This Score</p>
           <div className="space-y-3">
-            {PO_METRICS.map((key) => {
+            {PO_METRICS.filter(k => k !== 'PO1_varietyPerception').map((key) => {
               const def = METRIC_DEFS[key];
               const val = fbData[key] || 0;
               return (
@@ -714,7 +688,52 @@ const Portfolio = () => {
       </div>
 
       <div className="mt-4">
-        <CategoryContextPanel paData={data?.paData} activeSegment={activeSegment} />
+        <div className="grid grid-cols-2 gap-4">
+          <CategoryContextPanel paData={data?.paData} activeSegment={activeSegment} />
+          <ExpandableCard title={`Portfolio Profile: ${fb} vs ${leader}`}>
+          <div className="bg-card rounded-card p-5 animate-slide-up">
+            <h3 className="font-display text-base text-text-primary tracking-wide mb-2">
+              Portfolio Profile: {fb} vs {leader}
+              {fb === leader && ' (Leader)'}
+            </h3>
+            <ResponsiveContainer width="100%" height={340}>
+              <RadarChart data={radarData} outerRadius="75%">
+                <PolarGrid stroke="#E5E7EB" />
+                <PolarAngleAxis dataKey="axis" tick={{ fontSize: 11, fill: '#6B7280' }} />
+                <PolarRadiusAxis tick={{ fontSize: 9 }} domain={[0, 'auto']} />
+                <Radar name={fb} dataKey={fb} stroke={ORANGE} fill={ORANGE} fillOpacity={0.25} strokeWidth={2} />
+                {fb !== leader && (
+                  <Radar name={leader} dataKey={leader} stroke="#6B7280" fill="#6B7280" fillOpacity={0.1} strokeWidth={1.5} strokeDasharray="4 4" />
+                )}
+                <Legend wrapperStyle={{ fontSize: 11 }} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+          </ExpandableCard>
+        </div>
+      </div>
+
+      {/* EBI Strategic Actions */}
+      <div className="bg-card rounded-card p-5 animate-slide-up mt-4">
+        <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            (fbData.PO3_tasteQuality || 0) < 0.2 && { badge: 'FIX', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'Low Taste Perception', desc: `${fmtMetric(fbData.PO3_tasteQuality || 0, 'pct')} — prioritise taste and quality improvements` },
+            (fbData.PO1_varietyPerception || 0) < 0.2 && { badge: 'GAP', bg: 'bg-blue-50', border: 'border-blue-300', badgeBg: 'bg-blue-500', title: 'Variety Gap', desc: `${fmtMetric(fbData.PO1_varietyPerception || 0, 'pct')} — expand menu range to cover unmet needs` },
+            (fbData.PO2_innovationPerception || 0) < 0.15 && { badge: 'STALE', bg: 'bg-orange-50', border: 'border-orange-300', badgeBg: 'bg-orange-500', title: 'Innovation Deficit', desc: `${fmtMetric(fbData.PO2_innovationPerception || 0, 'pct')} — launch new or limited-time offerings` },
+            (fbData.PO4_healthOptionBreadth || 0) < 0.15 && { badge: 'NEED', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Health Options Lacking', desc: `${fmtMetric(fbData.PO4_healthOptionBreadth || 0, 'pct')} — add nutritious choices to attract health-conscious buyers` },
+            (fbData.PO5_priceAccessibility || 0) < 0.15 && { badge: 'PRICE', bg: 'bg-purple-50', border: 'border-purple-300', badgeBg: 'bg-purple-500', title: 'Price Accessibility Low', desc: `${fmtMetric(fbData.PO5_priceAccessibility || 0, 'pct')} — review value tiers and entry-price options` },
+            { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Principle', desc: 'Portfolio breadth drives mental availability — cover more need-states to grow category entry points' },
+          ].filter(Boolean).map((item, i) => (
+            <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
+              <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>
+              <div>
+                <p className="text-[11px] font-semibold text-text-primary">{item.title}</p>
+                <p className="text-[10px] text-text-secondary">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

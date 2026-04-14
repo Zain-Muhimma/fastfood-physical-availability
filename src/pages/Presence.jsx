@@ -6,6 +6,7 @@ import PageViewModeFallback from '../components/PageViewModeFallback.jsx';
 import { METRIC_DEFS, fmtMetric } from '../data/metrics.js';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter, ZAxis, ReferenceLine } from 'recharts';
 import { ChartBar, Table, MagnifyingGlass } from '@phosphor-icons/react';
+import ExpandableCard from '../components/ExpandableCard.jsx';
 
 const ORANGE = '#F36B1F';
 const GRAY = '#D1D5DB';
@@ -47,6 +48,7 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, delay 
   const maxAbs = Math.max(...barData.map((d) => Math.abs(d.display)), 1);
 
   return (
+    <ExpandableCard title={def.label}>
     <div
       className="bg-card rounded-card p-5 animate-slide-up"
       style={{ animationDelay: `${delay}ms` }}
@@ -133,6 +135,7 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, delay 
         })}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -172,18 +175,19 @@ const ComparisonTable = ({ allMetrics, brandNames, focusedBrand }) => {
   };
 
   return (
-    <div className="bg-card rounded-card p-5 animate-slide-up overflow-x-auto">
-      <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">
+    <ExpandableCard title="Presence Metrics Comparison">
+    <div className="bg-card rounded-card p-6 animate-slide-up overflow-x-auto min-h-[calc(100vh-280px)]">
+      <h3 className="font-display text-xl text-text-primary tracking-wide mb-6">
         Presence Metrics Comparison
       </h3>
-      <table className="w-full text-[12px]">
+      <table className="w-full text-[13px]">
         <thead>
-          <tr className="border-b border-gray-200">
-            <th className="text-left py-2 px-3 text-text-secondary">Brand</th>
+          <tr className="border-b-2 border-gray-200">
+            <th className="text-left py-3 px-4 text-text-secondary font-semibold">Brand</th>
             {PRESENCE_KEYS.map((k) => (
               <th
                 key={k}
-                className="text-right py-2 px-2 text-text-secondary cursor-pointer select-none hover:text-orange-primary transition-colors whitespace-nowrap"
+                className="text-right py-3 px-3 text-text-secondary cursor-pointer select-none hover:text-orange-primary transition-colors whitespace-nowrap font-semibold"
                 onClick={() => handleSort(k)}
                 title={METRIC_DEFS[k].desc}
               >
@@ -192,7 +196,7 @@ const ComparisonTable = ({ allMetrics, brandNames, focusedBrand }) => {
               </th>
             ))}
             <th
-              className="text-right py-2 px-3 text-text-secondary cursor-pointer select-none hover:text-orange-primary font-semibold"
+              className="text-right py-3 px-4 text-text-secondary cursor-pointer select-none hover:text-orange-primary font-bold"
               onClick={() => handleSort('score')}
             >
               Score{sortCol === 'score' && (sortDir === 'desc' ? ' \u25BC' : ' \u25B2')}
@@ -205,19 +209,19 @@ const ComparisonTable = ({ allMetrics, brandNames, focusedBrand }) => {
             return (
               <tr
                 key={row.brand}
-                className={`border-b border-gray-100 ${
+                className={`border-b border-gray-100 transition-colors ${
                   isFocused ? 'bg-orange-light font-semibold' : 'hover:bg-gray-50'
                 }`}
               >
-                <td className={`py-2 px-3 ${isFocused ? 'text-orange-primary' : ''}`}>
+                <td className={`py-4 px-4 ${isFocused ? 'text-orange-primary' : ''}`}>
                   {row.brand}
                 </td>
                 {PRESENCE_KEYS.map((k) => (
-                  <td key={k} className="py-2 px-2 text-right">
+                  <td key={k} className="py-4 px-3 text-right">
                     {fmtMetric(row[k], METRIC_DEFS[k].format)}
                   </td>
                 ))}
-                <td className="py-2 px-3 text-right font-semibold">
+                <td className="py-4 px-4 text-right font-semibold">
                   {(row.score * 100).toFixed(1)}%
                 </td>
               </tr>
@@ -226,6 +230,7 @@ const ComparisonTable = ({ allMetrics, brandNames, focusedBrand }) => {
         </tbody>
       </table>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -380,6 +385,7 @@ const EaseStackedBars = ({ data, brandNames, focusedBrand }) => {
   }, [data, brandNames]);
 
   return (
+    <ExpandableCard title="Ease of Access Distribution">
     <div
       className="bg-card rounded-card p-5 animate-slide-up col-span-full"
       style={{ animationDelay: '500ms' }}
@@ -457,6 +463,7 @@ const EaseStackedBars = ({ data, brandNames, focusedBrand }) => {
         </div>
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -566,6 +573,7 @@ const LocationEaseScatter = ({ allMetrics, brandNames, focusedBrand }) => {
   };
 
   return (
+    <ExpandableCard title="Location Association vs Ease Score">
     <div
       className="bg-card rounded-card p-5 animate-slide-up"
       style={{ animationDelay: '700ms' }}
@@ -626,13 +634,14 @@ const LocationEaseScatter = ({ allMetrics, brandNames, focusedBrand }) => {
         ))}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
 /* ========== PAGE COMPONENT ========== */
 const Presence = () => {
   const { setViewMode } = useViewMode();
-  const { focusedBrand, brandNames, allMetrics, leader } = useFilters();
+  const { focusedBrand, brandNames, allMetrics, leader, setFocusedBrand, activeSegment } = useFilters();
   const { data, loading, error } = useData();
   const { setCurrentGuide } = useGuide();
   const [view, setView] = useState('overview');
@@ -705,14 +714,6 @@ const Presence = () => {
             ))}
           </div>
 
-          {/* Stacked Bar: Ease Distribution (all brands) */}
-          <EaseStackedBars data={data} brandNames={brandNames} focusedBrand={fb} />
-
-          {/* Regional Ease Breakdown + Location vs Ease Scatter */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-            <RegionalEaseBreakdown data={data} focusedBrand={fb} />
-            <LocationEaseScatter allMetrics={allMetrics} brandNames={brandNames} focusedBrand={fb} />
-          </div>
         </div>
       )}
 
@@ -726,16 +727,184 @@ const Presence = () => {
       )}
 
       {/* Deep-dive mode */}
-      {view === 'deepdive' && (
-        <div className="space-y-6">
-          <DeepDiveCard
-            allMetrics={allMetrics}
-            focusedBrand={fb}
-            leader={leader}
-          />
-          <EaseDistribution data={data} focusedBrand={fb} />
-        </div>
-      )}
+      {view === 'deepdive' && (() => {
+        const fbData = allMetrics[fb]?.presence ?? {};
+        const leaderData = allMetrics[leader]?.presence ?? {};
+
+        // Ranking by presence score
+        const ranked = [...brandNames].sort(
+          (a, b) => (allMetrics[b]?.presence?.score ?? 0) - (allMetrics[a]?.presence?.score ?? 0),
+        );
+        const fbRank = ranked.indexOf(fb) + 1;
+
+        // EBI insights
+        const ebiInsights = [];
+        const easeVal = (fbData.P1_easeScore ?? 0) * 100;
+        const frictionVal = (fbData.P2_frictionRate ?? 0) * 100;
+        const momentumVal = fbData.P4_frequencyMomentum ?? 0;
+        const locationVal = (fbData.P5_locationAssociation ?? 0) * 100;
+
+        if (easeVal > 70) ebiInsights.push({ type: 'positive', text: `Ease of access is strong at ${easeVal.toFixed(1)}% — well above the 70% benchmark.` });
+        if (easeVal < 50) ebiInsights.push({ type: 'negative', text: `Ease of access is critically low at ${easeVal.toFixed(1)}% — below the 50% threshold. Prioritise location and convenience improvements.` });
+        if (frictionVal > 20) ebiInsights.push({ type: 'negative', text: `Friction rate is elevated at ${frictionVal.toFixed(1)}% — over 1 in 5 customers find dining difficult.` });
+        if (momentumVal < 0) ebiInsights.push({ type: 'negative', text: `Frequency momentum is negative (${(momentumVal * 100).toFixed(1)}pp) — visit frequency is declining.` });
+        if (locationVal > 60 && easeVal < 50) ebiInsights.push({ type: 'warning', text: `Location association (${locationVal.toFixed(1)}%) is high but ease (${easeVal.toFixed(1)}%) is low — customers know where you are but still find it hard to visit. Check operational friction.` });
+        if (locationVal < 40 && easeVal > 60) ebiInsights.push({ type: 'warning', text: `Ease (${easeVal.toFixed(1)}%) is decent but location association (${locationVal.toFixed(1)}%) is weak — brand is accessible but not mentally linked to locations.` });
+        if (ebiInsights.length === 0) ebiInsights.push({ type: 'neutral', text: `${fb} shows balanced presence metrics with no critical flags.` });
+
+        return (
+          <div className="space-y-4">
+            {/* 3-column layout */}
+            <div className="grid grid-cols-3 gap-4">
+              {/* LEFT: Focused brand card */}
+              <div className="bg-card rounded-card p-6 animate-slide-up">
+                <div className="flex items-center gap-3 mb-4">
+                  {data?.brands?.find(b => b.name === fb)?.logo ? (
+                    <img
+                      src={data.brands.find(b => b.name === fb).logo}
+                      alt={fb}
+                      className="w-14 h-14 rounded-lg object-contain bg-gray-50 flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-14 h-14 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
+                      <span className="font-display text-xl text-orange-primary">{fb?.[0]}</span>
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <h2 className="font-display text-2xl text-text-primary">{fb}</h2>
+                    <p className="text-[11px] text-text-secondary">Rank #{fbRank} of {brandNames.length}</p>
+                  </div>
+                  {fbRank <= 3 && <span className="text-orange-primary text-xl">&#9733;</span>}
+                </div>
+
+                <div className="text-center py-4 bg-orange-50 rounded-card mb-4">
+                  <p className="font-display text-[48px] text-orange-primary">
+                    {fmtMetric(fbData.score ?? 0, 'pct')}
+                  </p>
+                  <p className="text-[11px] text-text-secondary">Presence Score</p>
+                  <p className="text-[12px] text-text-primary font-medium mt-1">Ease of Access</p>
+                </div>
+
+                <p className="font-display text-sm text-text-primary tracking-wide mb-2">What's Driving This Score</p>
+                <div className="space-y-3">
+                  {PRESENCE_KEYS.filter(k => k !== 'P1_easeScore').map((key) => {
+                    const def = METRIC_DEFS[key];
+                    const val = fbData[key] ?? 0;
+                    const barVal = def.format === 'net' ? (val + 1) / 2 : val;
+                    return (
+                      <div key={key}>
+                        <div className="flex justify-between text-[11px] mb-1">
+                          <span className="text-text-secondary">{def.short}</span>
+                          <span className="font-semibold">{fmtMetric(val, def.format)}</span>
+                        </div>
+                        <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: `${Math.max(0, barVal * 100)}%`,
+                              backgroundColor: ORANGE,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* MIDDLE: Brand ranking sidebar */}
+              <div className="bg-card rounded-card p-6 animate-slide-up" style={{ animationDelay: '80ms' }}>
+                <h3 className="font-display text-lg text-text-primary mb-4">Brand Ranking</h3>
+                <div className="space-y-2">
+                  {ranked.map((brand, i) => (
+                    <button
+                      key={brand}
+                      onClick={() => setFocusedBrand(brand)}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-[12px] transition-colors ${
+                        brand === fb
+                          ? 'bg-orange-primary text-white'
+                          : 'bg-gray-50 hover:bg-gray-100 text-text-primary'
+                      }`}
+                    >
+                      <span>#{i + 1} {brand}</span>
+                      <span className="font-semibold">
+                        {fmtMetric(allMetrics[brand]?.presence?.score ?? 0, 'pct')}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* RIGHT: Strategic Actions — gap vs leader + EBI insights */}
+              <div className="bg-card rounded-card p-6 animate-slide-up" style={{ animationDelay: '160ms' }}>
+                <h3 className="font-display text-lg text-text-primary mb-4">Strategic Actions</h3>
+
+                {fb === leader ? (
+                  <div className="bg-green-50 rounded-lg p-4 mb-4">
+                    <p className="text-[12px] text-green-800 font-medium">
+                      {fb} is the category leader in presence with a score of{' '}
+                      {fmtMetric(fbData.score ?? 0, 'pct')}.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="bg-orange-50 rounded-lg p-4 mb-4">
+                    <p className="text-[12px] text-orange-800 font-medium">
+                      {fb} trails the leader ({leader}) by{' '}
+                      {fmtMetric((leaderData.score ?? 0) - (fbData.score ?? 0), 'pct')} in overall
+                      presence.
+                    </p>
+                  </div>
+                )}
+
+                <h4 className="text-[12px] font-semibold text-text-primary mb-3">
+                  Gap vs Leader ({leader})
+                </h4>
+                <div className="space-y-3 mb-6">
+                  {PRESENCE_KEYS.map((key) => {
+                    const def = METRIC_DEFS[key];
+                    const gap = (fbData[key] ?? 0) - (leaderData[key] ?? 0);
+                    const isPositive = def.invert ? gap <= 0 : gap >= 0;
+                    return (
+                      <div key={key} className="flex items-center justify-between text-[11px]">
+                        <span className="text-text-secondary">{def.short}</span>
+                        <span
+                          className={`font-semibold ${
+                            isPositive ? 'text-green-600' : 'text-red-500'
+                          }`}
+                        >
+                          {gap >= 0 ? '+' : ''}
+                          {(gap * 100).toFixed(1)}pp
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <h4 className="text-[12px] font-semibold text-text-primary mb-2">EBI Insights</h4>
+                <div className="space-y-2">
+                  {ebiInsights.map((insight, i) => (
+                    <div
+                      key={i}
+                      className={`rounded-lg p-3 text-[11px] leading-relaxed ${
+                        insight.type === 'positive' ? 'bg-green-50 text-green-800' :
+                        insight.type === 'negative' ? 'bg-red-50 text-red-800' :
+                        insight.type === 'warning' ? 'bg-amber-50 text-amber-800' :
+                        'bg-gray-50 text-text-secondary'
+                      }`}
+                    >
+                      {insight.text}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Below columns: distribution charts */}
+            <EaseStackedBars data={data} brandNames={brandNames} focusedBrand={fb} />
+            <LocationEaseScatter allMetrics={allMetrics} brandNames={brandNames} focusedBrand={fb} />
+          </div>
+        );
+      })()}
     </div>
   );
 };

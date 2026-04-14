@@ -9,12 +9,15 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
 } from 'recharts';
 import { Trophy, TrendUp, TrendDown, ArrowRight } from '@phosphor-icons/react';
+import ExpandableCard from '../components/ExpandableCard.jsx';
 
 const ORANGE = '#F36B1F';
 const GRAY = '#D1D5DB';
 const GREEN = '#2E7D32';
 const BLUE = '#1565C0';
 const RED = '#C62828';
+// Dimension colors — consistent everywhere
+const DIM_COLORS = { presence: '#F36B1F', prominence: '#FDB55B', portfolio: '#707070' };
 
 /* ── Brand Ranking Card (horizontal, with logos) ── */
 const BrandRankingStrip = ({ allMetrics, brandNames, focusedBrand, data }) => {
@@ -32,6 +35,7 @@ const BrandRankingStrip = ({ allMetrics, brandNames, focusedBrand, data }) => {
   data?.brands?.forEach(b => { logoMap[b.name] = b.logo; });
 
   return (
+    <ExpandableCard title="Brand Ranking">
     <div className="bg-card rounded-card p-5 animate-slide-up">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-display text-xl text-text-primary tracking-wide">Brand Ranking</h3>
@@ -69,6 +73,7 @@ const BrandRankingStrip = ({ allMetrics, brandNames, focusedBrand, data }) => {
         })}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -103,9 +108,7 @@ const StrategicRead = ({ allMetrics, focusedBrand, brandNames, leader }) => {
     `**${focusedBrand}** ranks **#${rank}** out of ${brandNames.length} brands with an overall PA score of **${(fbOverall * 100).toFixed(1)}%**, ${gap >= 0 ? 'leading' : `trailing the leader ${leader} by ${(Math.abs(gap) * 100).toFixed(1)}pp`}.`,
     `Strongest dimension is **${dims[0].key}** at ${(dims[0].score * 100).toFixed(1)}%. Growth lies in **${dims[2].key}** (${(dims[2].score * 100).toFixed(1)}%) — the largest opportunity gap.`,
     `Ease Score of ${(fb.presence.P1_easeScore * 100).toFixed(1)}% means ${fb.presence.P1_easeScore > 0.6 ? 'most category buyers find it convenient to dine in' : 'a significant portion of buyers find access difficult'}.`,
-    fb.prominence.PR5_netAdvocacy > 0
-      ? `Net Advocacy is positive (+${(fb.prominence.PR5_netAdvocacy * 100).toFixed(1)}%), indicating word-of-mouth is working in the brand's favour.`
-      : `Net Advocacy is negative (${(fb.prominence.PR5_netAdvocacy * 100).toFixed(1)}%), suggesting word-of-mouth is currently damaging the brand.`,
+    `Positive Standout of ${(fb.prominence.PR1_impressionScore * 100).toFixed(1)}% means ${fb.prominence.PR1_impressionScore > 0.6 ? 'the brand stands out favourably at point of purchase' : 'the brand does not stand out enough to be noticed by category buyers'}.`,
   ];
 
   return (
@@ -253,6 +256,7 @@ const RadarComparison = ({ allMetrics, focusedBrand, leader }) => {
   }));
 
   return (
+    <ExpandableCard title={`${focusedBrand} vs ${leader && leader !== focusedBrand ? leader : 'Leader'} — Radar`}>
     <div className="bg-card rounded-card p-5 animate-slide-up">
       <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">
         {focusedBrand} vs {leader && leader !== focusedBrand ? leader : 'Leader'}
@@ -270,6 +274,7 @@ const RadarComparison = ({ allMetrics, focusedBrand, leader }) => {
         </RadarChart>
       </ResponsiveContainer>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -284,13 +289,13 @@ const FullRankingTable = ({ allMetrics, brandNames, focusedBrand }) => {
           presence: m?.presence?.score ?? 0,
           prominence: m?.prominence?.score ?? 0,
           portfolio: m?.portfolio?.score ?? 0,
-          overall: ((m?.presence?.score ?? 0) + (m?.prominence?.score ?? 0) + (m?.portfolio?.score ?? 0)) / 3,
         };
       })
-      .sort((a, b) => b.overall - a.overall);
+      .sort((a, b) => b.presence - a.presence);
   }, [allMetrics, brandNames]);
 
   return (
+    <ExpandableCard title="All Brands — Dimension Scores">
     <div className="bg-card rounded-card p-5 animate-slide-up">
       <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">All Brands — Dimension Scores</h3>
       <table className="w-full text-[12px]">
@@ -301,7 +306,6 @@ const FullRankingTable = ({ allMetrics, brandNames, focusedBrand }) => {
             <th className="text-right py-2 px-3 text-text-secondary">Presence</th>
             <th className="text-right py-2 px-3 text-text-secondary">Prominence</th>
             <th className="text-right py-2 px-3 text-text-secondary">Portfolio</th>
-            <th className="text-right py-2 px-3 text-text-secondary font-bold">Overall</th>
           </tr>
         </thead>
         <tbody>
@@ -314,18 +318,19 @@ const FullRankingTable = ({ allMetrics, brandNames, focusedBrand }) => {
                 <td className="py-2 px-3 text-right">{(row.presence * 100).toFixed(1)}%</td>
                 <td className="py-2 px-3 text-right">{(row.prominence * 100).toFixed(1)}%</td>
                 <td className="py-2 px-3 text-right">{(row.portfolio * 100).toFixed(1)}%</td>
-                <td className="py-2 px-3 text-right font-bold">{(row.overall * 100).toFixed(1)}%</td>
               </tr>
             );
           })}
         </tbody>
       </table>
     </div>
+    </ExpandableCard>
   );
 };
 
 /* ── Metric Breakdown (for Overall PA tab) ── */
 const MetricBreakdown = ({ fbMetrics, focusedBrand }) => (
+  <ExpandableCard title={`Metric Breakdown: ${focusedBrand}`}>
   <div className="bg-card rounded-card p-5 animate-slide-up">
     <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">Metric Breakdown: {focusedBrand}</h3>
     <div className="grid grid-cols-3 gap-6">
@@ -351,6 +356,7 @@ const MetricBreakdown = ({ fbMetrics, focusedBrand }) => (
       })}
     </div>
   </div>
+  </ExpandableCard>
 );
 
 /* ========== PAGE COMPONENT ========== */
@@ -414,9 +420,9 @@ const PAScoreboard = () => {
           {/* 1. Focused Brand KPI Cards — Blueprint: show P1, PR1, PO1 with vs-leader delta */}
           <div className="grid grid-cols-3 gap-4">
             {[
-              { label: 'Presence', sub: 'Ease Score (P1)', val: p1Val, ldrVal: p1Leader, color: ORANGE },
-              { label: 'Prominence', sub: 'Impression Score (PR1)', val: pr1Val, ldrVal: pr1Leader, color: GREEN },
-              { label: 'Portfolio', sub: 'Variety Perception (PO1)', val: po1Val, ldrVal: po1Leader, color: BLUE },
+              { label: 'Presence', sub: 'Ease Score (P1)', val: p1Val, ldrVal: p1Leader, color: DIM_COLORS.presence },
+              { label: 'Prominence', sub: 'Positive Standout', val: pr1Val, ldrVal: pr1Leader, color: DIM_COLORS.prominence },
+              { label: 'Portfolio', sub: 'Variety Perception (PO1)', val: po1Val, ldrVal: po1Leader, color: DIM_COLORS.portfolio },
             ].map((card, i) => {
               const delta = card.val - card.ldrVal;
               return (
@@ -443,59 +449,33 @@ const PAScoreboard = () => {
           {/* 4. Strongest & Weakest PA */}
           <StrengthWeakness allMetrics={allMetrics} focusedBrand={fb} brandNames={brandNames} />
 
-          {/* 5. Customer Journey Funnel */}
-          <CustomerFunnel data={data} focusedBrand={fb} />
         </div>
       ) : (
         /* Overall PA tab */
         <div className="space-y-5">
-          {/* Focused brand card + Radar */}
+          {/* 3 Dimension cards in a row */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="bg-card rounded-card p-5 animate-slide-up">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-14 h-14 rounded-full overflow-hidden bg-white border border-gray-200 flex items-center justify-center">
-                  {data?.brands?.find(b => b.name === fb)?.logo ? (
-                    <img src={data.brands.find(b => b.name === fb).logo} alt={fb} className="w-full h-full object-contain p-1" />
-                  ) : (
-                    <span className="font-display text-xl text-orange-primary">{fb?.[0]}</span>
-                  )}
-                </div>
-                <div>
-                  <h2 className="font-display text-xl text-text-primary">{fb}</h2>
-                  <p className="text-[10px] text-orange-primary font-semibold">Focused Brand</p>
-                </div>
+            {[
+              { label: 'Presence', val: presenceVal, color: DIM_COLORS.presence, desc: 'Ease of Access' },
+              { label: 'Prominence', val: prominenceVal, color: DIM_COLORS.prominence, desc: 'Positive Standout' },
+              { label: 'Portfolio', val: portfolioVal, color: DIM_COLORS.portfolio, desc: 'Range Coverage' },
+            ].map((d, i) => (
+              <div key={d.label} className="bg-card rounded-card p-5 text-center animate-slide-up" style={{ animationDelay: `${i * 80}ms` }}>
+                <p className="text-[10px] text-text-secondary font-medium uppercase tracking-wider mb-1">{d.label}</p>
+                <p className="font-display text-[42px] leading-none" style={{ color: d.color }}>{(d.val * 100).toFixed(1)}%</p>
+                <p className="text-[11px] text-text-secondary mt-1">{d.desc}</p>
               </div>
-              <div className="space-y-3">
-                {[
-                  { label: 'Presence', val: presenceVal, color: ORANGE },
-                  { label: 'Prominence', val: prominenceVal, color: GREEN },
-                  { label: 'Portfolio', val: portfolioVal, color: BLUE },
-                ].map(d => (
-                  <div key={d.label}>
-                    <div className="flex justify-between text-[11px] mb-1">
-                      <span className="text-text-secondary">{d.label}</span>
-                      <span className="font-semibold" style={{ color: d.color }}>{(d.val * 100).toFixed(1)}%</span>
-                    </div>
-                    <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: `${d.val * 100}%`, backgroundColor: d.color }} />
-                    </div>
-                  </div>
-                ))}
-                <div className="pt-2 border-t border-gray-100 flex justify-between text-[12px]">
-                  <span className="font-semibold text-text-primary">Overall PA</span>
-                  <span className="font-bold text-orange-primary">{(((presenceVal + prominenceVal + portfolioVal) / 3) * 100).toFixed(1)}%</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-span-2">
-              <RadarComparison allMetrics={allMetrics} focusedBrand={fb} leader={leader} />
-            </div>
+            ))}
           </div>
 
-          {/* Dimension ranking table */}
-          <FullRankingTable allMetrics={allMetrics} brandNames={brandNames} focusedBrand={fb} />
+          {/* Radar + Ranking Table side by side */}
+          <div className="grid grid-cols-2 gap-4">
+            <RadarComparison allMetrics={allMetrics} focusedBrand={fb} leader={leader} />
+            <FullRankingTable allMetrics={allMetrics} brandNames={brandNames} focusedBrand={fb} />
+          </div>
 
           {/* Full 18-metric comparison: all brands */}
+          <ExpandableCard title="All Metrics — 10 Brands">
           <div className="bg-card rounded-card p-5 animate-slide-up">
             <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">All Metrics — 10 Brands</h3>
             <div className="overflow-x-auto">
@@ -551,8 +531,10 @@ const PAScoreboard = () => {
               </table>
             </div>
           </div>
+          </ExpandableCard>
 
           {/* Gap vs Leader for focused brand */}
+          <ExpandableCard title={`${fb} vs Leader (${leader}) — Gap Analysis`}>
           <div className="bg-card rounded-card p-5 animate-slide-up">
             <h3 className="font-display text-xl text-text-primary tracking-wide mb-4">{fb} vs Leader ({leader}) — Gap Analysis</h3>
             <div className="grid grid-cols-3 gap-6">
@@ -585,41 +567,8 @@ const PAScoreboard = () => {
               })}
             </div>
           </div>
+          </ExpandableCard>
 
-          {/* All-brands funnel */}
-          <div className="bg-card rounded-card p-5 animate-slide-up">
-            <h3 className="font-display text-xl text-text-primary tracking-wide mb-1">Customer Journey — All Brands</h3>
-            <p className="text-[10px] text-text-secondary mb-4">Relationship stages from Q15 survey (Unaware → Regular)</p>
-            <ResponsiveContainer width="100%" height={brandNames.length * 36 + 50}>
-              <BarChart
-                data={(() => {
-                  return [...brandNames]
-                    .map(brand => {
-                      const opts = data?.paData?.q15?.[brand]?.options;
-                      if (!opts) return null;
-                      const row = { brand };
-                      [{ key: 'Regular', color: '#166534' }, { key: 'Occasional', color: '#22C55E' },
-                       { key: 'Lapsed', color: '#FDE047' }, { key: 'Know but untried', color: '#D1D5DB' },
-                       { key: 'Unaware', color: '#9CA3AF' }].forEach(s => { row[s.key] = (opts[s.key]?.Total ?? 0) * 100; });
-                      return row;
-                    })
-                    .filter(Boolean)
-                    .sort((a, b) => (b.Regular + b.Occasional) - (a.Regular + a.Occasional));
-                })()}
-                layout="vertical" barSize={18} margin={{ left: 90, right: 20, top: 5, bottom: 5 }}
-              >
-                <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} />
-                <YAxis type="category" dataKey="brand" tick={{ fontSize: 11 }} width={85} />
-                <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} formatter={v => `${v.toFixed(1)}%`} />
-                {[{ key: 'Regular', color: '#166534' }, { key: 'Occasional', color: '#22C55E' },
-                  { key: 'Lapsed', color: '#FDE047' }, { key: 'Know but untried', color: '#D1D5DB' },
-                  { key: 'Unaware', color: '#9CA3AF' }].map(s => (
-                  <Bar key={s.key} dataKey={s.key} stackId="funnel" fill={s.color} name={s.key} />
-                ))}
-                <Legend wrapperStyle={{ fontSize: 11 }} iconType="square" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
         </div>
       )}
     </div>

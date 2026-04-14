@@ -5,17 +5,15 @@ import { useViewMode } from '../components/ViewModeContext.jsx';
 import PageViewModeFallback from '../components/PageViewModeFallback.jsx';
 import { METRIC_DEFS, fmtMetric } from '../data/metrics.js';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import ExpandableCard from '../components/ExpandableCard.jsx';
 
 const ORANGE = '#F36B1F';
 const GREY = '#D1D5DB';
 
 const PR_METRICS = [
   'PR1_impressionScore',
-  'PR2_valueStandout',
-  'PR3_perceivedMomentum',
-  'PR4_adCutThrough',
-  'PR5_netAdvocacy',
-  'PR6_reputationSalience',
+  'PR2_marketPresence',
+  'PR3_adCutThrough',
 ];
 
 /* ───────── Horizontal bar card (with diverging bars for PR5) ───────── */
@@ -36,6 +34,7 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, index 
     : Math.max(0.01, ...values);
 
   return (
+    <ExpandableCard title={def.label}>
     <div
       className="bg-card rounded-card p-5 animate-slide-up"
       style={{ animationDelay: `${index * 60}ms` }}
@@ -115,6 +114,7 @@ const MetricBarCard = ({ metricKey, allMetrics, brandNames, focusedBrand, index 
         })}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -128,6 +128,7 @@ const VFM_COLORS  = { overpriced: '#DC2626', expected: '#9CA3AF', good: '#16A34A
 const StackedBarChart = ({ title, subtitle, dataByBrand, categoryMap, colorMap, focusedBrand, index }) => {
   // categoryMap: array of { key: substring to match, label, colorKey }
   return (
+    <ExpandableCard title={title}>
     <div
       className="bg-card rounded-card p-5 animate-slide-up"
       style={{ animationDelay: `${index * 60}ms` }}
@@ -179,6 +180,7 @@ const StackedBarChart = ({ title, subtitle, dataByBrand, categoryMap, colorMap, 
         })}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -188,88 +190,84 @@ const BRAND_COLORS = [
   '#0891B2', '#CA8A04', '#DB2777', '#4F46E5', '#059669',
 ];
 
-const BubbleChart = ({ allMetrics, brandNames, focusedBrand, index }) => {
+const BubbleChart = ({ allMetrics, brandNames, focusedBrand, index, data }) => {
   const chartData = useMemo(() => {
-    return brandNames.map((brand, i) => {
+    const logoMap = {};
+    data?.brands?.forEach(b => { logoMap[b.name] = b.logo; });
+    return brandNames.map((brand) => {
       const prom = allMetrics[brand]?.prominence || {};
-      const pres = allMetrics[brand]?.presence || {};
       return {
         brand,
-        x: prom.PR4_adCutThrough || 0,
+        x: prom.PR3_adCutThrough || 0,
         y: prom.PR1_impressionScore || 0,
-        z: pres.P3_trialPenetration || 0,
-        color: brand === focusedBrand ? '#F36B1F' : BRAND_COLORS[i % BRAND_COLORS.length],
+        logo: logoMap[brand],
         isFocused: brand === focusedBrand,
       };
     });
-  }, [allMetrics, brandNames, focusedBrand]);
+  }, [allMetrics, brandNames, focusedBrand, data]);
 
-  // Compute medians for quadrant lines
+  const maxX = Math.max(...chartData.map(d => d.x), 0.01);
+  const maxY = Math.max(...chartData.map(d => d.y), 0.01);
   const medianX = useMemo(() => {
     const xs = chartData.map(d => d.x).sort((a, b) => a - b);
     const mid = Math.floor(xs.length / 2);
     return xs.length % 2 !== 0 ? xs[mid] : (xs[mid - 1] + xs[mid]) / 2;
   }, [chartData]);
-
   const medianY = useMemo(() => {
     const ys = chartData.map(d => d.y).sort((a, b) => a - b);
     const mid = Math.floor(ys.length / 2);
     return ys.length % 2 !== 0 ? ys[mid] : (ys[mid - 1] + ys[mid]) / 2;
   }, [chartData]);
 
+  const W = 100; // percentage-based positioning
+  const H = 100;
+
   return (
-    <div
-      className="bg-card rounded-card p-5 animate-slide-up"
-      style={{ animationDelay: `${index * 60}ms` }}
-    >
+    <ExpandableCard title="Ad Recall vs Impression">
+    <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: `${index * 60}ms` }}>
       <h3 className="font-display text-base text-text-primary tracking-wide mb-1">Ad Recall vs Impression</h3>
       <p className="text-[10px] text-text-secondary mb-3">
-        X = Ad Cut-Through (PR4) | Y = Impression Score (PR1) | Bubble size = Trial Penetration (P3)
+        X = Ad Cut-Through | Y = Positive Standout | Logo = Brand
       </p>
-      <ResponsiveContainer width="100%" height={350}>
-        <ScatterChart margin={{ top: 10, right: 30, left: 10, bottom: 10 }}>
-          <XAxis
-            type="number" dataKey="x" name="Ad Recall" tick={{ fontSize: 10 }}
-            domain={[0, 'auto']} tickFormatter={v => `${(v * 100).toFixed(0)}%`}
-            label={{ value: 'Ad Cut-Through (PR4)', position: 'bottom', fontSize: 10, offset: -5 }}
-          />
-          <YAxis
-            type="number" dataKey="y" name="Impression" tick={{ fontSize: 10 }}
-            domain={[0, 'auto']} tickFormatter={v => `${(v * 100).toFixed(0)}%`}
-            label={{ value: 'Impression Score (PR1)', angle: -90, position: 'insideLeft', fontSize: 10 }}
-          />
-          <ZAxis type="number" dataKey="z" range={[40, 300]} />
-          <ReferenceLine x={medianX} stroke="#D1D5DB" strokeDasharray="4 4" />
-          <ReferenceLine y={medianY} stroke="#D1D5DB" strokeDasharray="4 4" />
-          <Tooltip content={({ payload }) => {
-            if (!payload?.[0]?.payload) return null;
-            const d = payload[0].payload;
-            return (
-              <div className="bg-white border border-gray-200 rounded p-2 text-[11px] shadow-lg">
-                <p className="font-semibold">{d.brand}</p>
-                <p>Ad Recall: {(d.x * 100).toFixed(1)}%</p>
-                <p>Impression: {(d.y * 100).toFixed(1)}%</p>
-                <p>Trial Penetration: {(d.z * 100).toFixed(1)}%</p>
-              </div>
-            );
-          }} />
-          <Scatter data={chartData}>
-            {chartData.map((d, i) => (
-              <Cell key={i} fill={d.color} fillOpacity={d.isFocused ? 1 : 0.5} stroke={d.isFocused ? '#F36B1F' : 'none'} strokeWidth={d.isFocused ? 2 : 0} />
-            ))}
-          </Scatter>
-        </ScatterChart>
-      </ResponsiveContainer>
-      {/* Brand legend */}
-      <div className="flex flex-wrap gap-3 mt-2 justify-center">
-        {chartData.map((d, i) => (
-          <div key={d.brand} className="flex items-center gap-1 text-[10px] text-text-secondary">
-            <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
-            {d.brand}
-          </div>
+      <div className="relative border border-gray-200 rounded-lg bg-gray-50" style={{ height: 380, overflow: 'hidden' }}>
+        {/* Axis labels */}
+        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] text-text-secondary">Ad Cut-Through →</span>
+        <span className="absolute top-1/2 left-1 -translate-y-1/2 text-[9px] text-text-secondary" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg) translateY(50%)' }}>Positive Standout →</span>
+        {/* Median lines */}
+        <div className="absolute border-l border-dashed border-gray-300" style={{ left: `${(medianX / maxX) * 90 + 5}%`, top: 0, bottom: 0 }} />
+        <div className="absolute border-t border-dashed border-gray-300" style={{ top: `${(1 - medianY / maxY) * 90 + 5}%`, left: 0, right: 0 }} />
+        {/* X-axis ticks */}
+        {[0, 0.25, 0.5, 0.75].filter(v => v <= maxX).map(v => (
+          <span key={`x${v}`} className="absolute text-[8px] text-gray-400" style={{ left: `${(v / maxX) * 90 + 5}%`, bottom: 14 }}>{(v * 100).toFixed(0)}%</span>
         ))}
+        {/* Y-axis ticks */}
+        {[0, 0.25, 0.5, 0.75].filter(v => v <= maxY).map(v => (
+          <span key={`y${v}`} className="absolute text-[8px] text-gray-400" style={{ top: `${(1 - v / maxY) * 90 + 5}%`, left: 14 }}>{(v * 100).toFixed(0)}%</span>
+        ))}
+        {/* Brand logos as dots */}
+        {chartData.map(d => {
+          const xPct = (d.x / maxX) * 90 + 5;
+          const yPct = (1 - d.y / maxY) * 90 + 5;
+          return (
+            <div
+              key={d.brand}
+              className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-white overflow-hidden border-2 transition-all ${
+                d.isFocused ? 'border-orange-primary shadow-lg z-10 w-12 h-12' : 'border-gray-200 w-9 h-9 opacity-80 hover:opacity-100 hover:scale-110'
+              }`}
+              style={{ left: `${xPct}%`, top: `${yPct}%` }}
+              title={`${d.brand}: Ad ${(d.x * 100).toFixed(1)}%, Impression ${(d.y * 100).toFixed(1)}%`}
+            >
+              {d.logo ? (
+                <img src={d.logo} alt={d.brand} className="w-full h-full object-contain p-0.5" />
+              ) : (
+                <span className="flex items-center justify-center w-full h-full text-[9px] font-bold text-gray-500">{d.brand[0]}</span>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
+    </ExpandableCard>
   );
 };
 
@@ -381,7 +379,7 @@ const Prominence = () => {
           <div className="mt-2"><PageViewModeFallback /></div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           {PR_METRICS.map((key, i) => (
             <MetricBarCard
               key={key}
@@ -409,53 +407,54 @@ const Prominence = () => {
           <div className="mt-2"><PageViewModeFallback /></div>
         </div>
 
-        <div className="bg-card rounded-card p-5 animate-slide-up">
-          <div className="overflow-x-auto">
-            <table className="w-full text-[12px]">
-              <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-2 px-3">Rank</th>
-                  <th className="text-left py-2 px-3">Brand</th>
-                  {PR_METRICS.map((key) => (
-                    <th key={key} className="text-right py-2 px-3">
-                      {METRIC_DEFS[key].short}
-                    </th>
-                  ))}
-                  <th className="text-right py-2 px-3">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ranked.map((brand, i) => {
-                  const prom = allMetrics[brand]?.prominence || {};
-                  const isFocused = brand === fb;
-                  return (
-                    <tr
-                      key={brand}
-                      className={`border-b border-gray-100 cursor-pointer transition-colors ${
-                        isFocused ? 'bg-orange-50 font-semibold' : 'hover:bg-gray-50'
-                      }`}
-                      onClick={() => setFocusedBrand(brand)}
-                    >
-                      <td className="py-2 px-3">{i + 1}</td>
-                      <td className={`py-2 px-3 ${isFocused ? 'text-orange-primary' : ''}`}>{brand}</td>
-                      {PR_METRICS.map((key) => {
-                        const def = METRIC_DEFS[key];
-                        return (
-                          <td key={key} className="py-2 px-3 text-right tabular-nums">
-                            {fmtMetric(prom[key] || 0, def.format)}
-                          </td>
-                        );
-                      })}
-                      <td className="py-2 px-3 text-right tabular-nums font-semibold">
-                        {fmtMetric(prom.score || 0, 'pct')}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+        <ExpandableCard title="Prominence Metrics Comparison">
+        <div className="bg-card rounded-card p-6 animate-slide-up overflow-x-auto min-h-[calc(100vh-280px)]">
+          <h3 className="font-display text-xl text-text-primary tracking-wide mb-6">Prominence Metrics Comparison</h3>
+          <table className="w-full text-[13px]">
+            <thead>
+              <tr className="border-b-2 border-gray-200">
+                <th className="text-left py-3 px-4 text-text-secondary font-semibold">Rank</th>
+                <th className="text-left py-3 px-4 text-text-secondary font-semibold">Brand</th>
+                {PR_METRICS.map((key) => (
+                  <th key={key} className="text-right py-3 px-3 text-text-secondary font-semibold whitespace-nowrap">
+                    {METRIC_DEFS[key].short}
+                  </th>
+                ))}
+                <th className="text-right py-3 px-4 text-text-secondary font-bold">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ranked.map((brand, i) => {
+                const prom = allMetrics[brand]?.prominence || {};
+                const isFocused = brand === fb;
+                return (
+                  <tr
+                    key={brand}
+                    className={`border-b border-gray-100 cursor-pointer transition-colors ${
+                      isFocused ? 'bg-orange-light font-semibold' : 'hover:bg-gray-50'
+                    }`}
+                    onClick={() => setFocusedBrand(brand)}
+                  >
+                    <td className="py-4 px-4">{i + 1}</td>
+                    <td className={`py-4 px-4 ${isFocused ? 'text-orange-primary' : ''}`}>{brand}</td>
+                    {PR_METRICS.map((key) => {
+                      const def = METRIC_DEFS[key];
+                      return (
+                        <td key={key} className="py-4 px-3 text-right tabular-nums">
+                          {fmtMetric(prom[key] || 0, def.format)}
+                        </td>
+                      );
+                    })}
+                    <td className="py-4 px-4 text-right tabular-nums font-semibold">
+                      {fmtMetric(prom.score || 0, 'pct')}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
+        </ExpandableCard>
       </div>
     );
   }
@@ -476,26 +475,32 @@ const Prominence = () => {
       <div className="grid grid-cols-3 gap-4">
         {/* Focused brand card */}
         <div className="bg-card rounded-card p-6 animate-slide-up">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-14 h-14 rounded-lg bg-orange-50 flex items-center justify-center">
-              <span className="font-display text-xl text-orange-primary">{fb?.[0]}</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-14 h-14 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0 overflow-hidden">
+              {data?.brands?.find(b => b.name === fb)?.logo ? (
+                <img src={data.brands.find(b => b.name === fb).logo} alt={fb} className="w-full h-full object-contain p-0.5" />
+              ) : (
+                <span className="font-display text-xl text-orange-primary">{fb?.[0]}</span>
+              )}
+            </div>
+            <div className="flex-1">
+              <h2 className="font-display text-2xl text-text-primary">{fb}</h2>
+              <p className="text-[11px] text-text-secondary">Rank #{fbRank} of {brandNames.length}</p>
             </div>
             {fbRank <= 3 && <span className="text-orange-primary text-xl">&#9733;</span>}
           </div>
-          <h2 className="font-display text-2xl text-text-primary">{fb}</h2>
-          <p className="text-[11px] text-text-secondary mb-4">
-            Rank #{fbRank} of {brandNames.length}
-          </p>
 
           <div className="text-center py-4 bg-orange-50 rounded-card mb-4">
             <p className="font-display text-[48px] text-orange-primary">
               {fmtMetric(fbData.score || 0, 'pct')}
             </p>
             <p className="text-[11px] text-text-secondary">Prominence Score</p>
+            <p className="text-[12px] text-text-primary font-medium mt-1">Positive Impression %</p>
           </div>
 
+          <p className="font-display text-sm text-text-primary tracking-wide mb-2">What's Driving This Score</p>
           <div className="space-y-3">
-            {PR_METRICS.map((key) => {
+            {PR_METRICS.filter(k => k !== 'PR1_impressionScore').map((key) => {
               const def = METRIC_DEFS[key];
               const val = fbData[key] || 0;
               return (
@@ -652,7 +657,30 @@ const Prominence = () => {
           brandNames={brandNames}
           focusedBrand={fb}
           index={8}
+          data={data}
         />
+      </div>
+
+      {/* EBI Strategic Actions */}
+      <div className="bg-card rounded-card p-5 animate-slide-up mt-4">
+        <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            (fbData.PR1_impressionScore || 0) < 0.5 && { badge: 'FIX', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'Low Impression', desc: `${fmtMetric(fbData.PR1_impressionScore || 0, 'pct')} — invest in distinctive brand assets` },
+            (fbData.PR3_adCutThrough || 0) > 0.3 && (fbData.PR1_impressionScore || 0) < 0.5 && { badge: 'REVIEW', bg: 'bg-orange-50', border: 'border-orange-300', badgeBg: 'bg-orange-500', title: 'Ad-Impression Gap', desc: `Ad recall high but impression low — review creative strategy` },
+            (fbData.PR5_netAdvocacy || 0) < 0 && { badge: 'ALERT', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Negative Advocacy', desc: `${fmtMetric(fbData.PR5_netAdvocacy || 0, 'net')} — fix experience before amplifying` },
+            (fbData.PR3_perceivedMomentum || 0) < 0.3 && { badge: 'WATCH', bg: 'bg-purple-50', border: 'border-purple-300', badgeBg: 'bg-purple-500', title: 'Low Momentum', desc: `${fmtMetric(fbData.PR3_perceivedMomentum || 0, 'pct')} — innovate to counter stagnation` },
+            { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Principle', desc: 'Prominence grows through consistent, distinctive presence across all touchpoints' },
+          ].filter(Boolean).map((item, i) => (
+            <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
+              <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>
+              <div>
+                <p className="text-[11px] font-semibold text-text-primary">{item.title}</p>
+                <p className="text-[10px] text-text-secondary">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
