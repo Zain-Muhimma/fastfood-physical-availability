@@ -305,6 +305,13 @@ const Experience = () => {
                     </div>
                   );
                 })}
+              <div className="bg-gray-50 border border-gray-300 rounded-lg p-3 flex items-start gap-2 col-span-2">
+                <span className="bg-gray-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0">EBI</span>
+                <div>
+                  <p className="text-[11px] font-semibold text-text-primary">Core Principle</p>
+                  <p className="text-[10px] text-text-secondary">Per EBI, advertising that builds expectations the brand cannot deliver accelerates decline. Fix operational delivery (Broken Promises) before amplifying marketing (Missed Opportunities). Experience reinforces or erodes the memory structures that advertising builds.</p>
+                </div>
+              </div>
             </div>
             {alignmentData.filter(d => d.cat !== 'Low Priority').length === 0 && (
               <p className="text-[11px] text-text-secondary">No actionable alignment data available.</p>

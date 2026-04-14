@@ -737,20 +737,11 @@ const Presence = () => {
         );
         const fbRank = ranked.indexOf(fb) + 1;
 
-        // EBI insights
-        const ebiInsights = [];
-        const easeVal = (fbData.P1_easeScore ?? 0) * 100;
-        const frictionVal = (fbData.P2_frictionRate ?? 0) * 100;
+        // EBI data points
+        const easeVal = (fbData.P1_easeScore ?? 0);
+        const frictionRate = (fbData.P2_frictionRate ?? 0);
+        const trialPen = (fbData.P3_trialPenetration ?? 0);
         const momentumVal = fbData.P4_frequencyMomentum ?? 0;
-        const locationVal = (fbData.P5_locationAssociation ?? 0) * 100;
-
-        if (easeVal > 70) ebiInsights.push({ type: 'positive', text: `Ease of access is strong at ${easeVal.toFixed(1)}% — well above the 70% benchmark.` });
-        if (easeVal < 50) ebiInsights.push({ type: 'negative', text: `Ease of access is critically low at ${easeVal.toFixed(1)}% — below the 50% threshold. Prioritise location and convenience improvements.` });
-        if (frictionVal > 20) ebiInsights.push({ type: 'negative', text: `Friction rate is elevated at ${frictionVal.toFixed(1)}% — over 1 in 5 customers find dining difficult.` });
-        if (momentumVal < 0) ebiInsights.push({ type: 'negative', text: `Frequency momentum is negative (${(momentumVal * 100).toFixed(1)}pp) — visit frequency is declining.` });
-        if (locationVal > 60 && easeVal < 50) ebiInsights.push({ type: 'warning', text: `Location association (${locationVal.toFixed(1)}%) is high but ease (${easeVal.toFixed(1)}%) is low — customers know where you are but still find it hard to visit. Check operational friction.` });
-        if (locationVal < 40 && easeVal > 60) ebiInsights.push({ type: 'warning', text: `Ease (${easeVal.toFixed(1)}%) is decent but location association (${locationVal.toFixed(1)}%) is weak — brand is accessible but not mentally linked to locations.` });
-        if (ebiInsights.length === 0) ebiInsights.push({ type: 'neutral', text: `${fb} shows balanced presence metrics with no critical flags.` });
 
         return (
           <div className="space-y-4">
@@ -879,20 +870,25 @@ const Presence = () => {
                     );
                   })}
                 </div>
+              </div>
 
-                <h4 className="text-[12px] font-semibold text-text-primary mb-2">EBI Insights</h4>
-                <div className="space-y-2">
-                  {ebiInsights.map((insight, i) => (
-                    <div
-                      key={i}
-                      className={`rounded-lg p-3 text-[11px] leading-relaxed ${
-                        insight.type === 'positive' ? 'bg-green-50 text-green-800' :
-                        insight.type === 'negative' ? 'bg-red-50 text-red-800' :
-                        insight.type === 'warning' ? 'bg-amber-50 text-amber-800' :
-                        'bg-gray-50 text-text-secondary'
-                      }`}
-                    >
-                      {insight.text}
+              {/* EBI Strategic Actions */}
+              <div className="bg-card rounded-card p-5 animate-slide-up">
+                <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    easeVal < 0.5 && { badge: 'GROW', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Expand Distribution', desc: 'Expand distribution footprint — per EBI, physical availability to more category buyers is the primary growth lever' },
+                    frictionRate > 0.15 && { badge: 'FRICTION', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'High Friction', desc: 'High friction excludes potential buyers — per Double Jeopardy, small brands cannot afford to lose any access points' },
+                    momentumVal < 0 && { badge: 'MOMENTUM', bg: 'bg-orange-50', border: 'border-orange-300', badgeBg: 'bg-orange-500', title: 'Declining Frequency', desc: 'Declining visit frequency — investigate whether competitors have expanded availability in your catchment areas' },
+                    trialPen < 0.7 && { badge: 'REACH', bg: 'bg-blue-50', border: 'border-blue-300', badgeBg: 'bg-blue-500', title: 'Low Trial Penetration', desc: 'Low trial penetration — per EBI, growth comes from gaining new buyers (penetration) not increasing loyalty of existing ones' },
+                    { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Core Principle', desc: 'Brands grow by being easy to buy. Distribution breadth is the #1 growth lever — every additional outlet reaches new category buyers.' },
+                  ].filter(Boolean).map((item, i) => (
+                    <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
+                      <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>
+                      <div>
+                        <p className="text-[11px] font-semibold text-text-primary">{item.title}</p>
+                        <p className="text-[10px] text-text-secondary">{item.desc}</p>
+                      </div>
                     </div>
                   ))}
                 </div>

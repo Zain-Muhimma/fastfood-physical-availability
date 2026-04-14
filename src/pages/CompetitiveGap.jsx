@@ -293,35 +293,22 @@ const CompetitiveGap = () => {
 
           {/* 2. EBI Strategic Actions */}
           <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '160ms' }}>
-            <h3 className="font-display text-lg text-text-primary tracking-wide mb-4">EBI Strategic Actions</h3>
-            <div className="space-y-3 text-[13px] text-text-primary leading-relaxed">
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p className="font-semibold text-red-800 mb-1">Biggest Gap: {biggestGap.label}</p>
-                <p className="text-red-900">
-                  {fb} trails {leaderBrand} by <span className="font-bold">{(Math.abs(biggestGap.gap) * 100).toFixed(1)}pp</span> in {biggestGap.label}.
-                  {biggestGap.key === 'presence' && ' Prioritise expanding distribution footprint.'}
-                  {biggestGap.key === 'prominence' && ' Invest in in-store visibility and point-of-sale salience.'}
-                  {biggestGap.key === 'portfolio' && ' Broaden the product range to cover more occasions.'}
-                </p>
-              </div>
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <p className="font-semibold text-green-800 mb-1">Closest Dimension: {closestDim.label}</p>
-                <p className="text-green-900">
-                  {closestDim.gap >= 0
-                    ? `${fb} leads by ${(closestDim.gap * 100).toFixed(1)}pp — protect this advantage.`
-                    : `${fb} is within ${(Math.abs(closestDim.gap) * 100).toFixed(1)}pp of ${leaderBrand} — a focused push could close the gap.`
-                  }
-                </p>
-              </div>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="font-semibold text-blue-800 mb-1">Distribution Investment</p>
-                <p className="text-blue-900">
-                  {fbOverall >= leaderOverall
-                    ? `${fb} holds an overall PA advantage. Focus on sustaining leadership.`
-                    : `Concentrate investment on ${biggestGap.label} (largest deficit) while leveraging ${closestDim.label} (nearest parity) as foundation.`
-                  }
-                </p>
-              </div>
+            <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { badge: 'GAP', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: `Biggest Gap: ${biggestGap.label}`, desc: `Biggest gap in ${biggestGap.label} at ${(Math.abs(biggestGap.gap) * 100).toFixed(1)}pp — concentrate distribution investment here first` },
+                { badge: 'PARITY', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-500', title: `Closest: ${closestDim.label}`, desc: `Closest to leader on ${closestDim.label} — ${closestDim.gap >= 0 ? 'protect this advantage' : 'close the remaining ' + (Math.abs(closestDim.gap) * 100).toFixed(1) + 'pp gap'}` },
+                { badge: 'DOUBLE J', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'Double Jeopardy', desc: `Per Double Jeopardy, ${fb} as a smaller brand has both fewer buyers and lower loyalty. Growth requires expanding physical availability to reach new category buyers, not deepening loyalty` },
+                { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Core Principle', desc: 'Physical availability is the primary growth lever. Close distribution gaps before investing in advertising — mental availability without physical availability wastes marketing spend.' },
+              ].filter(Boolean).map((item, i) => (
+                <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
+                  <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>
+                  <div>
+                    <p className="text-[11px] font-semibold text-text-primary">{item.title}</p>
+                    <p className="text-[10px] text-text-secondary">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

@@ -666,11 +666,10 @@ const Prominence = () => {
         <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
         <div className="grid grid-cols-2 gap-2">
           {[
-            (fbData.PR1_impressionScore || 0) < 0.5 && { badge: 'FIX', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'Low Impression', desc: `${fmtMetric(fbData.PR1_impressionScore || 0, 'pct')} — invest in distinctive brand assets` },
-            (fbData.PR3_adCutThrough || 0) > 0.3 && (fbData.PR1_impressionScore || 0) < 0.5 && { badge: 'REVIEW', bg: 'bg-orange-50', border: 'border-orange-300', badgeBg: 'bg-orange-500', title: 'Ad-Impression Gap', desc: `Ad recall high but impression low — review creative strategy` },
-            (fbData.PR5_netAdvocacy || 0) < 0 && { badge: 'ALERT', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Negative Advocacy', desc: `${fmtMetric(fbData.PR5_netAdvocacy || 0, 'net')} — fix experience before amplifying` },
-            (fbData.PR3_perceivedMomentum || 0) < 0.3 && { badge: 'WATCH', bg: 'bg-purple-50', border: 'border-purple-300', badgeBg: 'bg-purple-500', title: 'Low Momentum', desc: `${fmtMetric(fbData.PR3_perceivedMomentum || 0, 'pct')} — innovate to counter stagnation` },
-            { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Principle', desc: 'Prominence grows through consistent, distinctive presence across all touchpoints' },
+            (fbData.PR1_impressionScore || 0) < 0.5 && { badge: 'VISIBILITY', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'Low Impression at POP', desc: 'Brand not noticed at point of purchase — invest in distinctive brand assets (logo, colour, packaging) that are unique to this brand' },
+            (fbData.PR3_adCutThrough || 0) < 0.15 && { badge: 'RECALL', bg: 'bg-blue-50', border: 'border-blue-300', badgeBg: 'bg-blue-500', title: 'Low Ad Recall', desc: 'Low ad recall — advertising builds mental availability by refreshing memory structures. Increase reach and frequency across all category buyers' },
+            (fbData.PR2_marketPresence || 0) < 0.1 && { badge: 'PRESENCE', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Low Market Presence', desc: 'Low perceived market presence — per Double Jeopardy, smaller brands feel less "everywhere". Growth in physical distribution will naturally lift perceived presence' },
+            { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Core Principle', desc: 'Prominence = being easy to notice. Build distinctive brand assets (not differentiation) and ensure consistent presence across all category buyer touchpoints.' },
           ].filter(Boolean).map((item, i) => (
             <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
               <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>

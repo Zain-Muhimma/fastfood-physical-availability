@@ -569,6 +569,27 @@ const PAScoreboard = () => {
           </div>
           </ExpandableCard>
 
+          {/* EBI Strategic Actions */}
+          <div className="bg-card rounded-card p-5 animate-slide-up">
+            <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                presenceVal < 0.5 && { badge: 'PRESENCE', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Low Ease of Access', desc: 'Ease of Access below 50% — distribution expansion is the top priority per EBI' },
+                prominenceVal < 0.5 && { badge: 'PROMINENCE', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'Brand Not Noticed', desc: 'Brand not noticed — invest in distinctive assets to increase salience at point of purchase' },
+                portfolioVal < 0.1 && { badge: 'PORTFOLIO', bg: 'bg-blue-50', border: 'border-blue-300', badgeBg: 'bg-blue-500', title: 'Narrow Range', desc: 'Narrow range coverage — expand menu to cover more category buying occasions' },
+                { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Core Principle', desc: 'Physical Availability = being easy to find + easy to notice + offering what buyers need. Per Ehrenberg-Bass, brands grow by reaching more category buyers through broader distribution, not by targeting segments.' },
+              ].filter(Boolean).map((item, i) => (
+                <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
+                  <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>
+                  <div>
+                    <p className="text-[11px] font-semibold text-text-primary">{item.title}</p>
+                    <p className="text-[10px] text-text-secondary">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       )}
     </div>
