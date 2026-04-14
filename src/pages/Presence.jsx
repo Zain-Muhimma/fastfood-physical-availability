@@ -558,6 +558,17 @@ const LocationEaseScatter = ({ allMetrics, brandNames, focusedBrand }) => {
       : sorted[mid].y;
   }, [scatterData]);
 
+  const focusedPoint = scatterData.find(d => d.brand === focusedBrand);
+  const insightText = useMemo(() => {
+    if (!focusedPoint) return '';
+    const highX = focusedPoint.x > medianX;
+    const highY = focusedPoint.y > medianY;
+    if (highX && highY) return 'Strong on both — stores are accessible AND mentally linked to convenience. PROTECT this alignment.';
+    if (highX && !highY) return 'High location recall but low ease — buyers remember the brand as accessible but find it hard to visit. Investigate operational friction (parking, seating, hours).';
+    if (!highX && highY) return 'Good ease but weak location memory — stores work but are not mentally linked to convenience. Feature location in distinctive brand assets.';
+    return 'Weak on both — priority is expanding distribution footprint. Per EBI, physical availability is the #1 growth lever.';
+  }, [focusedPoint, medianX, medianY]);
+
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload?.length) {
       const d = payload[0].payload;
@@ -574,64 +585,94 @@ const LocationEaseScatter = ({ allMetrics, brandNames, focusedBrand }) => {
 
   return (
     <ExpandableCard title="Location Association vs Ease Score">
-    <div
-      className="bg-card rounded-card p-5 animate-slide-up"
-      style={{ animationDelay: '700ms' }}
-    >
-      <h3 className="font-display text-lg text-text-primary tracking-wide mb-0.5">
-        Location Association vs Ease Score
-      </h3>
-      <p className="text-[10px] text-text-secondary mb-4">
-        X = Location Association (P5) | Y = Ease Score (P1) | Dashed lines = median
-      </p>
+    <div className="grid grid-cols-2 gap-4">
+      <div
+        className="bg-card rounded-card p-5 animate-slide-up"
+        style={{ animationDelay: '700ms' }}
+      >
+        <h3 className="font-display text-lg text-text-primary tracking-wide mb-0.5">
+          Location Association vs Ease Score
+        </h3>
+        <p className="text-[10px] text-text-secondary mb-4">
+          X = Location Association (P5) | Y = Ease Score (P1) | Dashed lines = median
+        </p>
 
-      <ResponsiveContainer width="100%" height={320}>
-        <ScatterChart margin={{ top: 10, right: 20, bottom: 30, left: 10 }}>
-          <XAxis
-            type="number"
-            dataKey="x"
-            name="Location"
-            unit="%"
-            tick={{ fontSize: 10, fill: '#6B7280' }}
-            label={{ value: 'Location Association (%)', position: 'bottom', fontSize: 10, fill: '#6B7280', offset: 10 }}
-          />
-          <YAxis
-            type="number"
-            dataKey="y"
-            name="Ease"
-            unit="%"
-            tick={{ fontSize: 10, fill: '#6B7280' }}
-            label={{ value: 'Ease Score (%)', angle: -90, position: 'insideLeft', fontSize: 10, fill: '#6B7280', offset: 0 }}
-          />
-          <ZAxis range={[120, 120]} />
-          <Tooltip content={<CustomTooltip />} />
-          <ReferenceLine x={medianX} stroke="#9CA3AF" strokeDasharray="4 4" label="" />
-          <ReferenceLine y={medianY} stroke="#9CA3AF" strokeDasharray="4 4" label="" />
-          <Scatter data={scatterData} shape="circle">
-            {scatterData.map((entry) => (
-              <Cell
-                key={entry.brand}
-                fill={entry.brand === focusedBrand ? ORANGE : GRAY}
-                stroke={entry.brand === focusedBrand ? ORANGE : '#9CA3AF'}
-                strokeWidth={entry.brand === focusedBrand ? 2 : 1}
-              />
-            ))}
-          </Scatter>
-        </ScatterChart>
-      </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={320}>
+          <ScatterChart margin={{ top: 10, right: 20, bottom: 30, left: 10 }}>
+            <XAxis
+              type="number"
+              dataKey="x"
+              name="Location"
+              unit="%"
+              tick={{ fontSize: 10, fill: '#6B7280' }}
+              label={{ value: 'Location Association (%)', position: 'bottom', fontSize: 10, fill: '#6B7280', offset: 10 }}
+            />
+            <YAxis
+              type="number"
+              dataKey="y"
+              name="Ease"
+              unit="%"
+              tick={{ fontSize: 10, fill: '#6B7280' }}
+              label={{ value: 'Ease Score (%)', angle: -90, position: 'insideLeft', fontSize: 10, fill: '#6B7280', offset: 0 }}
+            />
+            <ZAxis range={[120, 120]} />
+            <Tooltip content={<CustomTooltip />} />
+            <ReferenceLine x={medianX} stroke="#9CA3AF" strokeDasharray="4 4" label="" />
+            <ReferenceLine y={medianY} stroke="#9CA3AF" strokeDasharray="4 4" label="" />
+            <Scatter data={scatterData} shape="circle">
+              {scatterData.map((entry) => (
+                <Cell
+                  key={entry.brand}
+                  fill={entry.brand === focusedBrand ? ORANGE : GRAY}
+                  stroke={entry.brand === focusedBrand ? ORANGE : '#9CA3AF'}
+                  strokeWidth={entry.brand === focusedBrand ? 2 : 1}
+                />
+              ))}
+            </Scatter>
+          </ScatterChart>
+        </ResponsiveContainer>
 
-      {/* Brand labels below chart */}
-      <div className="flex flex-wrap gap-3 mt-3 justify-center">
-        {scatterData.map((d) => (
-          <span
-            key={d.brand}
-            className={`text-[10px] ${
-              d.brand === focusedBrand ? 'font-semibold text-orange-primary' : 'text-text-secondary'
-            }`}
-          >
-            {d.brand}
-          </span>
-        ))}
+        {/* Brand labels below chart */}
+        <div className="flex flex-wrap gap-3 mt-3 justify-center">
+          {scatterData.map((d) => (
+            <span
+              key={d.brand}
+              className={`text-[10px] ${
+                d.brand === focusedBrand ? 'font-semibold text-orange-primary' : 'text-text-secondary'
+              }`}
+            >
+              {d.brand}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Dynamic Insight Panel */}
+      <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: '750ms' }}>
+        <h3 className="font-display text-base text-text-primary mb-3">Insight: {focusedBrand}</h3>
+        <div className="space-y-3 text-[12px] text-text-secondary leading-relaxed">
+          <p>{insightText}</p>
+          {focusedPoint && (
+            <div className="mt-4 space-y-2">
+              <div className="flex justify-between text-[11px]">
+                <span>Location Association</span>
+                <span className="font-semibold text-text-primary">{focusedPoint.x.toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between text-[11px]">
+                <span>Ease Score</span>
+                <span className="font-semibold text-text-primary">{focusedPoint.y.toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between text-[11px]">
+                <span>Median Location</span>
+                <span className="font-semibold text-text-primary">{medianX.toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between text-[11px]">
+                <span>Median Ease</span>
+                <span className="font-semibold text-text-primary">{medianY.toFixed(1)}%</span>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
     </ExpandableCard>
@@ -872,32 +913,37 @@ const Presence = () => {
                 </div>
               </div>
 
-              {/* EBI Strategic Actions */}
-              <div className="bg-card rounded-card p-5 animate-slide-up">
-                <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    easeVal < 0.5 && { badge: 'GROW', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Expand Distribution', desc: 'Expand distribution footprint — per EBI, physical availability to more category buyers is the primary growth lever' },
-                    frictionRate > 0.15 && { badge: 'FRICTION', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'High Friction', desc: 'High friction excludes potential buyers — per Double Jeopardy, small brands cannot afford to lose any access points' },
-                    momentumVal < 0 && { badge: 'MOMENTUM', bg: 'bg-orange-50', border: 'border-orange-300', badgeBg: 'bg-orange-500', title: 'Declining Frequency', desc: 'Declining visit frequency — investigate whether competitors have expanded availability in your catchment areas' },
-                    trialPen < 0.7 && { badge: 'REACH', bg: 'bg-blue-50', border: 'border-blue-300', badgeBg: 'bg-blue-500', title: 'Low Trial Penetration', desc: 'Low trial penetration — per EBI, growth comes from gaining new buyers (penetration) not increasing loyalty of existing ones' },
-                    { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Core Principle', desc: 'Brands grow by being easy to buy. Distribution breadth is the #1 growth lever — every additional outlet reaches new category buyers.' },
-                  ].filter(Boolean).map((item, i) => (
-                    <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
-                      <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>
-                      <div>
-                        <p className="text-[11px] font-semibold text-text-primary">{item.title}</p>
-                        <p className="text-[10px] text-text-secondary">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
 
             {/* Below columns: distribution charts */}
             <EaseStackedBars data={data} brandNames={brandNames} focusedBrand={fb} />
             <LocationEaseScatter allMetrics={allMetrics} brandNames={brandNames} focusedBrand={fb} />
+
+            {/* EBI Strategic Actions — placed AFTER all charts */}
+            <div className="bg-card rounded-card p-5 animate-slide-up">
+              <h3 className="font-display text-lg text-text-primary mb-3">EBI Strategic Actions</h3>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  easeVal < 0.5 && { badge: 'GROW', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Expand Distribution', desc: 'Expand distribution footprint — per EBI, physical availability to more category buyers is the primary growth lever' },
+                  frictionRate > 0.15 && { badge: 'FRICTION', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'High Friction', desc: `${fmtMetric(frictionRate, 'pct')} find access difficult — per Double Jeopardy, small brands cannot afford to lose any access points` },
+                  momentumVal < 0 && { badge: 'MOMENTUM', bg: 'bg-orange-50', border: 'border-orange-300', badgeBg: 'bg-orange-500', title: 'Declining Frequency', desc: 'Declining visit frequency — investigate whether competitors have expanded availability in your catchment areas' },
+                  trialPen < 0.7 && { badge: 'REACH', bg: 'bg-blue-50', border: 'border-blue-300', badgeBg: 'bg-blue-500', title: 'Low Trial Penetration', desc: 'Low trial penetration — per EBI, growth comes from gaining new buyers (penetration) not increasing loyalty of existing ones' },
+                  easeVal >= 0.7 && { badge: 'STRONG', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-600', title: 'Strong Ease of Access', desc: `${fmtMetric(easeVal, 'pct')} — above 70% benchmark. Protect distribution coverage and maintain operational standards.` },
+                  frictionRate <= 0.05 && { badge: 'STRONG', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-600', title: 'Low Friction', desc: `Only ${fmtMetric(frictionRate, 'pct')} find access difficult. Maintain this by monitoring new competitor openings.` },
+                  trialPen >= 0.9 && { badge: 'STRONG', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-600', title: 'High Trial', desc: `${fmtMetric(trialPen, 'pct')} have tried the brand — strong historical penetration. Focus on converting trialists to regulars.` },
+                  momentumVal > 0.05 && { badge: 'STRONG', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-600', title: 'Positive Momentum', desc: `Visit frequency growing at ${fmtMetric(momentumVal, 'net')} — brand is gaining physical availability share.` },
+                  { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Core Principle', desc: 'Brands grow by being easy to buy. Distribution breadth is the #1 growth lever — every additional outlet reaches new category buyers.' },
+                ].filter(Boolean).map((item, i) => (
+                  <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
+                    <span className={`${item.badgeBg} text-white text-[8px] font-bold px-1.5 py-0.5 rounded mt-0.5 flex-shrink-0`}>{item.badge}</span>
+                    <div>
+                      <p className="text-[11px] font-semibold text-text-primary">{item.title}</p>
+                      <p className="text-[10px] text-text-secondary">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         );
       })()}

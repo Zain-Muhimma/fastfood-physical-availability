@@ -222,49 +222,90 @@ const BubbleChart = ({ allMetrics, brandNames, focusedBrand, index, data }) => {
   const W = 100; // percentage-based positioning
   const H = 100;
 
+  const focusedPoint = chartData.find(d => d.brand === focusedBrand);
+  const insightText = useMemo(() => {
+    if (!focusedPoint) return '';
+    const highX = focusedPoint.x > medianX;
+    const highY = focusedPoint.y > medianY;
+    if (highX && highY) return 'Strong advertising effectiveness — ads are noticed AND building positive impression. Per EBI, this refreshes memory structures effectively.';
+    if (highX && !highY) return 'Advertising noticed but not building positive perception — review creative strategy. Per EBI, ads should build distinctive brand assets, not just awareness.';
+    if (!highX && highY) return 'Organically prominent — brand stands out without heavy ad spend. This is the strongest position per EBI — earned salience through distinctive assets.';
+    return 'Low visibility — increase advertising reach to all category buyers. Per EBI, broad reach advertising refreshes memory structures.';
+  }, [focusedPoint, medianX, medianY]);
+
   return (
     <ExpandableCard title="Ad Recall vs Impression">
-    <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: `${index * 60}ms` }}>
-      <h3 className="font-display text-base text-text-primary tracking-wide mb-1">Ad Recall vs Impression</h3>
-      <p className="text-[10px] text-text-secondary mb-3">
-        X = Ad Cut-Through | Y = Positive Standout | Logo = Brand
-      </p>
-      <div className="relative border border-gray-200 rounded-lg bg-gray-50" style={{ height: 380, overflow: 'hidden' }}>
-        {/* Axis labels */}
-        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] text-text-secondary">Ad Cut-Through →</span>
-        <span className="absolute top-1/2 left-1 -translate-y-1/2 text-[9px] text-text-secondary" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg) translateY(50%)' }}>Positive Standout →</span>
-        {/* Median lines */}
-        <div className="absolute border-l border-dashed border-gray-300" style={{ left: `${(medianX / maxX) * 90 + 5}%`, top: 0, bottom: 0 }} />
-        <div className="absolute border-t border-dashed border-gray-300" style={{ top: `${(1 - medianY / maxY) * 90 + 5}%`, left: 0, right: 0 }} />
-        {/* X-axis ticks */}
-        {[0, 0.25, 0.5, 0.75].filter(v => v <= maxX).map(v => (
-          <span key={`x${v}`} className="absolute text-[8px] text-gray-400" style={{ left: `${(v / maxX) * 90 + 5}%`, bottom: 14 }}>{(v * 100).toFixed(0)}%</span>
-        ))}
-        {/* Y-axis ticks */}
-        {[0, 0.25, 0.5, 0.75].filter(v => v <= maxY).map(v => (
-          <span key={`y${v}`} className="absolute text-[8px] text-gray-400" style={{ top: `${(1 - v / maxY) * 90 + 5}%`, left: 14 }}>{(v * 100).toFixed(0)}%</span>
-        ))}
-        {/* Brand logos as dots */}
-        {chartData.map(d => {
-          const xPct = (d.x / maxX) * 90 + 5;
-          const yPct = (1 - d.y / maxY) * 90 + 5;
-          return (
-            <div
-              key={d.brand}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-white overflow-hidden border-2 transition-all ${
-                d.isFocused ? 'border-orange-primary shadow-lg z-10 w-12 h-12' : 'border-gray-200 w-9 h-9 opacity-80 hover:opacity-100 hover:scale-110'
-              }`}
-              style={{ left: `${xPct}%`, top: `${yPct}%` }}
-              title={`${d.brand}: Ad ${(d.x * 100).toFixed(1)}%, Impression ${(d.y * 100).toFixed(1)}%`}
-            >
-              {d.logo ? (
-                <img src={d.logo} alt={d.brand} className="w-full h-full object-contain p-0.5" />
-              ) : (
-                <span className="flex items-center justify-center w-full h-full text-[9px] font-bold text-gray-500">{d.brand[0]}</span>
-              )}
+    <div className="grid grid-cols-2 gap-4">
+      <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: `${index * 60}ms` }}>
+        <h3 className="font-display text-base text-text-primary tracking-wide mb-1">Ad Recall vs Impression</h3>
+        <p className="text-[10px] text-text-secondary mb-3">
+          X = Ad Cut-Through | Y = Positive Standout | Logo = Brand
+        </p>
+        <div className="relative border border-gray-200 rounded-lg bg-gray-50" style={{ height: 380, overflow: 'hidden' }}>
+          {/* Axis labels */}
+          <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] text-text-secondary">Ad Cut-Through →</span>
+          <span className="absolute top-1/2 left-1 -translate-y-1/2 text-[9px] text-text-secondary" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg) translateY(50%)' }}>Positive Standout →</span>
+          {/* Median lines */}
+          <div className="absolute border-l border-dashed border-gray-300" style={{ left: `${(medianX / maxX) * 90 + 5}%`, top: 0, bottom: 0 }} />
+          <div className="absolute border-t border-dashed border-gray-300" style={{ top: `${(1 - medianY / maxY) * 90 + 5}%`, left: 0, right: 0 }} />
+          {/* X-axis ticks */}
+          {[0, 0.25, 0.5, 0.75].filter(v => v <= maxX).map(v => (
+            <span key={`x${v}`} className="absolute text-[8px] text-gray-400" style={{ left: `${(v / maxX) * 90 + 5}%`, bottom: 14 }}>{(v * 100).toFixed(0)}%</span>
+          ))}
+          {/* Y-axis ticks */}
+          {[0, 0.25, 0.5, 0.75].filter(v => v <= maxY).map(v => (
+            <span key={`y${v}`} className="absolute text-[8px] text-gray-400" style={{ top: `${(1 - v / maxY) * 90 + 5}%`, left: 14 }}>{(v * 100).toFixed(0)}%</span>
+          ))}
+          {/* Brand logos as dots */}
+          {chartData.map(d => {
+            const xPct = (d.x / maxX) * 90 + 5;
+            const yPct = (1 - d.y / maxY) * 90 + 5;
+            return (
+              <div
+                key={d.brand}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-white overflow-hidden border-2 transition-all ${
+                  d.isFocused ? 'border-orange-primary shadow-lg z-10 w-12 h-12' : 'border-gray-200 w-9 h-9 opacity-80 hover:opacity-100 hover:scale-110'
+                }`}
+                style={{ left: `${xPct}%`, top: `${yPct}%` }}
+                title={`${d.brand}: Ad ${(d.x * 100).toFixed(1)}%, Impression ${(d.y * 100).toFixed(1)}%`}
+              >
+                {d.logo ? (
+                  <img src={d.logo} alt={d.brand} className="w-full h-full object-contain p-0.5" />
+                ) : (
+                  <span className="flex items-center justify-center w-full h-full text-[9px] font-bold text-gray-500">{d.brand[0]}</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Dynamic Insight Panel */}
+      <div className="bg-card rounded-card p-5 animate-slide-up" style={{ animationDelay: `${index * 60 + 50}ms` }}>
+        <h3 className="font-display text-base text-text-primary mb-3">Insight: {focusedBrand}</h3>
+        <div className="space-y-3 text-[12px] text-text-secondary leading-relaxed">
+          <p>{insightText}</p>
+          {focusedPoint && (
+            <div className="mt-4 space-y-2">
+              <div className="flex justify-between text-[11px]">
+                <span>Ad Cut-Through</span>
+                <span className="font-semibold text-text-primary">{(focusedPoint.x * 100).toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between text-[11px]">
+                <span>Positive Standout</span>
+                <span className="font-semibold text-text-primary">{(focusedPoint.y * 100).toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between text-[11px]">
+                <span>Median Ad Cut-Through</span>
+                <span className="font-semibold text-text-primary">{(medianX * 100).toFixed(1)}%</span>
+              </div>
+              <div className="flex justify-between text-[11px]">
+                <span>Median Standout</span>
+                <span className="font-semibold text-text-primary">{(medianY * 100).toFixed(1)}%</span>
+              </div>
             </div>
-          );
-        })}
+          )}
+        </div>
       </div>
     </div>
     </ExpandableCard>
@@ -669,6 +710,9 @@ const Prominence = () => {
             (fbData.PR1_impressionScore || 0) < 0.5 && { badge: 'VISIBILITY', bg: 'bg-amber-50', border: 'border-amber-300', badgeBg: 'bg-amber-500', title: 'Low Impression at POP', desc: 'Brand not noticed at point of purchase — invest in distinctive brand assets (logo, colour, packaging) that are unique to this brand' },
             (fbData.PR3_adCutThrough || 0) < 0.15 && { badge: 'RECALL', bg: 'bg-blue-50', border: 'border-blue-300', badgeBg: 'bg-blue-500', title: 'Low Ad Recall', desc: 'Low ad recall — advertising builds mental availability by refreshing memory structures. Increase reach and frequency across all category buyers' },
             (fbData.PR2_marketPresence || 0) < 0.1 && { badge: 'PRESENCE', bg: 'bg-red-50', border: 'border-red-300', badgeBg: 'bg-red-500', title: 'Low Market Presence', desc: 'Low perceived market presence — per Double Jeopardy, smaller brands feel less "everywhere". Growth in physical distribution will naturally lift perceived presence' },
+            (fbData.PR1_impressionScore || 0) >= 0.65 && { badge: 'STRONG', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-600', title: 'High Standout', desc: `${fmtMetric(fbData.PR1_impressionScore || 0, 'pct')} positive standout — brand is noticed and perceived favourably at point of purchase. Protect distinctive assets.` },
+            (fbData.PR2_marketPresence || 0) >= 0.2 && { badge: 'STRONG', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-600', title: 'Strong Market Presence', desc: `${fmtMetric(fbData.PR2_marketPresence || 0, 'pct')} perceive the brand as widely available — physical distribution is translating into mental presence.` },
+            (fbData.PR3_adCutThrough || 0) >= 0.3 && { badge: 'STRONG', bg: 'bg-green-50', border: 'border-green-300', badgeBg: 'bg-green-600', title: 'High Ad Recall', desc: `${fmtMetric(fbData.PR3_adCutThrough || 0, 'pct')} ad cut-through — advertising is cutting through and refreshing memory structures effectively.` },
             { badge: 'EBI', bg: 'bg-gray-50', border: 'border-gray-300', badgeBg: 'bg-gray-500', title: 'Core Principle', desc: 'Prominence = being easy to notice. Build distinctive brand assets (not differentiation) and ensure consistent presence across all category buyer touchpoints.' },
           ].filter(Boolean).map((item, i) => (
             <div key={i} className={`${item.bg} border ${item.border} rounded-lg p-3 flex items-start gap-2`}>
